@@ -1,2 +1,7 @@
-# modulo-compras-sg
-Proyecto Sistemas de Gestión - Modulo de Compras
+# modulo-compras-api
+Proyecto Sistemas de Gestión - API del Modulo de Compras
+
+Integrantes: 
+  -Rodrigo Maidana
+  -Jorge Figueredo
+  -Pedro Kazlauskas
