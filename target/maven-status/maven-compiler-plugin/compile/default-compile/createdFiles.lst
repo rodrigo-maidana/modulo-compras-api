@@ -1,1 +1,4 @@
+modulocompras/api/Repositories/CategoriaRepository.class
+modulocompras/api/Entities/Categoria.class
+modulocompras/api/Controller/CategoriaController.class
 modulocompras/api/ApiApplication.class
