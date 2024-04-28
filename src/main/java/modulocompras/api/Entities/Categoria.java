@@ -12,7 +12,7 @@ import jakarta.persistence.GenerationType;
 public class Categoria {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Esta línea es la clave
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_CATEGORIA")
     private Integer idCategoria;
 
