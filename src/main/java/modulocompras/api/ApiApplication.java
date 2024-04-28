@@ -17,7 +17,7 @@ public class ApiApplication {
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
-			public void addCorsMappings(CorsRegistry registry) {
+			public void addCorsMappings(@SuppressWarnings("null") CorsRegistry registry) {
 				registry.addMapping("/**") // Todos los paths
 						.allowedOriginPatterns("*") // Permite cualquier origen con un patrón
 						.allowedMethods("*") // Permite todos los métodos HTTP
