@@ -1,6 +1,5 @@
 package modulocompras.api.Controller;
 
-import modulocompras.api.Entities.Categoria;
 import modulocompras.api.Entities.Deposito;
 import modulocompras.api.Repositories.DepositoRepository;
 
