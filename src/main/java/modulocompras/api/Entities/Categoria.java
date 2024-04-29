@@ -16,7 +16,7 @@ public class Categoria {
     @Column(name = "ID_CATEGORIA")
     private Integer idCategoria;
 
-    @Column(name = "STR_NOMBRE")
+    @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
     // Getters y setters

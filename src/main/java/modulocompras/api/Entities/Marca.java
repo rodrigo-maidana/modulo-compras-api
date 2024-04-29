@@ -16,7 +16,7 @@ public class Marca {
     @Column(name = "ID_MARCA")
     private Integer idMarca;
 
-    @Column(name = "STR_NOMBRE", length = 200)
+    @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
     // Getters y setters

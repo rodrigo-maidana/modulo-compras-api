@@ -16,7 +16,7 @@ public class Deposito {
     @Column(name = "ID_DEPOSITO")
     private Integer idDeposito;
 
-    @Column(name = "STR_NOMBRE")
+    @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
     @Column(name = "STR_DIRECCION")

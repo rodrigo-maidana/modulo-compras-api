@@ -16,19 +16,19 @@ public class Proveedor {
     @Column(name = "ID_PROVEEDOR")
     private Integer idProveedor;
 
-    @Column(name = "STR_NOMBRE", length = 60, nullable = false)
+    @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
-    @Column(name = "STR_RUC", length = 60, nullable = false)
+    @Column(name = "STR_RUC", nullable = false)
     private String ruc;
 
-    @Column(name = "STR_CONTACTO", length = 60, nullable = false)
+    @Column(name = "STR_CONTACTO")
     private String contacto;
 
-    @Column(name = "STR_CORREO", length = 60, nullable = false)
+    @Column(name = "STR_CORREO")
     private String correo;
 
-    @Column(name = "STR_DIRECCION", length = 200, nullable = false)
+    @Column(name = "STR_DIRECCION")
     private String direccion;
 
     // Getters y setters
