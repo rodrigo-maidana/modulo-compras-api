@@ -14,18 +14,18 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_CATEGORIA")
-    private Integer idCategoria;
+    private Integer id;
 
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
     // Getters y setters
-    public Integer getIdCategoria() {
-        return idCategoria;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdCategoria(Integer idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setId(Integer idCategoria) {
+        this.id = idCategoria;
     }
 
     public String getNombre() {

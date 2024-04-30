@@ -14,7 +14,7 @@ public class Deposito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_DEPOSITO")
-    private Integer idDeposito;
+    private Integer id;
 
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
@@ -26,12 +26,12 @@ public class Deposito {
     private String contacto;
 
     // Getters y setters
-    public Integer getIdDeposito() {
-        return idDeposito;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdDeposito(Integer idDeposito) {
-        this.idDeposito = idDeposito;
+    public void setId(Integer idDeposito) {
+        this.id = idDeposito;
     }
 
     public String getNombre() {

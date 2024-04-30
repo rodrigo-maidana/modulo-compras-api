@@ -14,7 +14,7 @@ public class Proveedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PROVEEDOR")
-    private Integer idProveedor;
+    private Integer id;
 
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
@@ -32,12 +32,12 @@ public class Proveedor {
     private String direccion;
 
     // Getters y setters
-    public Integer getIdProveedor() {
-        return idProveedor;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdProveedor(Integer idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setId(Integer idProveedor) {
+        this.id = idProveedor;
     }
 
     public String getNombre() {

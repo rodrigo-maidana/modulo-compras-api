@@ -19,7 +19,7 @@ public class PedidoDetalle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PEDIDO_DETALLE")
-    private Integer idPedidoDetalle;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "FK_ID_PEDIDO_COMPRA", referencedColumnName = "ID_PEDIDO_COMPRA", nullable = false)
@@ -34,12 +34,12 @@ public class PedidoDetalle {
 
     // Getters y setters
 
-    public Integer getIdPedidoDetalle() {
-        return idPedidoDetalle;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdPedidoDetalle(Integer idPedidoDetalle) {
-        this.idPedidoDetalle = idPedidoDetalle;
+    public void setId(Integer idPedidoDetalle) {
+        this.id = idPedidoDetalle;
     }
 
     public PedidoCompra getPedidoCompra() {

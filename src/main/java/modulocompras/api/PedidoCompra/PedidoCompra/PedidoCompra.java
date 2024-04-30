@@ -15,7 +15,7 @@ public class PedidoCompra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PEDIDO_COMPRA")
-    private Integer idPedidoCompra;
+    private Integer id;
 
     @Column(name = "DATE_FECHA_EMISION", nullable = false)
     private Date fechaEmision;
@@ -25,12 +25,12 @@ public class PedidoCompra {
 
     // Getters y setters
 
-    public Integer getIdPedidoCompra() {
-        return idPedidoCompra;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdPedidoCompra(Integer idPedidoCompra) {
-        this.idPedidoCompra = idPedidoCompra;
+    public void setId(Integer idPedidoCompra) {
+        this.id = idPedidoCompra;
     }
 
     public Date getFechaEmision() {

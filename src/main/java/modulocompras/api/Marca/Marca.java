@@ -14,18 +14,18 @@ public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_MARCA")
-    private Integer idMarca;
+    private Integer id;
 
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
     // Getters y setters
-    public Integer getIdMarca() {
-        return idMarca;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdMarca(Integer idMarca) {
-        this.idMarca = idMarca;
+    public void setId(Integer idMarca) {
+        this.id = idMarca;
     }
 
     public String getNombre() {

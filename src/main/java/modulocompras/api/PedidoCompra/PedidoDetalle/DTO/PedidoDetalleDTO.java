@@ -4,19 +4,19 @@ import modulocompras.api.PedidoCompra.PedidoDetalle.PedidoDetalle;
 import modulocompras.api.Producto.Producto;
 
 public class PedidoDetalleDTO {
-    private Integer idPedidoDetalle;
+    private Integer id;
     private Producto producto;
     private Integer cantidad;
 
     public PedidoDetalleDTO(PedidoDetalle pedidoDetalle) {
-        this.idPedidoDetalle = pedidoDetalle.getIdPedidoDetalle();
+        this.id = pedidoDetalle.getId();
         this.producto = pedidoDetalle.getProducto();  // Aquí asumimos que quieres exponer detalles del producto
         this.cantidad = pedidoDetalle.getCantidad();
     }
 
     // Getters
-    public Integer getIdPedidoDetalle() {
-        return idPedidoDetalle;
+    public Integer getId() {
+        return id;
     }
 
     public Producto getProducto() {
@@ -28,8 +28,8 @@ public class PedidoDetalleDTO {
     }
 
     // Setters
-    public void setIdPedidoDetalle(Integer idPedidoDetalle) {
-        this.idPedidoDetalle = idPedidoDetalle;
+    public void setId(Integer idPedidoDetalle) {
+        this.id = idPedidoDetalle;
     }
 
     public void setProducto(Producto producto) {
