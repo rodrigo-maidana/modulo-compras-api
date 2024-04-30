@@ -7,10 +7,17 @@
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/ApiApplication.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Categoria/CategoriaController.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Proveedor/ProveedorController.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/PedidoCompra/PedidoDetalle/PedidoDetalle.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Deposito/DepositoRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Deposito/DepositoController.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/PedidoCompra/PedidoDetalle/DTO/PedidoDetalleDTO.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/PedidoCompra/PedidoCompra/PedidoCompraController.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Categoria/Categoria.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Categoria/CategoriaRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Marca/Marca.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/PedidoCompra/PedidoCompra/PedidoCompraRepository.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/PedidoCompra/PedidoDetalle/PedidoDetalleController.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/PedidoCompra/PedidoDetalle/PedidoDetalleRepository.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/PedidoCompra/PedidoCompra/PedidoCompra.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Producto/Producto.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/Marca/MarcaRepository.java

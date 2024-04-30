@@ -1,7 +1,5 @@
 package modulocompras.api.PedidoCompra.PedidoDetalle;
 
-import modulocompras.api.PedidoCompra.PedidoDetalle.DTO.PedidoDetalleDTO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedidosdetalles") // Endpoint para Pedidos Detalles
@@ -64,18 +61,5 @@ public class PedidoDetalleController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    
-    /**
-     * Recupera todos los detalles de pedido con FK_idPedidoCompra igual a idPedidoCompra.
-     * 
-     * @param idPedidoCompra El id del pedido compra.
-     * @return Una lista de detalles de pedido DTO que coinciden con el idPedidoCompra dado.
-     */
-    @GetMapping("/byIdPedidoCompra/{idPedidoCompra}")
-    public List<PedidoDetalleDTO> findByDetallesByPedidoCompraId(@PathVariable Integer idPedidoCompra) {
-        return pedidoDetalleRepository.findAll().stream()
-            .filter(pedidoDetalle -> pedidoDetalle.getPedidoCompra().getIdPedidoCompra() == idPedidoCompra)
-            .map(PedidoDetalleDTO::new)  // Convierte cada PedidoDetalle a PedidoDetalleDTO
-            .collect(Collectors.toList());
-    }
+
 }
