@@ -80,7 +80,7 @@ public class PedidoCompraController {
      *         idPedidoCompra dado.
      */
     @GetMapping("/detalles/{id}")
-    public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(@PathVariable Integer idPedidoCompra) {
+    public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(@PathVariable("id") Integer idPedidoCompra) {
         List<PedidoDetalle> detalles = pedidoDetalleRepository.findByPedidoCompraId(idPedidoCompra);
         if (detalles.isEmpty()) {
             return ResponseEntity.notFound().build(); // Retorna 404 si no se encuentran detalles
