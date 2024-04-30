@@ -1,7 +1,4 @@
-package modulocompras.api.Controller;
-
-import modulocompras.api.Entities.Deposito;
-import modulocompras.api.Repositories.DepositoRepository;
+package modulocompras.api.Deposito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

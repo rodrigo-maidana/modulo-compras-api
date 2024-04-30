@@ -1,7 +1,4 @@
-package modulocompras.api.Controller;
-
-import modulocompras.api.Entities.Marca; // Rename to Marca
-import modulocompras.api.Repositories.MarcaRepository; // Rename to MarcaRepository
+package modulocompras.api.Marca;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

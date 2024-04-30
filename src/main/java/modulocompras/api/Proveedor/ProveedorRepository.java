@@ -1,11 +1,9 @@
-package modulocompras.api.Repositories;
+package modulocompras.api.Proveedor;
 
-import modulocompras.api.Entities.Marca;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MarcaRepository extends JpaRepository<Marca, Integer> {
+public interface ProveedorRepository extends JpaRepository<Proveedor, Integer> {
     // Aquí puedes añadir métodos personalizados de consulta si es necesario
-    
 }
