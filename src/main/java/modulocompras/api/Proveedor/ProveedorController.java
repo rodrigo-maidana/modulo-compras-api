@@ -43,7 +43,11 @@ public class ProveedorController {
     public ResponseEntity<Proveedor> updateProveedor(@PathVariable Integer id, @RequestBody Proveedor proveedorDetails) {
         return proveedorRepository.findById(id)
                 .map(proveedor -> {
-                    proveedor.setNombre(proveedorDetails.getNombre()); // Assuming 'nombre' field exists in Proveedor
+                    proveedor.setNombre(proveedorDetails.getNombre());
+                    proveedor.setRuc(proveedorDetails.getRuc());
+                    proveedor.setContacto(proveedorDetails.getContacto());
+                    proveedor.setCorreo(proveedorDetails.getCorreo());
+                    proveedor.setDireccion(proveedorDetails.getDireccion());
                     Proveedor updatedProveedor = proveedorRepository.save(proveedor);
                     return ResponseEntity.ok(updatedProveedor);
                 })
