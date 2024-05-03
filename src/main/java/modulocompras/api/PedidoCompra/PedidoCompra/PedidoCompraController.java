@@ -53,7 +53,7 @@ public class PedidoCompraController {
         return pedidoCompraRepository.findById(id)
                 .map(pedidoCompra -> {
                     pedidoCompra.setFechaEmision(pedidoCompraDetails.getFechaEmision());
-                    pedidoCompra.setEstado(pedidoCompra.getEstado());
+                    pedidoCompra.setEstado(pedidoCompraDetails.getEstado());
                     PedidoCompra updatedPedidoCompra = pedidoCompraRepository.save(pedidoCompra);
                     return ResponseEntity.ok(updatedPedidoCompra);
                 })
