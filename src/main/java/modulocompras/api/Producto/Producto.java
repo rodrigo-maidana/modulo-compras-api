@@ -22,11 +22,11 @@ public class Producto {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "FK_ID_MARCA", referencedColumnName = "ID_MARCA")
+    @JoinColumn(name = "FK_ID_MARCA", referencedColumnName = "ID_MARCA", nullable = false)
     private Marca marca;
 
     @ManyToOne
-    @JoinColumn(name = "FK_ID_CATEGORIA", referencedColumnName = "ID_CATEGORIA")
+    @JoinColumn(name = "FK_ID_CATEGORIA", referencedColumnName = "ID_CATEGORIA", nullable = false)
     private Categoria categoria;
 
     @Column(name = "STR_DESCRIPCION", nullable = false)
