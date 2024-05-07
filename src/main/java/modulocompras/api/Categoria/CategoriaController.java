@@ -1,5 +1,6 @@
 package modulocompras.api.Categoria;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,24 +41,26 @@ public class CategoriaController {
 
     // Actualizar una categoría existente
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> updateCategoria(@PathVariable Integer id, @RequestBody Categoria categoriaDetails) {
+    public ResponseEntity<Categoria> updateCategoria(@PathVariable Integer id,
+            @RequestBody Categoria categoriaDetails) {
         return categoriaRepository.findById(id)
-            .map(categoria -> {
-                categoria.setNombre(categoriaDetails.getNombre());
-                Categoria updatedCategoria = categoriaRepository.save(categoria);
-                return ResponseEntity.ok(updatedCategoria);
-            })
-            .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(categoria -> {
+                    categoria.setNombre(categoriaDetails.getNombre());
+                    Categoria updatedCategoria = categoriaRepository.save(categoria);
+                    return ResponseEntity.ok(updatedCategoria);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Eliminar una categoría
+    // Eliminar una categoría (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategoria(@PathVariable Integer id) {
         return categoriaRepository.findById(id)
-            .map(categoria -> {
-                categoriaRepository.delete(categoria);
-                return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-            })
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(categoria -> {
+                    categoria.setEliminado(true);
+                    categoriaRepository.save(categoria);
+                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
