@@ -1,7 +1,7 @@
-package modulocompras.api.PedidoCompra.PedidoDetalle.DTO;
+package modulocompras.api.entities.dto;
 
-import modulocompras.api.PedidoCompra.PedidoDetalle.PedidoDetalle;
-import modulocompras.api.Producto.Producto;
+import modulocompras.api.entities.PedidoDetalle;
+import modulocompras.api.entities.Producto;
 
 public class PedidoDetalleDTO {
     private Integer id;
@@ -10,7 +10,7 @@ public class PedidoDetalleDTO {
 
     public PedidoDetalleDTO(PedidoDetalle pedidoDetalle) {
         this.id = pedidoDetalle.getId();
-        this.producto = pedidoDetalle.getProducto();  // Aquí asumimos que quieres exponer detalles del producto
+        this.producto = pedidoDetalle.getProducto(); // Aquí asumimos que quieres exponer detalles del producto
         this.cantidad = pedidoDetalle.getCantidad();
     }
 

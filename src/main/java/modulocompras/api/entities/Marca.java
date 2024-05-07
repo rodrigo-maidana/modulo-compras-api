@@ -1,4 +1,4 @@
-package modulocompras.api.Categoria;
+package modulocompras.api.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,12 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "CATEGORIAS")
-public class Categoria {
+@Table(name = "MARCAS")
+public class Marca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_CATEGORIA")
+    @Column(name = "ID_MARCA")
     private Integer id;
 
     @Column(name = "STR_NOMBRE", nullable = false)
@@ -27,8 +27,8 @@ public class Categoria {
         return id;
     }
 
-    public void setId(Integer idCategoria) {
-        this.id = idCategoria;
+    public void setId(Integer idMarca) {
+        this.id = idMarca;
     }
 
     public String getNombre() {

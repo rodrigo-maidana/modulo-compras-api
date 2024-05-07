@@ -1,13 +1,15 @@
-package modulocompras.api.PedidoCompra.PedidoCompra;
+package modulocompras.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import modulocompras.api.PedidoCompra.PedidoDetalle.DTO.PedidoDetalleDTO;
-import modulocompras.api.PedidoCompra.PedidoDetalle.PedidoDetalle;
-import modulocompras.api.PedidoCompra.PedidoDetalle.PedidoDetalleRepository;
+import modulocompras.api.entities.PedidoCompra;
+import modulocompras.api.entities.PedidoDetalle;
+import modulocompras.api.entities.dto.PedidoDetalleDTO;
+import modulocompras.api.repositories.PedidoCompraRepository;
+import modulocompras.api.repositories.PedidoDetalleRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -80,7 +82,8 @@ public class PedidoCompraController {
      *         idPedidoCompra dado.
      */
     @GetMapping("/detalles/{id}")
-    public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(@PathVariable("id") Integer idPedidoCompra) {
+    public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
+            @PathVariable("id") Integer idPedidoCompra) {
         List<PedidoDetalle> detalles = pedidoDetalleRepository.findByPedidoCompraId(idPedidoCompra);
         if (detalles.isEmpty()) {
             return ResponseEntity.notFound().build(); // Retorna 404 si no se encuentran detalles

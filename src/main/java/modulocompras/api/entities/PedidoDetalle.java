@@ -1,7 +1,4 @@
-package modulocompras.api.PedidoCompra.PedidoDetalle;
-
-import modulocompras.api.PedidoCompra.PedidoCompra.PedidoCompra;
-import modulocompras.api.Producto.Producto;
+package modulocompras.api.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

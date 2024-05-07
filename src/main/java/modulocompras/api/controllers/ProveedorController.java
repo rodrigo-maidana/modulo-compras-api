@@ -1,9 +1,12 @@
-package modulocompras.api.Proveedor;
+package modulocompras.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import modulocompras.api.entities.Proveedor;
+import modulocompras.api.repositories.ProveedorRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +43,8 @@ public class ProveedorController {
 
     // Update an existing proveedor
     @PutMapping("/{id}")
-    public ResponseEntity<Proveedor> updateProveedor(@PathVariable Integer id, @RequestBody Proveedor proveedorDetails) {
+    public ResponseEntity<Proveedor> updateProveedor(@PathVariable Integer id,
+            @RequestBody Proveedor proveedorDetails) {
         return proveedorRepository.findById(id)
                 .map(proveedor -> {
                     proveedor.setNombre(proveedorDetails.getNombre());

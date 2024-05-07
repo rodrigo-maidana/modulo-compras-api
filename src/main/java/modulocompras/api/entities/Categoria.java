@@ -1,4 +1,4 @@
-package modulocompras.api.Deposito;
+package modulocompras.api.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,22 +8,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "DEPOSITOS")
-public class Deposito {
+@Table(name = "CATEGORIAS")
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_DEPOSITO")
+    @Column(name = "ID_CATEGORIA")
     private Integer id;
 
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
-
-    @Column(name = "STR_DIRECCION")
-    private String direccion;
-
-    @Column(name = "STR_CONTACTO")
-    private String contacto;
 
     @Column(name = "BOOL_ELIMINADO", nullable = false)
     private Boolean eliminado;
@@ -33,8 +27,8 @@ public class Deposito {
         return id;
     }
 
-    public void setId(Integer idDeposito) {
-        this.id = idDeposito;
+    public void setId(Integer idCategoria) {
+        this.id = idCategoria;
     }
 
     public String getNombre() {
@@ -45,22 +39,6 @@ public class Deposito {
         this.nombre = nombre;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getContacto() {
-        return contacto;
-    }
-
-    public void setContacto(String contacto) {
-        this.contacto = contacto;
-    }
-
     public Boolean getEliminado() {
         return eliminado;
     }
@@ -69,6 +47,5 @@ public class Deposito {
         this.eliminado = eliminado;
     }
 
-    // Métodos como constructor, hashCode, equals, y toString pueden ser añadidos
-    // según necesidad
+    // Constructor, hashCode, equals, y toString pueden ser añadidos según necesidad
 }

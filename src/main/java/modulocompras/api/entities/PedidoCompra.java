@@ -1,4 +1,4 @@
-package modulocompras.api.PedidoCompra.PedidoCompra;
+package modulocompras.api.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

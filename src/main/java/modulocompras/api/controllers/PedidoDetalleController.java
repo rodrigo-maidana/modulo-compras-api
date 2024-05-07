@@ -1,9 +1,12 @@
-package modulocompras.api.PedidoCompra.PedidoDetalle;
+package modulocompras.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import modulocompras.api.entities.PedidoDetalle;
+import modulocompras.api.repositories.PedidoDetalleRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +43,8 @@ public class PedidoDetalleController {
 
     // Actualizar un pedido detalle existente
     @PutMapping("/{id}")
-    public ResponseEntity<PedidoDetalle> updatePedidoDetalle(@PathVariable Integer id, @RequestBody PedidoDetalle pedidoDetalleDetails) {
+    public ResponseEntity<PedidoDetalle> updatePedidoDetalle(@PathVariable Integer id,
+            @RequestBody PedidoDetalle pedidoDetalleDetails) {
         return pedidoDetalleRepository.findById(id)
                 .map(pedidoDetalle -> {
                     pedidoDetalle.setCantidad(pedidoDetalleDetails.getCantidad());
