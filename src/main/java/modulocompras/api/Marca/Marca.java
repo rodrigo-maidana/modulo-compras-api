@@ -19,6 +19,9 @@ public class Marca {
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    private Boolean eliminado;
+
     // Getters y setters
     public Integer getId() {
         return id;
@@ -34,6 +37,14 @@ public class Marca {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
     // Constructor, hashCode, equals, y toString pueden ser añadidos según necesidad

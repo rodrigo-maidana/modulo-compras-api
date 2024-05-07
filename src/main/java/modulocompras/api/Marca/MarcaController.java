@@ -55,7 +55,8 @@ public class MarcaController {
     public ResponseEntity<Void> deleteMarca(@PathVariable Integer id) {
         return marcaRepository.findById(id)
                 .map(marca -> {
-                    marcaRepository.delete(marca);
+                    marca.setEliminado(true);
+                    marcaRepository.save(marca);
                     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
