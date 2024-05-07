@@ -25,6 +25,9 @@ public class Deposito {
     @Column(name = "STR_CONTACTO")
     private String contacto;
 
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    private Boolean eliminado;
+
     // Getters y setters
     public Integer getId() {
         return id;
@@ -58,5 +61,14 @@ public class Deposito {
         this.contacto = contacto;
     }
 
-    // Métodos como constructor, hashCode, equals, y toString pueden ser añadidos según necesidad
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
+    // Métodos como constructor, hashCode, equals, y toString pueden ser añadidos
+    // según necesidad
 }
