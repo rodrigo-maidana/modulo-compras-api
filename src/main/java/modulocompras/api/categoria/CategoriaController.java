@@ -1,13 +1,9 @@
-package modulocompras.api.controllers;
+package modulocompras.api.categoria;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import modulocompras.api.entities.Categoria;
-import modulocompras.api.entities.dto.CategoriaDTO;
-import modulocompras.api.repositories.CategoriaRepository;
 
 import java.util.List;
 import java.util.Optional;

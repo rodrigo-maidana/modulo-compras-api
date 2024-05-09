@@ -1,6 +1,4 @@
-package modulocompras.api.entities.dto;
-
-import modulocompras.api.entities.Categoria;
+package modulocompras.api.categoria;
 
 public class CategoriaDTO {
 

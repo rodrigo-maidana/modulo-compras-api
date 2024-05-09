@@ -1,7 +1,6 @@
-package modulocompras.api.entities.dto;
+package modulocompras.api.pedido_compra.detalle;
 
-import modulocompras.api.entities.PedidoDetalle;
-import modulocompras.api.entities.Producto;
+import modulocompras.api.producto.Producto;
 
 public class PedidoDetalleDTO {
     private Integer id;

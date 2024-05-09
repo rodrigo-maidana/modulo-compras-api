@@ -1,12 +1,9 @@
-package modulocompras.api.controllers;
+package modulocompras.api.pedido_compra.detalle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import modulocompras.api.entities.PedidoDetalle;
-import modulocompras.api.repositories.PedidoDetalleRepository;
 
 import java.util.List;
 import java.util.Optional;

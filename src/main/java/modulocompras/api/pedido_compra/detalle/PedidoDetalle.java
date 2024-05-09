@@ -1,4 +1,4 @@
-package modulocompras.api.entities;
+package modulocompras.api.pedido_compra.detalle;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import modulocompras.api.producto.Producto;
+import modulocompras.api.pedido_compra.PedidoCompra;
 
 @Entity
 @Table(name = "PEDIDOS_DETALLES")
