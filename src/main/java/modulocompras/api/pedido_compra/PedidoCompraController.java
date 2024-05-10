@@ -24,16 +24,18 @@ public class PedidoCompraController {
 
     // Obtener todos los pedidos de compra
     @GetMapping
-    public List<PedidoCompra> getAllPedidosCompra() {
-        return pedidoCompraRepository.findAll();
+    public List<PedidoCompraDTO> getAllPedidosCompra() {
+        return pedidoCompraRepository.findByEliminadoFalse().stream()
+                .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra))
+                .collect(Collectors.toList());
     }
 
     // Obtener un pedido de compra por ID
     @GetMapping("/{id}")
-    public ResponseEntity<PedidoCompra> getPedidoCompraById(@PathVariable Integer id) {
+    public ResponseEntity<PedidoCompraDTO> getPedidoCompraById(@PathVariable Integer id) {
         Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findById(id);
         if (pedidoCompra.isPresent() && !pedidoCompra.get().getEliminado()) {
-            return ResponseEntity.ok(pedidoCompra.get());
+            return ResponseEntity.ok(new PedidoCompraDTO(pedidoCompra.get()));
         } else {
             return ResponseEntity.notFound().build();
         }

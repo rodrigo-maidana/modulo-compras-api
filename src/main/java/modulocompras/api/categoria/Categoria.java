@@ -22,6 +22,17 @@ public class Categoria {
     @Column(name = "BOOL_ELIMINADO")
     private Boolean eliminado;
 
+    // Constructor por defecto
+    public Categoria() {
+    }
+
+    // Constructor desde DTO
+    public Categoria(CategoriaDTO categoriaDTO) {
+        this.id = categoriaDTO.getId();
+        this.nombre = categoriaDTO.getNombre();
+
+    }
+
     // Getters y setters
     public Integer getId() {
         return id;

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import modulocompras.api.producto.Producto;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,7 +41,7 @@ public class PedidoDetalleController {
     public ResponseEntity<PedidoDetalleDTO> createPedidoDetalle(@RequestBody PedidoDetalleDTO pedidoDetalleDTO) {
         PedidoDetalle newPedidoDetalle = new PedidoDetalle();
         newPedidoDetalle.setCantidad(pedidoDetalleDTO.getCantidad());
-        newPedidoDetalle.setProducto(pedidoDetalleDTO.getProducto()); // Asume que se puede establecer directamente
+        newPedidoDetalle.setProducto(new Producto(pedidoDetalleDTO.getProducto()));
         PedidoDetalle savedPedidoDetalle = pedidoDetalleRepository.save(newPedidoDetalle);
         return ResponseEntity.ok(new PedidoDetalleDTO(savedPedidoDetalle));
     }
@@ -52,7 +54,7 @@ public class PedidoDetalleController {
         if (pedidoDetalle.isPresent() && !pedidoDetalle.get().getEliminado()) {
             PedidoDetalle existingPedidoDetalle = pedidoDetalle.get();
             existingPedidoDetalle.setCantidad(pedidoDetalleDTO.getCantidad());
-            existingPedidoDetalle.setProducto(pedidoDetalleDTO.getProducto());
+            existingPedidoDetalle.setProducto(new Producto(pedidoDetalleDTO.getProducto()));
             PedidoDetalle updatedPedidoDetalle = pedidoDetalleRepository.save(existingPedidoDetalle);
 
             return ResponseEntity.ok(new PedidoDetalleDTO(updatedPedidoDetalle));

@@ -22,6 +22,16 @@ public class Marca {
     @Column(name = "BOOL_ELIMINADO")
     private Boolean eliminado;
 
+    // Constructor por defecto
+    public Marca() {
+    }
+
+    // Constructor desde DTO
+    public Marca(MarcaDTO marcaDTO) {
+        this.id = marcaDTO.getId();
+        this.nombre = marcaDTO.getNombre();
+    }
+
     // Getters y setters
     public Integer getId() {
         return id;

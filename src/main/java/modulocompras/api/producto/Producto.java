@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import modulocompras.api.categoria.Categoria;
 import modulocompras.api.marca.Marca;
 
@@ -30,6 +31,18 @@ public class Producto {
 
     @Column(name = "STR_DESCRIPCION", nullable = false)
     private String descripcion;
+
+    // Constructor por defecto
+    public Producto() {
+    }
+
+    // Constructor desde DTO
+    public Producto(ProductoDTO productoDTO) {
+        this.id = productoDTO.getId();
+        this.marca = new Marca(productoDTO.getMarca());
+        this.categoria = new Categoria(productoDTO.getCategoria());
+        this.descripcion = productoDTO.getDescripcion();
+    }
 
     // Getters y setters
     public Integer getId() {

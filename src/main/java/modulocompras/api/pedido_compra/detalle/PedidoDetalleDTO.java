@@ -1,15 +1,15 @@
 package modulocompras.api.pedido_compra.detalle;
 
-import modulocompras.api.producto.Producto;
+import modulocompras.api.producto.ProductoDTO;
 
 public class PedidoDetalleDTO {
     private Integer id;
-    private Producto producto;
+    private ProductoDTO producto;
     private Integer cantidad;
 
     public PedidoDetalleDTO(PedidoDetalle pedidoDetalle) {
         this.id = pedidoDetalle.getId();
-        this.producto = pedidoDetalle.getProducto(); // Aquí asumimos que quieres exponer detalles del producto
+        this.producto = new ProductoDTO(pedidoDetalle.getProducto());
         this.cantidad = pedidoDetalle.getCantidad();
     }
 
@@ -18,7 +18,7 @@ public class PedidoDetalleDTO {
         return id;
     }
 
-    public Producto getProducto() {
+    public ProductoDTO getProducto() {
         return producto;
     }
 
@@ -31,7 +31,7 @@ public class PedidoDetalleDTO {
         this.id = idPedidoDetalle;
     }
 
-    public void setProducto(Producto producto) {
+    public void setProducto(ProductoDTO producto) {
         this.producto = producto;
     }
 
