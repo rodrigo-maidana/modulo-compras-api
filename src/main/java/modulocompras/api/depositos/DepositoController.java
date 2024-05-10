@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/depositos")
+@RequestMapping("/depositos") // Endpoint para Deposito
 public class DepositoController {
 
     @Autowired
@@ -17,39 +18,48 @@ public class DepositoController {
 
     // Obtener todos los depositos
     @GetMapping
-    public List<Deposito> getAllDepositos() {
-        return depositoRepository.findAll();
+    public List<DepositoDTO> getAllDepositos() {
+        return depositoRepository.findByEliminadoFalse().stream()
+                .map(deposito -> new DepositoDTO(deposito))
+                .collect(Collectors.toList());
     }
 
     // Obtener un deposito por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Deposito> getDepositoById(@PathVariable Integer id) {
+    public ResponseEntity<DepositoDTO> getDepositoById(@PathVariable Integer id) {
         Optional<Deposito> deposito = depositoRepository.findById(id);
-        if (deposito.isPresent()) {
-            return ResponseEntity.ok(deposito.get());
+        if (deposito.isPresent() && !deposito.get().getEliminado()) {
+            return ResponseEntity.ok(new DepositoDTO(deposito.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    // Crear una nueva categoría
+    // Crear un nuevo deposito
     @PostMapping
-    public Deposito createDeposito(@RequestBody Deposito deposito) {
-        return depositoRepository.save(deposito);
+    public ResponseEntity<DepositoDTO> createDeposito(@RequestBody DepositoDTO depositoDTO) {
+        Deposito newDeposito = new Deposito();
+        newDeposito.setNombre(depositoDTO.getNombre());
+        newDeposito.setDireccion(depositoDTO.getDireccion());
+        newDeposito.setContacto(depositoDTO.getContacto());
+        Deposito savedDeposito = depositoRepository.save(newDeposito);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DepositoDTO(savedDeposito));
     }
 
     // Actualizar un deposito existente
     @PutMapping("/{id}")
-    public ResponseEntity<Deposito> updateDeposito(@PathVariable Integer id, @RequestBody Deposito depositoDetails) {
-        return depositoRepository.findById(id)
-                .map(deposito -> {
-                    deposito.setNombre(depositoDetails.getNombre());
-                    deposito.setDireccion(depositoDetails.getDireccion());
-                    deposito.setContacto(depositoDetails.getContacto());
-                    Deposito updatedDeposito = depositoRepository.save(deposito);
-                    return ResponseEntity.ok(updatedDeposito);
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<DepositoDTO> updateDeposito(@PathVariable Integer id, @RequestBody DepositoDTO depositoDTO) {
+        Optional<Deposito> deposito = depositoRepository.findById(id);
+        if (deposito.isPresent() && !deposito.get().getEliminado()) {
+            Deposito existingDeposito = deposito.get();
+            existingDeposito.setNombre(depositoDTO.getNombre());
+            existingDeposito.setDireccion(depositoDTO.getDireccion());
+            existingDeposito.setContacto(depositoDTO.getContacto());
+            Deposito updatedDeposito = depositoRepository.save(existingDeposito);
+            return ResponseEntity.ok(new DepositoDTO(updatedDeposito));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Eliminar un deposito
@@ -63,5 +73,4 @@ public class DepositoController {
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
 }

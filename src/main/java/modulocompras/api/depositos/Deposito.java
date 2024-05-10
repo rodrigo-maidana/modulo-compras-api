@@ -19,13 +19,13 @@ public class Deposito {
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
-    @Column(name = "STR_DIRECCION")
+    @Column(name = "STR_DIRECCION", nullable = false)
     private String direccion;
 
-    @Column(name = "STR_CONTACTO")
+    @Column(name = "STR_CONTACTO", nullable = false)
     private String contacto;
 
-    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    @Column(name = "BOOL_ELIMINADO")
     private Boolean eliminado;
 
     // Getters y setters
