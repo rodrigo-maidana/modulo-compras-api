@@ -1,7 +1,6 @@
 package modulocompras.api.proveedor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,35 +44,37 @@ public class ProveedorController {
         newProveedor.setCorreo(proveedorDTO.getCorreo());
         newProveedor.setDireccion(proveedorDTO.getDireccion());
         Proveedor savedProveedor = proveedorRepository.save(newProveedor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ProveedorDTO(savedProveedor));
+        return ResponseEntity.ok(new ProveedorDTO(savedProveedor));
     }
 
     // Actualizar un proveedor existente
     @PutMapping("/{id}")
     public ResponseEntity<ProveedorDTO> updateProveedor(@PathVariable Integer id,
             @RequestBody ProveedorDTO proveedorDTO) {
-        return proveedorRepository.findById(id)
-                .map(proveedor -> {
-                    proveedor.setNombre(proveedorDTO.getNombre());
-                    proveedor.setRuc(proveedorDTO.getRuc());
-                    proveedor.setContacto(proveedorDTO.getContacto());
-                    proveedor.setCorreo(proveedorDTO.getCorreo());
-                    proveedor.setDireccion(proveedorDTO.getDireccion());
-                    Proveedor updatedProveedor = proveedorRepository.save(proveedor);
-                    return ResponseEntity.ok(new ProveedorDTO(updatedProveedor));
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Optional<Proveedor> proveedor = proveedorRepository.findById(id);
+        if (proveedor.isPresent() && !proveedor.get().getEliminado()) {
+            Proveedor existingProveedor = proveedor.get();
+            existingProveedor.setNombre(proveedorDTO.getNombre());
+            existingProveedor.setRuc(proveedorDTO.getRuc());
+            existingProveedor.setContacto(proveedorDTO.getContacto());
+            existingProveedor.setCorreo(proveedorDTO.getCorreo());
+            existingProveedor.setDireccion(proveedorDTO.getDireccion());
+            Proveedor updatedProveedor = proveedorRepository.save(existingProveedor);
+            return ResponseEntity.ok(new ProveedorDTO(updatedProveedor));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Borrar un proveedor (borrado suave)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProveedor(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteProveedor(@PathVariable Integer id) {
         return proveedorRepository.findById(id)
                 .map(proveedor -> {
                     proveedor.setEliminado(true);
                     proveedorRepository.save(proveedor);
-                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+                    return ResponseEntity.noContent().build();
                 })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse(ResponseEntity.notFound().build());
     }
 }

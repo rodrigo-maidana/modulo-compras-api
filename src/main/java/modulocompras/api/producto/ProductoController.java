@@ -1,7 +1,6 @@
 package modulocompras.api.producto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,12 +53,12 @@ public class ProductoController {
 
     // Eliminar un producto
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProducto(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteProducto(@PathVariable Integer id) {
         return productoRepository.findById(id)
                 .map(producto -> {
                     productoRepository.delete(producto);
-                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+                    return ResponseEntity.noContent().build();
                 })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse(ResponseEntity.notFound().build());
     }
 }

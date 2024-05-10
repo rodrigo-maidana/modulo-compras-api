@@ -1,7 +1,6 @@
 package modulocompras.api.marca;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +40,7 @@ public class MarcaController {
         Marca newMarca = new Marca();
         newMarca.setNombre(marcaDTO.getNombre());
         Marca savedMarca = marcaRepository.save(newMarca);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new MarcaDTO(savedMarca));
+        return ResponseEntity.ok(new MarcaDTO(savedMarca));
     }
 
     // Actualizar una marca existente
@@ -60,13 +59,13 @@ public class MarcaController {
 
     // Eliminar una marca (borrado suave)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMarca(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteMarca(@PathVariable Integer id) {
         return marcaRepository.findById(id)
                 .map(marca -> {
                     marca.setEliminado(true);
                     marcaRepository.save(marca);
-                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+                    return ResponseEntity.noContent().build();
                 })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse(ResponseEntity.notFound().build());
     }
 }
