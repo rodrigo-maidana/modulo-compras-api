@@ -26,8 +26,18 @@ public class PedidoCompra {
     @Column(name = "BOOL_ELIMINADO")
     private Boolean eliminado;
 
-    // Getters y setters
+    // Constructor por defecto
+    public PedidoCompra() {
+    }
 
+    // Constructor desde DTO
+    public PedidoCompra(PedidoCompraDTO pedidoCompraDTO) {
+        this.id = pedidoCompraDTO.getId();
+        this.fechaEmision = pedidoCompraDTO.getFechaEmision();
+        this.estado = pedidoCompraDTO.getEstado();
+    }
+
+    // Getters y setters
     public Integer getId() {
         return id;
     }

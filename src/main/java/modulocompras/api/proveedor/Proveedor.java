@@ -34,6 +34,20 @@ public class Proveedor {
     @Column(name = "BOOL_ELIMINADO")
     private Boolean eliminado;
 
+    // Constructor por defecto
+    public Proveedor() {
+    }
+
+    // Constructor desde DTO
+    public Proveedor(ProveedorDTO proveedorDTO) {
+        this.id = proveedorDTO.getId();
+        this.nombre = proveedorDTO.getNombre();
+        this.ruc = proveedorDTO.getRuc();
+        this.contacto = proveedorDTO.getContacto();
+        this.correo = proveedorDTO.getCorreo();
+        this.direccion = proveedorDTO.getDireccion();
+    }
+
     // Getters y setters
     public Integer getId() {
         return id;
