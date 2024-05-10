@@ -1,7 +1,6 @@
 package modulocompras.api.depositos;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +42,7 @@ public class DepositoController {
         newDeposito.setDireccion(depositoDTO.getDireccion());
         newDeposito.setContacto(depositoDTO.getContacto());
         Deposito savedDeposito = depositoRepository.save(newDeposito);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new DepositoDTO(savedDeposito));
+        return ResponseEntity.ok(new DepositoDTO(savedDeposito));
     }
 
     // Actualizar un deposito existente
@@ -64,13 +63,13 @@ public class DepositoController {
 
     // Eliminar un deposito
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDeposito(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteDeposito(@PathVariable Integer id) {
         return depositoRepository.findById(id)
                 .map(deposito -> {
                     deposito.setEliminado(true);
                     depositoRepository.save(deposito);
-                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+                    return ResponseEntity.noContent().build();
                 })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse(ResponseEntity.notFound().build());
     }
 }

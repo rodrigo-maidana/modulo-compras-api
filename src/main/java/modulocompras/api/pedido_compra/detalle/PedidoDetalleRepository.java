@@ -9,6 +9,14 @@ import org.springframework.stereotype.Repository;
 public interface PedidoDetalleRepository extends JpaRepository<PedidoDetalle, Integer> {
 
     /**
+     * Busca y devuelve una lista de los detalles de pedido que no han sido
+     * eliminados.
+     *
+     * @return una lista de los detalles de pedido que no han sido eliminados.
+     */
+    List<PedidoDetalle> findByEliminadoFalse();
+
+    /**
      * Encuentra todos los detalles de un pedido de compra basados en el ID del
      * pedido.
      *
@@ -17,5 +25,14 @@ public interface PedidoDetalleRepository extends JpaRepository<PedidoDetalle, In
      *         encuentran detalles.
      */
     List<PedidoDetalle> findByPedidoCompraId(Integer idPedidoCompra);
+
+    /**
+     * Busca los detalles de un pedido de compra por su ID de pedido de compra,
+     * excluyendo los eliminados.
+     *
+     * @param idPedidoCompra El ID del pedido de compra.
+     * @return Una lista de los detalles del pedido de compra encontrados.
+     */
+    List<PedidoDetalle> findByPedidoCompraIdAndEliminadoFalse(Integer idPedidoCompra);
 
 }

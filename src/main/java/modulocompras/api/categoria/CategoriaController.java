@@ -1,7 +1,6 @@
 package modulocompras.api.categoria;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +40,7 @@ public class CategoriaController {
         Categoria newCategoria = new Categoria();
         newCategoria.setNombre(categoriaDTO.getNombre());
         Categoria savedCategoria = categoriaRepository.save(newCategoria);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CategoriaDTO(savedCategoria));
+        return ResponseEntity.ok(new CategoriaDTO(savedCategoria));
     }
 
     // Actualizar una categoría existente
@@ -59,17 +58,15 @@ public class CategoriaController {
         }
     }
 
-    // Eliminar una categoría (borrado suave)
+    // Eliminar un categoria
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategoria(@PathVariable Integer id) {
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
-        if (categoria.isPresent() && !categoria.get().getEliminado()) {
-            Categoria toDelete = categoria.get();
-            toDelete.setEliminado(true);
-            categoriaRepository.save(toDelete);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Object> deletecategoria(@PathVariable Integer id) {
+        return categoriaRepository.findById(id)
+                .map(categoria -> {
+                    categoria.setEliminado(true);
+                    categoriaRepository.save(categoria);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }

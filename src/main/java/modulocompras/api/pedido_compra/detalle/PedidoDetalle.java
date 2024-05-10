@@ -32,6 +32,9 @@ public class PedidoDetalle {
     @Column(name = "INT_CANTIDAD", nullable = false)
     private Integer cantidad;
 
+    @Column(name = "BOOL_ELIMINADO")
+    private Boolean eliminado;
+
     // Getters y setters
 
     public Integer getId() {
@@ -64,5 +67,13 @@ public class PedidoDetalle {
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 }
