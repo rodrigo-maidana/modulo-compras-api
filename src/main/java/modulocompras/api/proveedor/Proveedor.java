@@ -31,6 +31,9 @@ public class Proveedor {
     @Column(name = "STR_DIRECCION")
     private String direccion;
 
+    @Column(name = "BOOL_ELIMINADO")
+    private Boolean eliminado;
+
     // Getters y setters
     public Integer getId() {
         return id;
@@ -78,6 +81,14 @@ public class Proveedor {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
     // Constructor, hashCode, equals, y toString pueden ser añadidos según necesidad

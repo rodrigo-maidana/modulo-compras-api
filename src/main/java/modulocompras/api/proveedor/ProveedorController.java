@@ -7,60 +7,71 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/proveedores") // Endpoint for Proveedor
+@RequestMapping("/proveedores") // Endpoint para Proveedor
 public class ProveedorController {
 
     @Autowired
-    private ProveedorRepository proveedorRepository; // Rename to ProveedorRepository
+    private ProveedorRepository proveedorRepository;
 
-    // Get all proveedores
+    // Obtener todos los proveedores
     @GetMapping
-    public List<Proveedor> getAllProveedores() {
-        return proveedorRepository.findAll();
+    public List<ProveedorDTO> getAllProveedores() {
+        return proveedorRepository.findAll().stream()
+                .map(proveedor -> new ProveedorDTO(proveedor))
+                .collect(Collectors.toList());
     }
 
-    // Get a proveedor by ID
+    // Obtener un proveedor por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Proveedor> getProveedorById(@PathVariable Integer id) {
+    public ResponseEntity<ProveedorDTO> getProveedorById(@PathVariable Integer id) {
         Optional<Proveedor> proveedor = proveedorRepository.findById(id);
         if (proveedor.isPresent()) {
-            return ResponseEntity.ok(proveedor.get());
+            return ResponseEntity.ok(new ProveedorDTO(proveedor.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    // Create a new proveedor
+    // Crear un nuevo proveedor
     @PostMapping
-    public Proveedor createProveedor(@RequestBody Proveedor proveedor) {
-        return proveedorRepository.save(proveedor);
+    public ResponseEntity<ProveedorDTO> createProveedor(@RequestBody ProveedorDTO proveedorDTO) {
+        Proveedor newProveedor = new Proveedor();
+        newProveedor.setNombre(proveedorDTO.getNombre());
+        newProveedor.setRuc(proveedorDTO.getRuc());
+        newProveedor.setContacto(proveedorDTO.getContacto());
+        newProveedor.setCorreo(proveedorDTO.getCorreo());
+        newProveedor.setDireccion(proveedorDTO.getDireccion());
+        Proveedor savedProveedor = proveedorRepository.save(newProveedor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ProveedorDTO(savedProveedor));
     }
 
-    // Update an existing proveedor
+    // Actualizar un proveedor existente
     @PutMapping("/{id}")
-    public ResponseEntity<Proveedor> updateProveedor(@PathVariable Integer id,
-            @RequestBody Proveedor proveedorDetails) {
+    public ResponseEntity<ProveedorDTO> updateProveedor(@PathVariable Integer id,
+            @RequestBody ProveedorDTO proveedorDTO) {
         return proveedorRepository.findById(id)
                 .map(proveedor -> {
-                    proveedor.setNombre(proveedorDetails.getNombre());
-                    proveedor.setRuc(proveedorDetails.getRuc());
-                    proveedor.setContacto(proveedorDetails.getContacto());
-                    proveedor.setCorreo(proveedorDetails.getCorreo());
-                    proveedor.setDireccion(proveedorDetails.getDireccion());
+                    proveedor.setNombre(proveedorDTO.getNombre());
+                    proveedor.setRuc(proveedorDTO.getRuc());
+                    proveedor.setContacto(proveedorDTO.getContacto());
+                    proveedor.setCorreo(proveedorDTO.getCorreo());
+                    proveedor.setDireccion(proveedorDTO.getDireccion());
                     Proveedor updatedProveedor = proveedorRepository.save(proveedor);
-                    return ResponseEntity.ok(updatedProveedor);
+                    return ResponseEntity.ok(new ProveedorDTO(updatedProveedor));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Delete a proveedor
+    // Borrar un proveedor (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProveedor(@PathVariable Integer id) {
         return proveedorRepository.findById(id)
                 .map(proveedor -> {
-                    proveedorRepository.delete(proveedor);
+                    proveedor.setEliminado(true);
+                    proveedorRepository.save(proveedor);
                     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
