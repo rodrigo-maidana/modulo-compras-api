@@ -93,7 +93,8 @@ public class PedidoCompraController {
             return ResponseEntity.notFound().build(); // Retorna 404 si no se encuentran detalles
         }
         List<PedidoDetalleDTO> detallesDTO = detalles.stream()
-                .map(PedidoDetalleDTO::new) // Convierte cada PedidoDetalle a PedidoDetalleDTO
+                .map(pedidoDetalle -> new PedidoDetalleDTO(pedidoDetalle)) // Convierte cada PedidoDetalle a
+                                                                           // PedidoDetalleDTO
                 .collect(Collectors.toList());
         return ResponseEntity.ok(detallesDTO); // Retorna los detalles encontrados
     }
