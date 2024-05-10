@@ -19,7 +19,7 @@ public class Marca {
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
-    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    @Column(name = "BOOL_ELIMINADO")
     private Boolean eliminado;
 
     // Getters y setters

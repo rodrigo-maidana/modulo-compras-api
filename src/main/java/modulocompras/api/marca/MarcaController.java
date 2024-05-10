@@ -7,50 +7,58 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/marcas") // Endpoint for Marca
+@RequestMapping("/marcas") // Endpoint para Marca
 public class MarcaController {
 
     @Autowired
-    private MarcaRepository marcaRepository; // Rename to MarcaRepository
+    private MarcaRepository marcaRepository;
 
-    // Get all marcas
+    // Obtener todas las marcas
     @GetMapping
-    public List<Marca> getAllMarcas() {
-        return marcaRepository.findAll();
+    public List<MarcaDTO> getAllMarcas() {
+        return marcaRepository.findByEliminadoFalse().stream()
+                .map(marca -> new MarcaDTO(marca))
+                .collect(Collectors.toList());
     }
 
-    // Get a marca by ID
+    // Obtener una marca por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Marca> getMarcaById(@PathVariable Integer id) {
+    public ResponseEntity<MarcaDTO> getMarcaById(@PathVariable Integer id) {
         Optional<Marca> marca = marcaRepository.findById(id);
-        if (marca.isPresent()) {
-            return ResponseEntity.ok(marca.get());
+        if (marca.isPresent() && !marca.get().getEliminado()) {
+            return ResponseEntity.ok(new MarcaDTO(marca.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    // Create a new marca
+    // Crear una nueva marca
     @PostMapping
-    public Marca createMarca(@RequestBody Marca marca) {
-        return marcaRepository.save(marca);
+    public ResponseEntity<MarcaDTO> createMarca(@RequestBody MarcaDTO marcaDTO) {
+        Marca newMarca = new Marca();
+        newMarca.setNombre(marcaDTO.getNombre());
+        Marca savedMarca = marcaRepository.save(newMarca);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MarcaDTO(savedMarca));
     }
 
-    // Update an existing marca
+    // Actualizar una marca existente
     @PutMapping("/{id}")
-    public ResponseEntity<Marca> updateMarca(@PathVariable Integer id, @RequestBody Marca marcaDetails) {
-        return marcaRepository.findById(id)
-                .map(marca -> {
-                    marca.setNombre(marcaDetails.getNombre()); // Assuming 'nombre' field exists in Marca
-                    Marca updatedMarca = marcaRepository.save(marca);
-                    return ResponseEntity.ok(updatedMarca);
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<MarcaDTO> updateMarca(@PathVariable Integer id, @RequestBody MarcaDTO marcaDTO) {
+        Optional<Marca> marca = marcaRepository.findById(id);
+        if (marca.isPresent() && !marca.get().getEliminado()) {
+            Marca existingMarca = marca.get();
+            existingMarca.setNombre(marcaDTO.getNombre());
+            Marca updatedMarca = marcaRepository.save(existingMarca);
+            return ResponseEntity.ok(new MarcaDTO(updatedMarca));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    // Delete a marca
+    // Eliminar una marca (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMarca(@PathVariable Integer id) {
         return marcaRepository.findById(id)
