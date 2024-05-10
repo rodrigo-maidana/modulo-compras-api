@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/categorias") // Endpoint para Categoria
 public class CategoriaController {
 
     @Autowired
@@ -19,7 +19,7 @@ public class CategoriaController {
     // Obtener todas las categorías
     @GetMapping
     public List<CategoriaDTO> getAllCategorias() {
-        return categoriaRepository.findAll().stream()
+        return categoriaRepository.findByEliminadoFalse().stream()
                 .map(categoria -> new CategoriaDTO(categoria))
                 .collect(Collectors.toList());
     }
@@ -28,7 +28,7 @@ public class CategoriaController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaDTO> getCategoriaById(@PathVariable Integer id) {
         Optional<Categoria> categoria = categoriaRepository.findById(id);
-        if (categoria.isPresent()) {
+        if (categoria.isPresent() && !categoria.get().getEliminado()) {
             return ResponseEntity.ok(new CategoriaDTO(categoria.get()));
         } else {
             return ResponseEntity.notFound().build();
@@ -37,33 +37,39 @@ public class CategoriaController {
 
     // Crear una nueva categoría
     @PostMapping
-    public CategoriaDTO createCategoria(@RequestBody Categoria categoria) {
-        categoriaRepository.save(categoria);
-        return (new CategoriaDTO(categoria));
+    public ResponseEntity<CategoriaDTO> createCategoria(@RequestBody CategoriaDTO categoriaDTO) {
+        Categoria newCategoria = new Categoria();
+        newCategoria.setNombre(categoriaDTO.getNombre());
+        Categoria savedCategoria = categoriaRepository.save(newCategoria);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CategoriaDTO(savedCategoria));
     }
 
     // Actualizar una categoría existente
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaDTO> updateCategoria(@PathVariable Integer id,
-            @RequestBody Categoria categoriaDetails) {
-        return categoriaRepository.findById(id)
-                .map(categoria -> {
-                    categoria.setNombre(categoriaDetails.getNombre());
-                    Categoria updatedCategoria = categoriaRepository.save(categoria);
-                    return ResponseEntity.ok(new CategoriaDTO(updatedCategoria));
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+            @RequestBody CategoriaDTO categoriaDTO) {
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if (categoria.isPresent() && !categoria.get().getEliminado()) {
+            Categoria existingCategoria = categoria.get();
+            existingCategoria.setNombre(categoriaDTO.getNombre());
+            Categoria updatedCategoria = categoriaRepository.save(existingCategoria);
+            return ResponseEntity.ok(new CategoriaDTO(updatedCategoria));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Eliminar una categoría (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategoria(@PathVariable Integer id) {
-        return categoriaRepository.findById(id)
-                .map(categoria -> {
-                    categoria.setEliminado(true);
-                    categoriaRepository.save(categoria);
-                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-                })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        if (categoria.isPresent() && !categoria.get().getEliminado()) {
+            Categoria toDelete = categoria.get();
+            toDelete.setEliminado(true);
+            categoriaRepository.save(toDelete);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
