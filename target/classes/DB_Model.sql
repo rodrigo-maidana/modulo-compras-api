@@ -15,7 +15,7 @@ CREATE TABLE categorias
 (
    id_categoria   	INT AUTO_INCREMENT,
    str_nombre     	VARCHAR(60) NOT NULL,
-   bool_eliminado	BOOLEAN NOT NULL DEFAULT FALSE,
+   bool_eliminado	BOOLEAN NULL DEFAULT FALSE,
    PRIMARY KEY (id_categoria)
 );
 
@@ -30,7 +30,7 @@ CREATE TABLE marcas
 (
    id_marca       	INT AUTO_INCREMENT,
    str_nombre     	VARCHAR(200) NOT NULL,
-   bool_eliminado   BOOLEAN NOT NULL DEFAULT FALSE,
+   bool_eliminado   BOOLEAN NULL DEFAULT FALSE,
    PRIMARY KEY (id_marca)
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE depositos
    str_nombre     	VARCHAR(60) NOT NULL,
    str_direccion  	VARCHAR(200) NOT NULL,
    str_contacto   	VARCHAR(60) NOT NULL,
-   bool_eliminado   BOOLEAN NOT NULL DEFAULT FALSE,
+   bool_eliminado   BOOLEAN NULL DEFAULT FALSE,
    PRIMARY KEY (id_deposito)
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE productos
    fk_id_marca          INT,
    fk_id_categoria      INT,
    str_descripcion      VARCHAR(60),
-   bool_eliminado   	BOOLEAN NOT NULL DEFAULT FALSE,
+   bool_eliminado   	BOOLEAN NULL DEFAULT FALSE,
    PRIMARY KEY (id_producto),
    FOREIGN KEY (fk_id_marca) REFERENCES marcas(id_marca),
    FOREIGN KEY (fk_id_categoria) REFERENCES categorias(id_categoria)
@@ -84,7 +84,7 @@ CREATE TABLE proveedores
    str_contacto   	VARCHAR(60) NOT NULL,
    str_correo     	VARCHAR(60) NOT NULL,
    str_direccion  	VARCHAR(200) NOT NULL,
-   bool_eliminado 	BOOLEAN NOT NULL DEFAULT FALSE,
+   bool_eliminado 	BOOLEAN NULL DEFAULT FALSE,
    PRIMARY KEY (id_proveedor)
 );
 
@@ -99,7 +99,7 @@ CREATE TABLE pedidos_compra
    id_pedido_compra 	INT AUTO_INCREMENT,
    date_fecha_emision 	DATE,
    str_estado 			VARCHAR(60),
-   bool_eliminado   	BOOLEAN NOT NULL DEFAULT FALSE,
+   bool_eliminado   	BOOLEAN NULL DEFAULT FALSE,
    PRIMARY KEY (id_pedido_compra)
 );
 
@@ -115,7 +115,7 @@ CREATE TABLE pedidos_detalles
    fk_id_pedido_compra 	INT,
    fk_id_producto 		INT,
    int_cantidad 		INT,
-   bool_eliminado  		BOOLEAN NOT NULL DEFAULT FALSE,
+   bool_eliminado  		BOOLEAN NULL DEFAULT FALSE,
    PRIMARY KEY (id_pedido_detalle),
    FOREIGN KEY (fk_id_pedido_compra) REFERENCES pedidos_compra(id_pedido_compra),
    FOREIGN KEY (fk_id_producto) REFERENCES productos(id_producto)
@@ -124,7 +124,6 @@ CREATE TABLE pedidos_detalles
 INSERT INTO pedidos_detalles (fk_id_pedido_compra, fk_id_producto, int_cantidad) VALUES (1, 1, 10);
 INSERT INTO pedidos_detalles (fk_id_pedido_compra, fk_id_producto, int_cantidad) VALUES (1, 2, 5);
 INSERT INTO pedidos_detalles (fk_id_pedido_compra, fk_id_producto, int_cantidad) VALUES (2, 3, 20);
-
 
 /*PENDIENTE DE IMPLEMENTAR API*/
 
