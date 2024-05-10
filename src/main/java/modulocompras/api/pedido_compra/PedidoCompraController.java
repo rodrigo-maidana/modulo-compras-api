@@ -32,7 +32,7 @@ public class PedidoCompraController {
     @GetMapping("/{id}")
     public ResponseEntity<PedidoCompra> getPedidoCompraById(@PathVariable Integer id) {
         Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findById(id);
-        if (pedidoCompra.isPresent()) {
+        if (pedidoCompra.isPresent() && !pedidoCompra.get().getEliminado()) {
             return ResponseEntity.ok(pedidoCompra.get());
         } else {
             return ResponseEntity.notFound().build();
@@ -41,22 +41,28 @@ public class PedidoCompraController {
 
     // Crear un nuevo pedido de compra
     @PostMapping
-    public PedidoCompra createPedidoCompra(@RequestBody PedidoCompra pedidoCompra) {
-        return pedidoCompraRepository.save(pedidoCompra);
+    public ResponseEntity<PedidoCompraDTO> createPedidoCompra(@RequestBody PedidoCompraDTO pedidoCompra) {
+        PedidoCompra newPedidoCompra = new PedidoCompra();
+        newPedidoCompra.setFechaEmision(pedidoCompra.getFechaEmision());
+        newPedidoCompra.setEstado(pedidoCompra.getEstado());
+        PedidoCompra savedPedidoCompra = pedidoCompraRepository.save(newPedidoCompra);
+        return ResponseEntity.ok(new PedidoCompraDTO(savedPedidoCompra));
     }
 
     // Actualizar un pedido de compra existente
     @PutMapping("/{id}")
-    public ResponseEntity<PedidoCompra> updatePedidoCompra(@PathVariable Integer id,
-            @RequestBody PedidoCompra pedidoCompraDetails) {
-        return pedidoCompraRepository.findById(id)
-                .map(pedidoCompra -> {
-                    pedidoCompra.setFechaEmision(pedidoCompraDetails.getFechaEmision());
-                    pedidoCompra.setEstado(pedidoCompraDetails.getEstado());
-                    PedidoCompra updatedPedidoCompra = pedidoCompraRepository.save(pedidoCompra);
-                    return ResponseEntity.ok(updatedPedidoCompra);
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<PedidoCompraDTO> updatePedidoCompra(@PathVariable Integer id,
+            @RequestBody PedidoCompraDTO pedidoCompraDetails) {
+        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findById(id);
+        if (pedidoCompra.isPresent() && !pedidoCompra.get().getEliminado()) {
+            PedidoCompra existingPedidoCompra = pedidoCompra.get();
+            existingPedidoCompra.setFechaEmision(pedidoCompraDetails.getFechaEmision());
+            existingPedidoCompra.setEstado(pedidoCompraDetails.getEstado());
+            PedidoCompra updatedPedidoCompra = pedidoCompraRepository.save(existingPedidoCompra);
+            return ResponseEntity.ok(new PedidoCompraDTO(updatedPedidoCompra));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Eliminar un pedido de compra
@@ -64,7 +70,8 @@ public class PedidoCompraController {
     public ResponseEntity<Object> deletePedidoCompra(@PathVariable Integer id) {
         return pedidoCompraRepository.findById(id)
                 .map(pedidoCompra -> {
-                    pedidoCompraRepository.delete(pedidoCompra);
+                    pedidoCompra.setEliminado(true);
+                    pedidoCompraRepository.save(pedidoCompra);
                     return ResponseEntity.noContent().build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -81,7 +88,7 @@ public class PedidoCompraController {
     @GetMapping("/detalles/{id}")
     public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
             @PathVariable("id") Integer idPedidoCompra) {
-        List<PedidoDetalle> detalles = pedidoDetalleRepository.findByPedidoCompraId(idPedidoCompra);
+        List<PedidoDetalle> detalles = pedidoDetalleRepository.findByPedidoCompraIdAndEliminadoFalse(idPedidoCompra);
         if (detalles.isEmpty()) {
             return ResponseEntity.notFound().build(); // Retorna 404 si no se encuentran detalles
         }

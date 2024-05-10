@@ -23,6 +23,9 @@ public class PedidoCompra {
     @Column(name = "STR_ESTADO", nullable = false)
     private String estado;
 
+    @Column(name = "BOOL_ELIMINADO")
+    private Boolean eliminado;
+
     // Getters y setters
 
     public Integer getId() {
@@ -47,6 +50,14 @@ public class PedidoCompra {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
 }
