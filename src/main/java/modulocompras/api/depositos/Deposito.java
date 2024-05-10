@@ -28,6 +28,18 @@ public class Deposito {
     @Column(name = "BOOL_ELIMINADO")
     private Boolean eliminado;
 
+    // Constructor por defecto
+    public Deposito() {
+    }
+
+    // Constructor desde DTO
+    public Deposito(DepositoDTO depositoDTO) {
+        this.id = depositoDTO.getId();
+        this.nombre = depositoDTO.getNombre();
+        this.direccion = depositoDTO.getDireccion();
+        this.contacto = depositoDTO.getContacto();
+    }
+
     // Getters y setters
     public Integer getId() {
         return id;
