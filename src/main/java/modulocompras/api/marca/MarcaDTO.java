@@ -5,6 +5,11 @@ public class MarcaDTO {
     private Integer id;
     private String nombre;
 
+    // Constructor por defecto
+    public MarcaDTO() {
+    }
+
+    // Constructor desde entidad
     public MarcaDTO(Marca marca) {
         this.id = marca.getId();
         this.nombre = marca.getNombre();

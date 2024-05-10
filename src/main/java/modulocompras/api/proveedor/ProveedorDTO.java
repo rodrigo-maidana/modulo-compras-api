@@ -9,6 +9,11 @@ public class ProveedorDTO {
     private String correo;
     private String direccion;
 
+    // Constructor por defecto
+    public ProveedorDTO() {
+    }
+
+    // Constructor desde entidad
     public ProveedorDTO(Proveedor proveedor) {
         this.id = proveedor.getId();
         this.nombre = proveedor.getNombre();

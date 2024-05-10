@@ -7,6 +7,11 @@ public class PedidoDetalleDTO {
     private ProductoDTO producto;
     private Integer cantidad;
 
+    // Constructor por defecto
+    public PedidoDetalleDTO() {
+    }
+
+    // Constructor desde entidad
     public PedidoDetalleDTO(PedidoDetalle pedidoDetalle) {
         this.id = pedidoDetalle.getId();
         this.producto = new ProductoDTO(pedidoDetalle.getProducto());

@@ -7,6 +7,11 @@ public class DepositoDTO {
     private String direccion;
     private String contacto;
 
+    // Constructor por defecto
+    public DepositoDTO() {
+    }
+
+    // Constructor desde entidad
     public DepositoDTO(Deposito deposito) {
         this.id = deposito.getId();
         this.nombre = deposito.getNombre();
