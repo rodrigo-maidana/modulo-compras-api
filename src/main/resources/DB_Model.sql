@@ -19,9 +19,13 @@ CREATE TABLE categorias
    PRIMARY KEY (id_categoria)
 );
 
+/* Inserts para categorías */
 INSERT INTO categorias (str_nombre) VALUES ('Herramientas');
 INSERT INTO categorias (str_nombre) VALUES ('Pinturas');
 INSERT INTO categorias (str_nombre) VALUES ('Electricidad');
+INSERT INTO categorias (str_nombre) VALUES ('Carpintería');
+INSERT INTO categorias (str_nombre) VALUES ('Jardinería');
+
 
 /*==============================================================*/
 /* Table: marcas                                                */
@@ -34,9 +38,16 @@ CREATE TABLE marcas
    PRIMARY KEY (id_marca)
 );
 
+/* Inserts para marcas */
 INSERT INTO marcas (str_nombre) VALUES ('Black & Decker');
 INSERT INTO marcas (str_nombre) VALUES ('Bosch');
+INSERT INTO marcas (str_nombre) VALUES ('DeWalt');
 INSERT INTO marcas (str_nombre) VALUES ('Stanley');
+INSERT INTO marcas (str_nombre) VALUES ('Makita');
+INSERT INTO marcas (str_nombre) VALUES ('Milwaukee');
+INSERT INTO marcas (str_nombre) VALUES ('Hitachi');
+INSERT INTO marcas (str_nombre) VALUES ('Festool');
+
 
 /*==============================================================*/
 /* Table: depositos                                             */
@@ -69,9 +80,28 @@ CREATE TABLE productos
    FOREIGN KEY (fk_id_categoria) REFERENCES categorias(id_categoria)
 );
 
-INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (1, 1, 'Taladro');
-INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (2, 1, 'Sierra circular');
-INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (3, 2, 'Pintura al agua');
+/* Inserts para productos */
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (1, 1, 'Taladro percutor 20V');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (2, 2, 'Sierra circular 1500W');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (3, 3, 'Juego de destornilladores 6 piezas');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (4, 4, 'Broca para madera 8mm');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (5, 5, 'Manguera de jardín 15m');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (6, 1, 'Lijadora orbital 200W');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (7, 2, 'Martillo antirebote');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (8, 3, 'Tijeras de podar ergonómicas');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (1, 4, 'Pintura latex blanco 20L');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (2, 5, 'Guantes de trabajo de cuero');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (3, 1, 'Gafas de seguridad anti-impacto');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (4, 2, 'Caja de herramientas 200 piezas');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (5, 3, 'Regadera de metal 5L');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (6, 4, 'Rodillo para pintura profesional');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (7, 5, 'Espátula de acero inoxidable 15cm');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (8, 1, 'Enchufe eléctrico universal');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (1, 2, 'Sierra de mano para madera');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (2, 3, 'Fertilizante universal 5kg');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (3, 4, 'Sellador acrílico 300ml');
+INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion) VALUES (4, 5, 'Bisagra de puerta de acero 10cm');
+
 
 /*==============================================================*/
 /* Table: proveedores                                           */
