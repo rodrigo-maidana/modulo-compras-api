@@ -19,11 +19,12 @@ public class Categoria {
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
 
-    @Column(name = "BOOL_ELIMINADO")
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
     private Boolean eliminado;
 
     // Constructor por defecto
     public Categoria() {
+        this.eliminado = false;
     }
 
     // Constructor desde DTO
