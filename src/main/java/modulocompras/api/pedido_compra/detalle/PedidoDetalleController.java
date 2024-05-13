@@ -28,8 +28,8 @@ public class PedidoDetalleController {
     // Obtener un pedido detalle por ID
     @GetMapping("/{id}")
     public ResponseEntity<PedidoDetalleDTO> getPedidoDetalleById(@PathVariable Integer id) {
-        Optional<PedidoDetalle> pedidoDetalle = pedidoDetalleRepository.findById(id);
-        if (pedidoDetalle.isPresent() && !pedidoDetalle.get().getEliminado()) {
+        Optional<PedidoDetalle> pedidoDetalle = pedidoDetalleRepository.findByIdAndEliminadoFalse(id);
+        if (pedidoDetalle.isPresent()) {
             return ResponseEntity.ok(new PedidoDetalleDTO(pedidoDetalle.get()));
         } else {
             return ResponseEntity.notFound().build();
@@ -39,9 +39,7 @@ public class PedidoDetalleController {
     // Crear un nuevo pedido detalle
     @PostMapping
     public ResponseEntity<PedidoDetalleDTO> createPedidoDetalle(@RequestBody PedidoDetalleDTO pedidoDetalleDTO) {
-        PedidoDetalle newPedidoDetalle = new PedidoDetalle();
-        newPedidoDetalle.setCantidad(pedidoDetalleDTO.getCantidad());
-        newPedidoDetalle.setProducto(new Producto(pedidoDetalleDTO.getProducto()));
+        PedidoDetalle newPedidoDetalle = new PedidoDetalle(pedidoDetalleDTO);
         PedidoDetalle savedPedidoDetalle = pedidoDetalleRepository.save(newPedidoDetalle);
         return ResponseEntity.ok(new PedidoDetalleDTO(savedPedidoDetalle));
     }
@@ -50,8 +48,8 @@ public class PedidoDetalleController {
     @PutMapping("/{id}")
     public ResponseEntity<PedidoDetalleDTO> updatePedidoDetalle(@PathVariable Integer id,
             @RequestBody PedidoDetalleDTO pedidoDetalleDTO) {
-        Optional<PedidoDetalle> pedidoDetalle = pedidoDetalleRepository.findById(id);
-        if (pedidoDetalle.isPresent() && !pedidoDetalle.get().getEliminado()) {
+        Optional<PedidoDetalle> pedidoDetalle = pedidoDetalleRepository.findByIdAndEliminadoFalse(id);
+        if (pedidoDetalle.isPresent()) {
             PedidoDetalle existingPedidoDetalle = pedidoDetalle.get();
             existingPedidoDetalle.setCantidad(pedidoDetalleDTO.getCantidad());
             existingPedidoDetalle.setProducto(new Producto(pedidoDetalleDTO.getProducto()));
@@ -66,7 +64,7 @@ public class PedidoDetalleController {
     // Eliminar un pedidoDetalle (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePedidoDetalle(@PathVariable Integer id) {
-        return pedidoDetalleRepository.findById(id)
+        return pedidoDetalleRepository.findByIdAndEliminadoFalse(id)
                 .map(pedidoDetalle -> {
                     pedidoDetalle.setEliminado(true);
                     pedidoDetalleRepository.save(pedidoDetalle);

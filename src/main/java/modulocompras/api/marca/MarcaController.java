@@ -26,8 +26,8 @@ public class MarcaController {
     // Obtener una marca por ID
     @GetMapping("/{id}")
     public ResponseEntity<MarcaDTO> getMarcaById(@PathVariable Integer id) {
-        Optional<Marca> marca = marcaRepository.findById(id);
-        if (marca.isPresent() && !marca.get().getEliminado()) {
+        Optional<Marca> marca = marcaRepository.findByIdAndEliminadoFalse(id);
+        if (marca.isPresent()) {
             return ResponseEntity.ok(new MarcaDTO(marca.get()));
         } else {
             return ResponseEntity.notFound().build();
@@ -37,8 +37,7 @@ public class MarcaController {
     // Crear una nueva marca
     @PostMapping
     public ResponseEntity<MarcaDTO> createMarca(@RequestBody MarcaDTO marcaDTO) {
-        Marca newMarca = new Marca();
-        newMarca.setNombre(marcaDTO.getNombre());
+        Marca newMarca = new Marca(marcaDTO);
         Marca savedMarca = marcaRepository.save(newMarca);
         return ResponseEntity.ok(new MarcaDTO(savedMarca));
     }
@@ -46,8 +45,8 @@ public class MarcaController {
     // Actualizar una marca existente
     @PutMapping("/{id}")
     public ResponseEntity<MarcaDTO> updateMarca(@PathVariable Integer id, @RequestBody MarcaDTO marcaDTO) {
-        Optional<Marca> marca = marcaRepository.findById(id);
-        if (marca.isPresent() && !marca.get().getEliminado()) {
+        Optional<Marca> marca = marcaRepository.findByIdAndEliminadoFalse(id);
+        if (marca.isPresent()) {
             Marca existingMarca = marca.get();
             existingMarca.setNombre(marcaDTO.getNombre());
             Marca updatedMarca = marcaRepository.save(existingMarca);
@@ -60,7 +59,7 @@ public class MarcaController {
     // Eliminar una marca (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteMarca(@PathVariable Integer id) {
-        return marcaRepository.findById(id)
+        return marcaRepository.findByIdAndEliminadoFalse(id)
                 .map(marca -> {
                     marca.setEliminado(true);
                     marcaRepository.save(marca);

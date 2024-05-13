@@ -1,6 +1,7 @@
 package modulocompras.api.pedido_compra.detalle;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,15 @@ public interface PedidoDetalleRepository extends JpaRepository<PedidoDetalle, In
      * @return una lista de los detalles de pedido que no han sido eliminados.
      */
     List<PedidoDetalle> findByEliminadoFalse();
+
+    /**
+     * Busca un PedidoCompra por su ID y verifica que no haya sido eliminado.
+     *
+     * @param id El ID del PedidoCompra a buscar.
+     * @return Un Optional que contiene el PedidoCompra si se encuentra y no ha sido
+     *         eliminado, o vacío si no se encuentra o ha sido eliminado.
+     */
+    Optional<PedidoDetalle> findByIdAndEliminadoFalse(Integer id);
 
     /**
      * Encuentra todos los detalles de un pedido de compra basados en el ID del

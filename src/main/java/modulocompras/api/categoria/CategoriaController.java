@@ -26,8 +26,8 @@ public class CategoriaController {
     // Obtener una categoría por ID
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaDTO> getCategoriaById(@PathVariable Integer id) {
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
-        if (categoria.isPresent() && !categoria.get().getEliminado()) {
+        Optional<Categoria> categoria = categoriaRepository.findByIdAndEliminadoFalse(id);
+        if (categoria.isPresent()) {
             return ResponseEntity.ok(new CategoriaDTO(categoria.get()));
         } else {
             return ResponseEntity.notFound().build();
@@ -37,8 +37,7 @@ public class CategoriaController {
     // Crear una nueva categoría
     @PostMapping
     public ResponseEntity<CategoriaDTO> createCategoria(@RequestBody CategoriaDTO categoriaDTO) {
-        Categoria newCategoria = new Categoria();
-        newCategoria.setNombre(categoriaDTO.getNombre());
+        Categoria newCategoria = new Categoria(categoriaDTO);
         Categoria savedCategoria = categoriaRepository.save(newCategoria);
         return ResponseEntity.ok(new CategoriaDTO(savedCategoria));
     }
@@ -47,8 +46,8 @@ public class CategoriaController {
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaDTO> updateCategoria(@PathVariable Integer id,
             @RequestBody CategoriaDTO categoriaDTO) {
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
-        if (categoria.isPresent() && !categoria.get().getEliminado()) {
+        Optional<Categoria> categoria = categoriaRepository.findByIdAndEliminadoFalse(id);
+        if (categoria.isPresent()) {
             Categoria existingCategoria = categoria.get();
             existingCategoria.setNombre(categoriaDTO.getNombre());
             Categoria updatedCategoria = categoriaRepository.save(existingCategoria);
@@ -61,7 +60,7 @@ public class CategoriaController {
     // Eliminar un categoria
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletecategoria(@PathVariable Integer id) {
-        return categoriaRepository.findById(id)
+        return categoriaRepository.findByIdAndEliminadoFalse(id)
                 .map(categoria -> {
                     categoria.setEliminado(true);
                     categoriaRepository.save(categoria);
