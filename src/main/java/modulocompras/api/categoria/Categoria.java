@@ -20,7 +20,7 @@ public class Categoria {
     private String nombre;
 
     @Column(name = "BOOL_ELIMINADO", nullable = false)
-    private Boolean eliminado;
+    private Boolean eliminado = false;
 
     // Constructor por defecto
     public Categoria() {
