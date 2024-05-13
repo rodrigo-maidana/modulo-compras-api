@@ -32,11 +32,12 @@ public class PedidoDetalle {
     @Column(name = "INT_CANTIDAD", nullable = false)
     private Integer cantidad;
 
-    @Column(name = "BOOL_ELIMINADO")
-    private Boolean eliminado;
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    private Boolean eliminado = false;
 
     // Constructor por defecto
     public PedidoDetalle() {
+        this.eliminado = false;
     }
 
     // Constructor desde DTO

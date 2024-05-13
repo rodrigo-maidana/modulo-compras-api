@@ -20,10 +20,11 @@ public class Marca {
     private String nombre;
 
     @Column(name = "BOOL_ELIMINADO")
-    private Boolean eliminado;
+    private Boolean eliminado = false;
 
     // Constructor por defecto
     public Marca() {
+        this.eliminado = false;
     }
 
     // Constructor desde DTO

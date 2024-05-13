@@ -31,11 +31,12 @@ public class Proveedor {
     @Column(name = "STR_DIRECCION")
     private String direccion;
 
-    @Column(name = "BOOL_ELIMINADO")
-    private Boolean eliminado;
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    private Boolean eliminado = false;
 
     // Constructor por defecto
     public Proveedor() {
+        this.eliminado = false;
     }
 
     // Constructor desde DTO

@@ -5,6 +5,11 @@ public class CategoriaDTO {
     private Integer id;
     private String nombre;
 
+    // Constructor por defecto
+    public CategoriaDTO() {
+    }
+
+    // Constructor desde entidad
     public CategoriaDTO(Categoria categoria) {
         this.id = categoria.getId();
         this.nombre = categoria.getNombre();

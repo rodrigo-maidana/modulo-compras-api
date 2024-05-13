@@ -23,11 +23,12 @@ public class PedidoCompra {
     @Column(name = "STR_ESTADO", nullable = false)
     private String estado;
 
-    @Column(name = "BOOL_ELIMINADO")
-    private Boolean eliminado;
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    private Boolean eliminado = false;
 
     // Constructor por defecto
     public PedidoCompra() {
+        this.eliminado = false;
     }
 
     // Constructor desde DTO

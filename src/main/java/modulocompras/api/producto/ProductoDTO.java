@@ -10,6 +10,11 @@ public class ProductoDTO {
     private MarcaDTO marca;
     private CategoriaDTO categoria;
 
+    // Constructor por defecto
+    public ProductoDTO() {
+    }
+
+    // Constructor desde entidad
     public ProductoDTO(Producto producto) {
         this.id = producto.getId();
         this.descripcion = producto.getDescripcion();

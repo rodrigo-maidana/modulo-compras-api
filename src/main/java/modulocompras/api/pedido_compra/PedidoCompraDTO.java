@@ -8,6 +8,11 @@ public class PedidoCompraDTO {
     private Date fechaEmision;
     private String estado;
 
+    // Constructor por defecto
+    public PedidoCompraDTO() {
+    }
+
+    // Constructor desde entidad
     public PedidoCompraDTO(PedidoCompra pedidoCompra) {
         this.id = pedidoCompra.getId();
         this.fechaEmision = pedidoCompra.getFechaEmision();

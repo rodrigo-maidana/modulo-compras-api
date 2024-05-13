@@ -32,8 +32,12 @@ public class Producto {
     @Column(name = "STR_DESCRIPCION", nullable = false)
     private String descripcion;
 
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    private Boolean eliminado = false;
+
     // Constructor por defecto
     public Producto() {
+        this.eliminado = false;
     }
 
     // Constructor desde DTO
@@ -75,6 +79,14 @@ public class Producto {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
     // Constructor, hashCode, equals, y toString pueden ser añadidos según necesidad

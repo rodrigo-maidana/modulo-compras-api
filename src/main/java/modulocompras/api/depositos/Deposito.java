@@ -25,11 +25,12 @@ public class Deposito {
     @Column(name = "STR_CONTACTO", nullable = false)
     private String contacto;
 
-    @Column(name = "BOOL_ELIMINADO")
-    private Boolean eliminado;
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    private Boolean eliminado = false;
 
     // Constructor por defecto
     public Deposito() {
+        this.eliminado = false;
     }
 
     // Constructor desde DTO
