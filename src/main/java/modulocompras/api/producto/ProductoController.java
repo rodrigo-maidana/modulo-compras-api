@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import modulocompras.api.categoria.Categoria;
+import modulocompras.api.marca.Marca;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/productos") // Endpoint para Productos
@@ -16,16 +20,18 @@ public class ProductoController {
 
     // Obtener todos los productos
     @GetMapping
-    public List<Producto> getAllProductos() {
-        return productoRepository.findAll();
+    public List<ProductoDTO> getAllProductos() {
+        return productoRepository.findByEliminadoFalse().stream()
+                .map(producto -> new ProductoDTO(producto))
+                .collect(Collectors.toList());
     }
 
     // Obtener un producto por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> getProductoById(@PathVariable Integer id) {
-        Optional<Producto> producto = productoRepository.findById(id);
+    public ResponseEntity<ProductoDTO> getProductoById(@PathVariable Integer id) {
+        Optional<Producto> producto = productoRepository.findByIdAndEliminadoFalse(id);
         if (producto.isPresent()) {
-            return ResponseEntity.ok(producto.get());
+            return ResponseEntity.ok(new ProductoDTO(producto.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -33,28 +39,32 @@ public class ProductoController {
 
     // Crear un nuevo producto
     @PostMapping
-    public Producto createProducto(@RequestBody Producto producto) {
-        return productoRepository.save(producto);
+    public ResponseEntity<ProductoDTO> createProducto(@RequestBody ProductoDTO productoDTO) {
+        Producto newProducto = new Producto(productoDTO);
+        Producto savedProducto = productoRepository.save(newProducto);
+        return ResponseEntity.ok(new ProductoDTO(savedProducto));
     }
 
     // Actualizar un producto existente
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> updateProducto(@PathVariable Integer id, @RequestBody Producto productoDetails) {
-        return productoRepository.findById(id)
-                .map(producto -> {
-                    producto.setMarca(productoDetails.getMarca());
-                    producto.setCategoria(productoDetails.getCategoria());
-                    producto.setDescripcion(productoDetails.getDescripcion());
-                    Producto updatedProducto = productoRepository.save(producto);
-                    return ResponseEntity.ok(updatedProducto);
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ProductoDTO> updateProducto(@PathVariable Integer id, @RequestBody ProductoDTO productoDTO) {
+        Optional<Producto> producto = productoRepository.findByIdAndEliminadoFalse(id);
+        if(producto.isPresent()) {
+            Producto existingProducto = producto.get();
+            existingProducto.setDescripcion(productoDTO.getDescripcion());
+            existingProducto.setCategoria(new Categoria(productoDTO.getCategoria()));
+            existingProducto.setMarca(new Marca(productoDTO.getMarca()));
+            Producto updatedProducto = productoRepository.save(existingProducto);
+            return ResponseEntity.ok(new ProductoDTO(updatedProducto));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Eliminar un producto
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteProducto(@PathVariable Integer id) {
-        return productoRepository.findById(id)
+        return productoRepository.findByIdAndEliminadoFalse(id)
                 .map(producto -> {
                     productoRepository.delete(producto);
                     return ResponseEntity.noContent().build();
