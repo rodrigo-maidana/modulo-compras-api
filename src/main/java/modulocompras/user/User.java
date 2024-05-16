@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,19 +35,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(name = "STR_USERNAME", nullable = false)
+    @Column(nullable = false)
     String username;
-
-    @Column(name = "STR_PASSWORD", nullable = false)
     String password;
-
-    @Column(name = "STR_FIRST_NAME", nullable = false)
     String firstName;
-
-    @Column(name = "STR_LAST_NAME", nullable = false)
     String lastName;
 
-    @Column(name = "STR_ROLE", nullable = false)
+    @Enumerated(EnumType.STRING)
     Role role;
 
     @Override
