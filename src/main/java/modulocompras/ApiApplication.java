@@ -20,7 +20,7 @@ public class ApiApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("*")
+						.allowedOrigins("181.121.74.202") // add ip 181.121.74.202
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
 						.allowCredentials(true);
