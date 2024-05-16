@@ -30,7 +30,6 @@ public class AuthService {
                 return AuthResponse.builder()
                                 .token(token)
                                 .build();
-
         }
 
         public AuthResponse register(RegisterRequest request) {
@@ -43,13 +42,13 @@ public class AuthService {
                                 .build();
 
                 userRepository.save(user);
-
                 System.out.println("User registered: " + user);
 
+                String token = jwtService.getToken(user);
+                System.out.println("Generated Token: " + token);
+
                 return AuthResponse.builder()
-                                .token(jwtService.getToken(user))
+                                .token(token)
                                 .build();
-
         }
-
 }
