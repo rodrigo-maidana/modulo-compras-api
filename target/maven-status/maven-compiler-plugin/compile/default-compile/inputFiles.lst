@@ -1,12 +1,26 @@
+<<<<<<< HEAD
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/ApiApplication.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/PedidoCompra.java
+=======
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/auth/RegisterRequest.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/PedidoCompra.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/auth/AuthResponse.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/config/SecurityConfig.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/user/UserRepository.java
+>>>>>>> dev
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/proveedor/ProveedorDTO.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/marca/MarcaRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/PedidoCompraRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/proveedor/ProveedorController.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/categoria/CategoriaController.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/detalle/PedidoDetalleController.java
+<<<<<<< HEAD
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/producto/ProductoRepository.java
+=======
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/auth/LoginRequest.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/producto/ProductoRepository.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/config/ApplicationConfig.java
+>>>>>>> dev
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/depositos/DepositoRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/detalle/PedidoDetalle.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/producto/ProductoDTO.java
@@ -16,7 +30,13 @@
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/categoria/CategoriaRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/detalle/PedidoDetalleDTO.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/PedidoCompraDTO.java
+<<<<<<< HEAD
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/categoria/CategoriaDTO.java
+=======
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/ApiApplication.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/categoria/CategoriaDTO.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/jwt/JwtAuthenticationFilter.java
+>>>>>>> dev
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/depositos/Deposito.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/proveedor/Proveedor.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/PedidoCompraController.java
@@ -25,5 +45,16 @@
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/producto/Producto.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/marca/MarcaController.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/depositos/DepositoDTO.java
+<<<<<<< HEAD
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/detalle/PedidoDetalleRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/marca/MarcaDTO.java
+=======
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/jwt/JwtService.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/user/User.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/config/OpenAPIConfig.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/detalle/PedidoDetalleRepository.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/auth/AuthService.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/marca/MarcaDTO.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/auth/AuthController.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/user/Role.java
+>>>>>>> dev
