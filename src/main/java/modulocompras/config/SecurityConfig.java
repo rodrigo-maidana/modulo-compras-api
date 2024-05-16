@@ -26,13 +26,15 @@ public class SecurityConfig {
                 return http
                                 .csrf(csrf -> csrf
                                                 .disable())
-                                .authorizeHttpRequests(authorizeRequest -> authorizeRequest
+                                .authorizeHttpRequests(authRequest -> authRequest
                                                 .requestMatchers("/auth/**").permitAll()
                                                 .anyRequest().authenticated())
-                                .sessionManagement(sessionManagement -> sessionManagement
+                                .sessionManagement(sessionManager -> sessionManager
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authenticationProvider(authProvider)
                                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                                 .build();
+
         }
+
 }
