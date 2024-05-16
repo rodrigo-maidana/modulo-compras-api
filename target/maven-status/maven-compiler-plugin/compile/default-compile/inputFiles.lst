@@ -1,4 +1,3 @@
-/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/ApiApplication.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/auth/RegisterRequest.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/PedidoCompra.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/auth/AuthResponse.java
@@ -22,6 +21,7 @@
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/categoria/CategoriaRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/detalle/PedidoDetalleDTO.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/PedidoCompraDTO.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/ApiApplication.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/categoria/CategoriaDTO.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/jwt/JwtAuthenticationFilter.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/depositos/Deposito.java
@@ -34,6 +34,7 @@
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/depositos/DepositoDTO.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/jwt/JwtService.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/user/User.java
+/home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/config/OpenAPIConfig.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/pedido_compra/detalle/PedidoDetalleRepository.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/auth/AuthService.java
 /home/rodrigo/Desktop/Repositories/modulo-compras-api/src/main/java/modulocompras/api/marca/MarcaDTO.java
