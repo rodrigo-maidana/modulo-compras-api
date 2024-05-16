@@ -31,7 +31,6 @@ public class Categoria {
     public Categoria(CategoriaDTO categoriaDTO) {
         this.id = categoriaDTO.getId();
         this.nombre = categoriaDTO.getNombre();
-
     }
 
     // Getters y setters
