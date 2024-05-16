@@ -1,10 +1,20 @@
+<<<<<<< HEAD
+modulocompras/api/ApiApplication$1.class
+modulocompras/api/proveedor/ProveedorController.class
+modulocompras/api/marca/MarcaController.class
+modulocompras/api/pedido_compra/PedidoCompra.class
+modulocompras/api/pedido_compra/PedidoCompraDTO.class
+=======
 modulocompras/api/marca/MarcaController.class
 modulocompras/auth/AuthController.class
 modulocompras/auth/AuthService.class
+>>>>>>> dev
 modulocompras/api/proveedor/ProveedorDTO.class
 modulocompras/api/pedido_compra/detalle/PedidoDetalleDTO.class
 modulocompras/api/pedido_compra/detalle/PedidoDetalleRepository.class
 modulocompras/api/pedido_compra/detalle/PedidoDetalle.class
+<<<<<<< HEAD
+=======
 modulocompras/api/producto/ProductoRepository.class
 modulocompras/ApiApplication.class
 modulocompras/api/proveedor/ProveedorRepository.class
@@ -26,11 +36,30 @@ modulocompras/auth/AuthResponse.class
 modulocompras/user/UserRepository.class
 modulocompras/jwt/JwtService.class
 modulocompras/auth/RegisterRequest.class
+>>>>>>> dev
 modulocompras/api/pedido_compra/detalle/PedidoDetalleController.class
 modulocompras/api/marca/Marca.class
 modulocompras/api/producto/ProductoController.class
 modulocompras/api/producto/Producto.class
 modulocompras/api/depositos/DepositoDTO.class
+<<<<<<< HEAD
+modulocompras/api/producto/ProductoRepository.class
+modulocompras/api/proveedor/ProveedorRepository.class
+modulocompras/api/producto/ProductoDTO.class
+modulocompras/api/marca/MarcaDTO.class
+modulocompras/api/categoria/CategoriaRepository.class
+modulocompras/api/marca/MarcaRepository.class
+modulocompras/api/categoria/CategoriaDTO.class
+modulocompras/api/pedido_compra/PedidoCompraRepository.class
+modulocompras/api/proveedor/Proveedor.class
+modulocompras/api/depositos/DepositoController.class
+modulocompras/api/pedido_compra/PedidoCompraController.class
+modulocompras/api/categoria/CategoriaController.class
+modulocompras/api/categoria/Categoria.class
+modulocompras/api/depositos/DepositoRepository.class
+modulocompras/api/depositos/Deposito.class
+modulocompras/api/ApiApplication.class
+=======
 modulocompras/auth/AuthResponse$AuthResponseBuilder.class
 modulocompras/api/marca/MarcaDTO.class
 modulocompras/user/User$UserBuilder.class
@@ -44,3 +73,4 @@ modulocompras/api/categoria/CategoriaController.class
 modulocompras/api/categoria/Categoria.class
 modulocompras/auth/RegisterRequest$RegisterRequestBuilder.class
 modulocompras/api/depositos/Deposito.class
+>>>>>>> dev
