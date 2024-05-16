@@ -6,12 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import modulocompras.jwt.JwtService;
 import modulocompras.user.Role;
 import modulocompras.user.User;
 import modulocompras.user.UserRepository;
-
-import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

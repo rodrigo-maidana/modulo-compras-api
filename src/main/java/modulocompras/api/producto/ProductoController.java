@@ -49,7 +49,7 @@ public class ProductoController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductoDTO> updateProducto(@PathVariable Integer id, @RequestBody ProductoDTO productoDTO) {
         Optional<Producto> producto = productoRepository.findByIdAndEliminadoFalse(id);
-        if(producto.isPresent()) {
+        if (producto.isPresent()) {
             Producto existingProducto = producto.get();
             existingProducto.setDescripcion(productoDTO.getDescripcion());
             existingProducto.setCategoria(new Categoria(productoDTO.getCategoria()));

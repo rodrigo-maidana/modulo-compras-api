@@ -8,9 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import modulocompras.api.producto.Producto;
 import modulocompras.api.pedido_compra.PedidoCompra;
+import modulocompras.api.producto.Producto;
 
 @Entity
 @Table(name = "PEDIDOS_DETALLES")

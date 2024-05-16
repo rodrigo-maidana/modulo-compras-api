@@ -20,7 +20,8 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * Obtiene un producto por su ID si no ha sido eliminado.
      *
      * @param id el ID del producto
-     * @return el producto si existe y no ha sido eliminado, de lo contrario, un Optional vacío
+     * @return el producto si existe y no ha sido eliminado, de lo contrario, un
+     *         Optional vacío
      */
     Optional<Producto> findByIdAndEliminadoFalse(Integer id);
 }
