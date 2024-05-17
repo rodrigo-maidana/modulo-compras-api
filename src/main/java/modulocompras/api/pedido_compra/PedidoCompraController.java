@@ -22,6 +22,9 @@ public class PedidoCompraController {
     @Autowired
     private PedidoDetalleRepository pedidoDetalleRepository; // Inyección del repositorio de PedidoDetalle
 
+    @Autowired
+    private PedidoCompraService pedidoCompraService; // Inyección del servicio de PedidoCompra
+
     // Obtener todos los pedidos de compra
     @GetMapping
     public List<PedidoCompraDTO> getAllPedidosCompra() {
@@ -44,9 +47,8 @@ public class PedidoCompraController {
     // Crear un nuevo pedido de compra
     @PostMapping
     public ResponseEntity<PedidoCompraDTO> createPedidoCompra(@RequestBody PedidoCompraDTO pedidoCompraDTO) {
-        PedidoCompra newPedidoCompra = new PedidoCompra(pedidoCompraDTO);
-        PedidoCompra savedPedidoCompra = pedidoCompraRepository.save(newPedidoCompra);
-        return ResponseEntity.ok(new PedidoCompraDTO(savedPedidoCompra));
+        PedidoCompra newPedidoCompra = pedidoCompraService.createPedidoCompra(pedidoCompraDTO);
+        return ResponseEntity.ok(new PedidoCompraDTO(newPedidoCompra));
     }
 
     // Actualizar un pedido de compra existente
@@ -58,6 +60,7 @@ public class PedidoCompraController {
             PedidoCompra existingPedidoCompra = pedidoCompra.get();
             existingPedidoCompra.setFechaEmision(pedidoCompraDetails.getFechaEmision());
             existingPedidoCompra.setEstado(pedidoCompraDetails.getEstado());
+            existingPedidoCompra.setNroPedido(pedidoCompraDetails.getNroPedido());
             PedidoCompra updatedPedidoCompra = pedidoCompraRepository.save(existingPedidoCompra);
             return ResponseEntity.ok(new PedidoCompraDTO(updatedPedidoCompra));
         } else {

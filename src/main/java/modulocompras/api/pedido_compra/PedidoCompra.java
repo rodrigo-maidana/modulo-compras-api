@@ -17,6 +17,9 @@ public class PedidoCompra {
     @Column(name = "ID_PEDIDO_COMPRA")
     private Integer id;
 
+    @Column(name = "STR_NRO_PEDIDO", nullable = false, unique = true)
+    private String nroPedido;
+
     @Column(name = "DATE_FECHA_EMISION", nullable = false)
     private Date fechaEmision;
 
@@ -36,35 +39,46 @@ public class PedidoCompra {
         this.id = pedidoCompraDTO.getId();
         this.fechaEmision = pedidoCompraDTO.getFechaEmision();
         this.estado = pedidoCompraDTO.getEstado();
+        this.nroPedido = pedidoCompraDTO.getNroPedido();
     }
 
-    // Getters y setters
+    // Getters
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer idPedidoCompra) {
-        this.id = idPedidoCompra;
     }
 
     public Date getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(Date fechaEmision) {
-        this.fechaEmision = fechaEmision;
-    }
-
     public String getEstado() {
         return estado;
+    }
+
+    public String getNroPedido() {
+        return nroPedido;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    // Setters
+
+    public void setId(Integer idPedidoCompra) {
+        this.id = idPedidoCompra;
+    }
+
+    public void setFechaEmision(Date fechaEmision) {
+        this.fechaEmision = fechaEmision;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public Boolean getEliminado() {
-        return eliminado;
+    public void setNroPedido(String nroPedido) {
+        this.nroPedido = nroPedido;
     }
 
     public void setEliminado(Boolean eliminado) {

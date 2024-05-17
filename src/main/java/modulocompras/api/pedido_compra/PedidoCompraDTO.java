@@ -7,6 +7,7 @@ public class PedidoCompraDTO {
     private Integer id;
     private Date fechaEmision;
     private String estado;
+    private String nroPedido;
 
     // Constructor por defecto
     public PedidoCompraDTO() {
@@ -17,6 +18,7 @@ public class PedidoCompraDTO {
         this.id = pedidoCompra.getId();
         this.fechaEmision = pedidoCompra.getFechaEmision();
         this.estado = pedidoCompra.getEstado();
+        this.nroPedido = pedidoCompra.getNroPedido();
     }
 
     // Getters
@@ -32,6 +34,10 @@ public class PedidoCompraDTO {
         return estado;
     }
 
+    public String getNroPedido() {
+        return nroPedido;
+    }
+
     // Setters
     public void setId(Integer idPedidoCompra) {
         this.id = idPedidoCompra;
@@ -43,6 +49,10 @@ public class PedidoCompraDTO {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public void setNroPedido(String nroPedido) {
+        this.nroPedido = nroPedido;
     }
 
 }
