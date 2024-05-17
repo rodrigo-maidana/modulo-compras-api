@@ -25,7 +25,7 @@ public class PedidoCompraController {
     // Obtener todos los pedidos de compra
     @GetMapping
     public List<PedidoCompraDTO> getAllPedidosCompra() {
-        return pedidoCompraRepository.findByEliminadoFalse().stream()
+        return pedidoCompraRepository.findByEliminadoFalseOrderByFechaEmisionDesc().stream()
                 .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra))
                 .collect(Collectors.toList());
     }
