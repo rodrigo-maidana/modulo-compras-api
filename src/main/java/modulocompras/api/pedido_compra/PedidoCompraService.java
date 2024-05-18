@@ -3,13 +3,22 @@ package modulocompras.api.pedido_compra;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import modulocompras.api.pedido_compra.detalle.PedidoDetalle;
+import modulocompras.api.pedido_compra.detalle.PedidoDetalleDTO;
+import modulocompras.api.pedido_compra.detalle.PedidoDetalleRepository;
 
 @Service
 public class PedidoCompraService {
 
     private PedidoCompraRepository pedidoCompraRepository;
+
+    private PedidoDetalleRepository pedidoDetalleRepository;
 
     public PedidoCompraService(PedidoCompraRepository pedidoCompraRepository) {
         this.pedidoCompraRepository = pedidoCompraRepository;
@@ -42,4 +51,69 @@ public class PedidoCompraService {
         return "PC-" + currentDate + "-" + secuenciaStr;
     }
 
+    // Obtener todos los pedidos de compra no eliminados ordenados por fecha de
+    // emisión descendente
+    public List<PedidoCompraDTO> getAllPedidosCompra() {
+        return pedidoCompraRepository.findByEliminadoFalseOrderByFechaEmisionDesc().stream()
+                .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra))
+                .collect(Collectors.toList());
+    }
+
+    // Obtener un pedido de compra por ID
+    public ResponseEntity<PedidoCompraDTO> getPedidoCompraById(Integer id) {
+        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findByIdAndEliminadoFalse(id);
+        if (pedidoCompra.isPresent()) {
+            return ResponseEntity.ok(new PedidoCompraDTO(pedidoCompra.get()));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Actualizar un pedido de compra por ID
+    public ResponseEntity<PedidoCompraDTO> updatePedidoCompra(Integer id, PedidoCompraDTO pedidoCompraDetails) {
+        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findByIdAndEliminadoFalse(id);
+        if (pedidoCompra.isPresent()) {
+            PedidoCompra existingPedidoCompra = pedidoCompra.get();
+            existingPedidoCompra.setEstado(pedidoCompraDetails.getEstado());
+            PedidoCompra updatedPedidoCompra = pedidoCompraRepository.save(existingPedidoCompra);
+            return ResponseEntity.ok(new PedidoCompraDTO(updatedPedidoCompra));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Eliminar un pedido de compra por ID
+    public ResponseEntity<Object> softDeletePedidoCompra(Integer id) {
+        return pedidoCompraRepository.findByIdAndEliminadoFalse(id).map(pedidoCompra -> {
+            pedidoCompra.setEliminado(true);
+            pedidoCompraRepository.save(pedidoCompra);
+            return ResponseEntity.noContent().build();
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Recupera todos los detalles de pedido con FK_idPedidoCompra igual a id.
+    public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(Integer id) {
+        List<PedidoDetalle> detalles = pedidoDetalleRepository.findByPedidoCompraIdAndEliminadoFalse(id);
+        if (detalles.isEmpty()) {
+            return ResponseEntity.notFound().build(); // Retorna 404 si no se encuentran detalles
+        }
+        List<PedidoDetalleDTO> detallesDTO = detalles.stream()
+                .map(pedidoDetalle -> new PedidoDetalleDTO(pedidoDetalle)) // Convierte cada PedidoDetalle a
+                                                                           // PedidoDetalleDTO
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(detallesDTO); // Retorna los detalles encontrados
+    }
+
+    // Preview de un pedido de compra (sin guardar)
+    public PedidoCompraDTO previewPedidoCompra() {
+        PedidoCompra newPedidoCompra = new PedidoCompra();
+        newPedidoCompra.setFechaEmision(new Date());
+
+        // Generar el número de pedido
+        String nroPedido = generateNroPedido();
+        newPedidoCompra.setNroPedido(nroPedido);
+
+        // Devolver un DTO sin guardar
+        return new PedidoCompraDTO(newPedidoCompra);
+    }
 }

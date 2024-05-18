@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import modulocompras.api.producto.Producto;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedidosdetalles") // Endpoint para Pedidos Detalles
+@Tag(name = "Detalles de Pedidos de Compra")
 public class PedidoDetalleController {
 
     @Autowired

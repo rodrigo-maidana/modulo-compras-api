@@ -8,6 +8,8 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
+import io.swagger.v3.oas.models.info.Info;
+
 @Configuration
 public class OpenAPIConfig {
 
@@ -19,7 +21,8 @@ public class OpenAPIConfig {
                                                                 new SecurityScheme().type(SecurityScheme.Type.HTTP)
                                                                                 .scheme("bearer")
                                                                                 .bearerFormat("JWT")))
-                                .addSecurityItem(new SecurityRequirement().addList("bearer-key"));
+                                .addSecurityItem(new SecurityRequirement().addList("bearer-key"))
+                                .info(new Info().title("API - Modulo de Compras"));
         }
 
 }

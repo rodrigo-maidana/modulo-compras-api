@@ -4,23 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import modulocompras.api.pedido_compra.detalle.PedidoDetalle;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import modulocompras.api.pedido_compra.detalle.PedidoDetalleDTO;
-import modulocompras.api.pedido_compra.detalle.PedidoDetalleRepository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedidoscompra") // Endpoint para Pedidos de Compra
+@Tag(name = "Pedidos de Compra")
 public class PedidoCompraController {
-
-    @Autowired
-    private PedidoCompraRepository pedidoCompraRepository; // Inyección del repositorio de PedidoCompra
-
-    @Autowired
-    private PedidoDetalleRepository pedidoDetalleRepository; // Inyección del repositorio de PedidoDetalle
 
     @Autowired
     private PedidoCompraService pedidoCompraService; // Inyección del servicio de PedidoCompra
@@ -28,20 +20,13 @@ public class PedidoCompraController {
     // Obtener todos los pedidos de compra
     @GetMapping
     public List<PedidoCompraDTO> getAllPedidosCompra() {
-        return pedidoCompraRepository.findByEliminadoFalseOrderByFechaEmisionDesc().stream()
-                .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra))
-                .collect(Collectors.toList());
+        return pedidoCompraService.getAllPedidosCompra();
     }
 
     // Obtener un pedido de compra por ID
     @GetMapping("/{id}")
     public ResponseEntity<PedidoCompraDTO> getPedidoCompraById(@PathVariable Integer id) {
-        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findByIdAndEliminadoFalse(id);
-        if (pedidoCompra.isPresent()) {
-            return ResponseEntity.ok(new PedidoCompraDTO(pedidoCompra.get()));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return pedidoCompraService.getPedidoCompraById(id);
     }
 
     // Crear un nuevo pedido de compra
@@ -55,29 +40,13 @@ public class PedidoCompraController {
     @PutMapping("/{id}")
     public ResponseEntity<PedidoCompraDTO> updatePedidoCompra(@PathVariable Integer id,
             @RequestBody PedidoCompraDTO pedidoCompraDetails) {
-        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findByIdAndEliminadoFalse(id);
-        if (pedidoCompra.isPresent()) {
-            PedidoCompra existingPedidoCompra = pedidoCompra.get();
-            existingPedidoCompra.setFechaEmision(pedidoCompraDetails.getFechaEmision());
-            existingPedidoCompra.setEstado(pedidoCompraDetails.getEstado());
-            existingPedidoCompra.setNroPedido(pedidoCompraDetails.getNroPedido());
-            PedidoCompra updatedPedidoCompra = pedidoCompraRepository.save(existingPedidoCompra);
-            return ResponseEntity.ok(new PedidoCompraDTO(updatedPedidoCompra));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return pedidoCompraService.updatePedidoCompra(id, pedidoCompraDetails);
     }
 
     // Eliminar un pedido de compra
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePedidoCompra(@PathVariable Integer id) {
-        return pedidoCompraRepository.findByIdAndEliminadoFalse(id)
-                .map(pedidoCompra -> {
-                    pedidoCompra.setEliminado(true);
-                    pedidoCompraRepository.save(pedidoCompra);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return pedidoCompraService.softDeletePedidoCompra(id);
     }
 
     /**
@@ -91,15 +60,12 @@ public class PedidoCompraController {
     @GetMapping("/detalles/{id}")
     public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
             @PathVariable("id") Integer idPedidoCompra) {
-        List<PedidoDetalle> detalles = pedidoDetalleRepository.findByPedidoCompraIdAndEliminadoFalse(idPedidoCompra);
-        if (detalles.isEmpty()) {
-            return ResponseEntity.notFound().build(); // Retorna 404 si no se encuentran detalles
-        }
-        List<PedidoDetalleDTO> detallesDTO = detalles.stream()
-                .map(pedidoDetalle -> new PedidoDetalleDTO(pedidoDetalle)) // Convierte cada PedidoDetalle a
-                                                                           // PedidoDetalleDTO
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(detallesDTO); // Retorna los detalles encontrados
+        return pedidoCompraService.findByDetallesByPedidoCompraId(idPedidoCompra);
     }
 
+    // Obtener PedidoDTO de el proximo pedido de compra a realizar
+    @GetMapping("/preview")
+    public PedidoCompraDTO previewPedidoCompra() {
+        return pedidoCompraService.previewPedidoCompra();
+    }
 }
