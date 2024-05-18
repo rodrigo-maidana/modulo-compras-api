@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedidosdetalles") // Endpoint para Pedidos Detalles
-@Tag(name = "Detalles de Pedidos de Compra")
+@Tag(name = "Pedidos Detalles")
 public class PedidoDetalleController {
 
     @Autowired
