@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/depositos") // Endpoint para Deposito
-@Tag(name = "Depositos")
+@Tag(name = "Depósitos")
 public class DepositoController {
 
     @Autowired
