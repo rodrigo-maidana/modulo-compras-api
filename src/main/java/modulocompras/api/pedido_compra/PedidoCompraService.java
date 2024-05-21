@@ -91,19 +91,6 @@ public class PedidoCompraService {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Recupera todos los detalles de pedido con FK_idPedidoCompra igual a id.
-    public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(Integer id) {
-        List<PedidoDetalle> detalles = pedidoDetalleRepository.findByPedidoCompraIdAndEliminadoFalse(id);
-        if (detalles.isEmpty()) {
-            return ResponseEntity.notFound().build(); // Retorna 404 si no se encuentran detalles
-        }
-        List<PedidoDetalleDTO> detallesDTO = detalles.stream()
-                .map(pedidoDetalle -> new PedidoDetalleDTO(pedidoDetalle)) // Convierte cada PedidoDetalle a
-                                                                           // PedidoDetalleDTO
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(detallesDTO); // Retorna los detalles encontrados
-    }
-
     // Preview de un pedido de compra (sin guardar)
     public PedidoCompraDTO previewPedidoCompra() {
         PedidoCompra newPedidoCompra = new PedidoCompra();

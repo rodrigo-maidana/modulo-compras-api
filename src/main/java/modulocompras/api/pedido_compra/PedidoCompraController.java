@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import modulocompras.api.pedido_compra.detalle.PedidoDetalleDTO;
+import modulocompras.api.pedido_compra.detalle.PedidoDetalleService;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class PedidoCompraController {
 
     @Autowired
     private PedidoCompraService pedidoCompraService; // Inyección del servicio de PedidoCompra
+
+    @Autowired
+    private PedidoDetalleService pedidoDetalleService; // Inyección del servicio de PedidoDetalle
 
     // Obtener todos los pedidos de compra
     @GetMapping
@@ -60,7 +64,7 @@ public class PedidoCompraController {
     @GetMapping("/detalles/{id}")
     public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
             @PathVariable("id") Integer idPedidoCompra) {
-        return pedidoCompraService.findByDetallesByPedidoCompraId(idPedidoCompra);
+        return pedidoDetalleService.findByDetallesByPedidoCompraId(idPedidoCompra);
     }
 
     // Obtener PedidoDTO de el proximo pedido de compra a realizar
