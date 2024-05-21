@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/proveedores") // Endpoint para Proveedor
+@RequestMapping("/api/v1/proveedores") // Endpoint para Proveedor
 @Tag(name = "Proveedores")
 public class ProveedorController {
 

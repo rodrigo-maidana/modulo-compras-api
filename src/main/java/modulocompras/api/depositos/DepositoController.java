@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/depositos") // Endpoint para Deposito
+@RequestMapping("api/v1/depositos") // Endpoint para Deposito
 @Tag(name = "Depósitos")
 public class DepositoController {
 

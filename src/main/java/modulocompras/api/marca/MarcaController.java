@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/marcas") // Endpoint para Marca
+@RequestMapping("api/v1/marcas") // Endpoint para Marca
 @Tag(name = "Marcas")
 public class MarcaController {
 

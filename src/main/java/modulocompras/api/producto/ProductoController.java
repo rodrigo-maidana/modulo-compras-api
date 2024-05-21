@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/productos") // Endpoint para Productos
+@RequestMapping("/api/v1/productos") // Endpoint para Productos
 @Tag(name = "Productos")
 public class ProductoController {
 

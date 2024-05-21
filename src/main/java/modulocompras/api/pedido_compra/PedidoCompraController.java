@@ -11,7 +11,7 @@ import modulocompras.api.pedido_compra.detalle.PedidoDetalleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pedidoscompra") // Endpoint para Pedidos de Compra
+@RequestMapping("api/v1/pedidos-compra") // Endpoint para Pedidos de Compra
 @Tag(name = "Pedidos de Compra")
 public class PedidoCompraController {
 

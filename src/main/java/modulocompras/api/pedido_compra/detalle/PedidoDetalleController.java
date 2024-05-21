@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pedidosdetalles") // Endpoint para Pedidos Detalles
+@RequestMapping("api/v1/pedidos-detalles") // Endpoint para Pedidos Detalles
 @Tag(name = "Pedidos Detalles")
 public class PedidoDetalleController {
 
