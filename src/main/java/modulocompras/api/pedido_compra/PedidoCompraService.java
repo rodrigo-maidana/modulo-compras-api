@@ -103,4 +103,8 @@ public class PedidoCompraService {
         // Devolver un DTO sin guardar
         return new PedidoCompraDTO(newPedidoCompra);
     }
+
+    public Optional<PedidoCompra> findByIdAndEliminadoFalse(Integer id) {
+        return pedidoCompraRepository.findByIdAndEliminadoFalse(id);
+    }
 }

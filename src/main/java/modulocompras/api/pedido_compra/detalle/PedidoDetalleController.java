@@ -19,6 +19,7 @@ public class PedidoDetalleController {
     @Autowired
     private PedidoDetalleRepository pedidoDetalleRepository;
 
+    @Autowired
     private PedidoDetalleService pedidoDetalleService;
 
     // Obtener todos los pedidos detalles
