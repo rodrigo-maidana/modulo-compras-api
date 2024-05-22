@@ -1,6 +1,5 @@
 package modulocompras.api.pedido_compra.detalle;
 
-import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/pedidosdetalles") // Endpoint para Pedidos Detalles
+@RequestMapping("api/v1/pedidosdetalles") // Endpoint para Pedidos Detalles
 @Tag(name = "Pedidos Detalles")
 public class PedidoDetalleController {
 
