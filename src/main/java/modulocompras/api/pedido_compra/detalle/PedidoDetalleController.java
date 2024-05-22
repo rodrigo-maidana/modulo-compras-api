@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/pedidosdetalles") // Endpoint para Pedidos Detalles
+@RequestMapping("api/v1/pedidos-detalles") // Endpoint para Pedidos Detalles
 @Tag(name = "Pedidos Detalles")
 public class PedidoDetalleController {
 
