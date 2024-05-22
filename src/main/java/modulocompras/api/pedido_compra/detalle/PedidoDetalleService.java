@@ -47,6 +47,7 @@ public class PedidoDetalleService {
         }
         newPedidoDetalle.setPedidoCompra(pedidoCompra.get());
         PedidoDetalle savedPedidoDetalle = pedidoDetalleRepository.save(newPedidoDetalle);
+
         return ResponseEntity.ok(new PedidoDetalleDTO(savedPedidoDetalle));
     }
 

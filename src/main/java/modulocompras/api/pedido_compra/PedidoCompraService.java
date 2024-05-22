@@ -9,16 +9,10 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import modulocompras.api.pedido_compra.detalle.PedidoDetalle;
-import modulocompras.api.pedido_compra.detalle.PedidoDetalleDTO;
-import modulocompras.api.pedido_compra.detalle.PedidoDetalleRepository;
-
 @Service
 public class PedidoCompraService {
 
     private PedidoCompraRepository pedidoCompraRepository;
-
-    private PedidoDetalleRepository pedidoDetalleRepository;
 
     public PedidoCompraService(PedidoCompraRepository pedidoCompraRepository) {
         this.pedidoCompraRepository = pedidoCompraRepository;
@@ -41,8 +35,11 @@ public class PedidoCompraService {
         SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
         String currentDate = sdf.format(new Date());
 
+        Date today = new Date(new java.util.Date().getTime());
+
         // Contar los pedidos de hoy
-        List<PedidoCompra> pedidosHoy = pedidoCompraRepository.findByFechaEmision(new Date());
+        List<PedidoCompra> pedidosHoy = pedidoCompraRepository.findByFechaEmision(today);
+
         int secuencia = pedidosHoy.size() + 1;
 
         // Formatear la secuencia a cuatro dígitos
