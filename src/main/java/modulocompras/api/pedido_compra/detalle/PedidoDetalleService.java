@@ -56,10 +56,12 @@ public class PedidoDetalleService {
 
         Producto producto = optionalProducto.get();
         PedidoCompra pedidoCompra = optionalPedidoCompra.get();
+        Integer cantidad = pedidoDetalleDTO.getCantidad();
 
-        PedidoDetalle newPedidoDetalle = new PedidoDetalle(pedidoDetalleDTO);
+        PedidoDetalle newPedidoDetalle = new PedidoDetalle();
         newPedidoDetalle.setProducto(producto);
         newPedidoDetalle.setPedidoCompra(pedidoCompra);
+        newPedidoDetalle.setCantidad(cantidad);
 
         PedidoDetalle savedPedidoDetalle = pedidoDetalleRepository.save(newPedidoDetalle);
 
