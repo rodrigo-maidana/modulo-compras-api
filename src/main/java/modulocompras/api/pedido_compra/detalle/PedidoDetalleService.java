@@ -7,12 +7,17 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import modulocompras.api.pedido_compra.PedidoCompra;
+import modulocompras.api.pedido_compra.PedidoCompraRepository;
+import modulocompras.api.pedido_compra.PedidoCompraService;
 import modulocompras.api.producto.Producto;
 
 @Service
 public class PedidoDetalleService {
 
     private PedidoDetalleRepository pedidoDetalleRepository;
+
+    private PedidoCompraRepository pedidoCompraRepository;
 
     public PedidoDetalleService(PedidoDetalleRepository pedidoDetalleRepository) {
         this.pedidoDetalleRepository = pedidoDetalleRepository;
@@ -33,8 +38,13 @@ public class PedidoDetalleService {
         }
     }
 
-    public ResponseEntity<PedidoDetalleDTO> createPedidoDetalle(PedidoDetalleDTO pedidoDetalleDTO) {
+    public ResponseEntity<PedidoDetalleDTO> createPedidoDetalle(Integer id, PedidoDetalleDTO pedidoDetalleDTO) {
         PedidoDetalle newPedidoDetalle = new PedidoDetalle(pedidoDetalleDTO);
+        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findByIdAndEliminadoFalse(id);
+        if (!pedidoCompra.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        newPedidoDetalle.setPedidoCompra(pedidoCompra.get());
         PedidoDetalle savedPedidoDetalle = pedidoDetalleRepository.save(newPedidoDetalle);
         return ResponseEntity.ok(new PedidoDetalleDTO(savedPedidoDetalle));
     }

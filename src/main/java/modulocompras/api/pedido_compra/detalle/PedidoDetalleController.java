@@ -1,50 +1,80 @@
 package modulocompras.api.pedido_compra.detalle;
 
+import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import modulocompras.api.producto.Producto;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/pedidos-detalles") // Endpoint para Pedidos Detalles
+@RequestMapping("/pedidosdetalles") // Endpoint para Pedidos Detalles
 @Tag(name = "Pedidos Detalles")
 public class PedidoDetalleController {
 
     @Autowired
-    private PedidoDetalleService pedidoDetalleService; // Inyección del servicio de PedidoDetalle
+    private PedidoDetalleRepository pedidoDetalleRepository;
+
+    private PedidoDetalleService pedidoDetalleService;
 
     // Obtener todos los pedidos detalles
     @GetMapping
     public List<PedidoDetalleDTO> getAllPedidosDetalles() {
-        return pedidoDetalleService.getAllPedidosDetalles();
+        return pedidoDetalleRepository.findByEliminadoFalse().stream()
+                .map(PedidoDetalleDTO::new)
+                .collect(Collectors.toList());
     }
 
     // Obtener un pedido detalle por ID
     @GetMapping("/{id}")
     public ResponseEntity<PedidoDetalleDTO> getPedidoDetalleById(@PathVariable Integer id) {
-        return pedidoDetalleService.getPedidoDetalleById(id);
+        Optional<PedidoDetalle> pedidoDetalle = pedidoDetalleRepository.findByIdAndEliminadoFalse(id);
+        if (pedidoDetalle.isPresent()) {
+            return ResponseEntity.ok(new PedidoDetalleDTO(pedidoDetalle.get()));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Crear un nuevo pedido detalle
-    @PostMapping
-    public ResponseEntity<PedidoDetalleDTO> createPedidoDetalle(@RequestBody PedidoDetalleDTO pedidoDetalleDTO) {
-        return pedidoDetalleService.createPedidoDetalle(pedidoDetalleDTO);
+    @PostMapping("/{id}")
+    public ResponseEntity<PedidoDetalleDTO> createPedidoDetalle(@PathVariable Integer id,
+            @RequestBody PedidoDetalleDTO pedidoDetalleDTO) {
+        return pedidoDetalleService.createPedidoDetalle(id, pedidoDetalleDTO);
     }
 
     // Actualizar un pedido detalle existente
     @PutMapping("/{id}")
     public ResponseEntity<PedidoDetalleDTO> updatePedidoDetalle(@PathVariable Integer id,
             @RequestBody PedidoDetalleDTO pedidoDetalleDTO) {
-        return pedidoDetalleService.updatePedidoDetalle(id, pedidoDetalleDTO);
+        Optional<PedidoDetalle> pedidoDetalle = pedidoDetalleRepository.findByIdAndEliminadoFalse(id);
+        if (pedidoDetalle.isPresent()) {
+            PedidoDetalle existingPedidoDetalle = pedidoDetalle.get();
+            existingPedidoDetalle.setCantidad(pedidoDetalleDTO.getCantidad());
+            existingPedidoDetalle.setProducto(new Producto(pedidoDetalleDTO.getProducto()));
+            PedidoDetalle updatedPedidoDetalle = pedidoDetalleRepository.save(existingPedidoDetalle);
+
+            return ResponseEntity.ok(new PedidoDetalleDTO(updatedPedidoDetalle));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Eliminar un pedidoDetalle (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePedidoDetalle(@PathVariable Integer id) {
-        return pedidoDetalleService.deletePedidoDetalle(id);
+        return pedidoDetalleRepository.findByIdAndEliminadoFalse(id)
+                .map(pedidoDetalle -> {
+                    pedidoDetalle.setEliminado(true);
+                    pedidoDetalleRepository.save(pedidoDetalle);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }
