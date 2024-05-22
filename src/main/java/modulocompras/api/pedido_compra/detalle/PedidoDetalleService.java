@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import modulocompras.api.pedido_compra.PedidoCompra;
 import modulocompras.api.pedido_compra.PedidoCompraService;
 import modulocompras.api.producto.Producto;
+import modulocompras.api.producto.ProductoService;
 
 @Service
 public class PedidoDetalleService {
@@ -19,6 +20,9 @@ public class PedidoDetalleService {
 
     @Autowired
     private PedidoCompraService pedidoCompraService;
+
+    @Autowired
+    private ProductoService productoService;
 
     public PedidoDetalleService(PedidoDetalleRepository pedidoDetalleRepository) {
         this.pedidoDetalleRepository = pedidoDetalleRepository;
@@ -40,12 +44,23 @@ public class PedidoDetalleService {
     }
 
     public ResponseEntity<PedidoDetalleDTO> createPedidoDetalle(Integer id, PedidoDetalleDTO pedidoDetalleDTO) {
-        PedidoDetalle newPedidoDetalle = new PedidoDetalle(pedidoDetalleDTO);
-        Optional<PedidoCompra> pedidoCompra = pedidoCompraService.findByIdAndEliminadoFalse(id);
-        if (!pedidoCompra.isPresent()) {
+        Optional<Producto> optionalProducto = productoService.getProductoByDTO(pedidoDetalleDTO.getProducto());
+        if (!optionalProducto.isPresent()) {
+            return ResponseEntity.badRequest().body(null); // O un mensaje de error adecuado
+        }
+
+        Optional<PedidoCompra> optionalPedidoCompra = pedidoCompraService.findByIdAndEliminadoFalse(id);
+        if (!optionalPedidoCompra.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        newPedidoDetalle.setPedidoCompra(pedidoCompra.get());
+
+        Producto producto = optionalProducto.get();
+        PedidoCompra pedidoCompra = optionalPedidoCompra.get();
+
+        PedidoDetalle newPedidoDetalle = new PedidoDetalle(pedidoDetalleDTO);
+        newPedidoDetalle.setProducto(producto);
+        newPedidoDetalle.setPedidoCompra(pedidoCompra);
+
         PedidoDetalle savedPedidoDetalle = pedidoDetalleRepository.save(newPedidoDetalle);
 
         return ResponseEntity.ok(new PedidoDetalleDTO(savedPedidoDetalle));
