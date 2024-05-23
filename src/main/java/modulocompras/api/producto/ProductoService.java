@@ -17,7 +17,7 @@ public class ProductoService {
 
     public List<ProductoDTO> getAllProductos() {
         return productoRepository.findByEliminadoFalse().stream()
-                .map(producto -> new ProductoDTO(producto))
+                .map(ProductoDTO::new)
                 .collect(Collectors.toList());
     }
 
@@ -56,5 +56,4 @@ public class ProductoService {
         Integer id = productoDTO.getId();
         return productoRepository.findByIdAndEliminadoFalse(id);
     }
-
 }
