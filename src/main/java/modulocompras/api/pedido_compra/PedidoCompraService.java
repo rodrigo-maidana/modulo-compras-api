@@ -6,20 +6,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PedidoCompraService {
 
+    @Autowired
     private PedidoCompraRepository pedidoCompraRepository;
 
-    public PedidoCompraService(PedidoCompraRepository pedidoCompraRepository) {
-        this.pedidoCompraRepository = pedidoCompraRepository;
-    }
-
     // Crear un nuevo pedido de compra
-    public PedidoCompra createPedidoCompra(PedidoCompraDTO pedidoCompraDTO) {
+    public PedidoCompraDTO createPedidoCompra(PedidoCompraDTO pedidoCompraDTO) {
         PedidoCompra newPedidoCompra = new PedidoCompra(pedidoCompraDTO);
         newPedidoCompra.setFechaEmision(new Date());
 
@@ -27,7 +24,8 @@ public class PedidoCompraService {
         String nroPedido = generateNroPedido();
         newPedidoCompra.setNroPedido(nroPedido);
 
-        return pedidoCompraRepository.save(newPedidoCompra);
+        PedidoCompra savedPedidoCompra = pedidoCompraRepository.save(newPedidoCompra);
+        return new PedidoCompraDTO(savedPedidoCompra);
     }
 
     // Generar el número de pedido
@@ -57,35 +55,29 @@ public class PedidoCompraService {
     }
 
     // Obtener un pedido de compra por ID
-    public ResponseEntity<PedidoCompraDTO> getPedidoCompraById(Integer id) {
-        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findByIdAndEliminadoFalse(id);
-        if (pedidoCompra.isPresent()) {
-            return ResponseEntity.ok(new PedidoCompraDTO(pedidoCompra.get()));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public Optional<PedidoCompraDTO> getPedidoCompraById(Integer id) {
+        return pedidoCompraRepository.findByIdAndEliminadoFalse(id)
+                .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra));
     }
 
     // Actualizar un pedido de compra por ID
-    public ResponseEntity<PedidoCompraDTO> updatePedidoCompra(Integer id, PedidoCompraDTO pedidoCompraDetails) {
-        Optional<PedidoCompra> pedidoCompra = pedidoCompraRepository.findByIdAndEliminadoFalse(id);
-        if (pedidoCompra.isPresent()) {
-            PedidoCompra existingPedidoCompra = pedidoCompra.get();
-            existingPedidoCompra.setEstado(pedidoCompraDetails.getEstado());
-            PedidoCompra updatedPedidoCompra = pedidoCompraRepository.save(existingPedidoCompra);
-            return ResponseEntity.ok(new PedidoCompraDTO(updatedPedidoCompra));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public Optional<PedidoCompraDTO> updatePedidoCompra(Integer id, PedidoCompraDTO pedidoCompraDetails) {
+        return pedidoCompraRepository.findByIdAndEliminadoFalse(id)
+                .map(existingPedidoCompra -> {
+                    existingPedidoCompra.setEstado(pedidoCompraDetails.getEstado());
+                    PedidoCompra updatedPedidoCompra = pedidoCompraRepository.save(existingPedidoCompra);
+                    return new PedidoCompraDTO(updatedPedidoCompra);
+                });
     }
 
-    // Eliminar un pedido de compra por ID
-    public ResponseEntity<Object> softDeletePedidoCompra(Integer id) {
-        return pedidoCompraRepository.findByIdAndEliminadoFalse(id).map(pedidoCompra -> {
-            pedidoCompra.setEliminado(true);
-            pedidoCompraRepository.save(pedidoCompra);
-            return ResponseEntity.noContent().build();
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+    // Eliminar un pedido de compra por ID (Soft Delete)
+    public boolean deletePedidoCompra(Integer id) {
+        return pedidoCompraRepository.findByIdAndEliminadoFalse(id)
+                .map(pedidoCompra -> {
+                    pedidoCompra.setEliminado(true);
+                    pedidoCompraRepository.save(pedidoCompra);
+                    return true;
+                }).orElse(false);
     }
 
     // Preview de un pedido de compra (sin guardar)

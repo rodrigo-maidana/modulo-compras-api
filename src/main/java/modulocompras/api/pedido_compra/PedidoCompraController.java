@@ -9,6 +9,7 @@ import modulocompras.api.pedido_compra.detalle.PedidoDetalleDTO;
 import modulocompras.api.pedido_compra.detalle.PedidoDetalleService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/pedidos-compra") // Endpoint para Pedidos de Compra
@@ -16,10 +17,10 @@ import java.util.List;
 public class PedidoCompraController {
 
     @Autowired
-    private PedidoCompraService pedidoCompraService; // Inyección del servicio de PedidoCompra
+    private PedidoCompraService pedidoCompraService;
 
     @Autowired
-    private PedidoDetalleService pedidoDetalleService; // Inyección del servicio de PedidoDetalle
+    private PedidoDetalleService pedidoDetalleService;
 
     // Obtener todos los pedidos de compra
     @GetMapping
@@ -30,44 +31,49 @@ public class PedidoCompraController {
     // Obtener un pedido de compra por ID
     @GetMapping("/{id}")
     public ResponseEntity<PedidoCompraDTO> getPedidoCompraById(@PathVariable Integer id) {
-        return pedidoCompraService.getPedidoCompraById(id);
+        Optional<PedidoCompraDTO> pedidoCompraDTO = pedidoCompraService.getPedidoCompraById(id);
+        return pedidoCompraDTO.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Crear un nuevo pedido de compra
     @PostMapping
     public ResponseEntity<PedidoCompraDTO> createPedidoCompra(@RequestBody PedidoCompraDTO pedidoCompraDTO) {
-        PedidoCompra newPedidoCompra = pedidoCompraService.createPedidoCompra(pedidoCompraDTO);
-        return ResponseEntity.ok(new PedidoCompraDTO(newPedidoCompra));
+        PedidoCompraDTO savedPedidoCompraDTO = pedidoCompraService.createPedidoCompra(pedidoCompraDTO);
+        return ResponseEntity.ok(savedPedidoCompraDTO);
     }
 
     // Actualizar un pedido de compra existente
     @PutMapping("/{id}")
     public ResponseEntity<PedidoCompraDTO> updatePedidoCompra(@PathVariable Integer id,
             @RequestBody PedidoCompraDTO pedidoCompraDetails) {
-        return pedidoCompraService.updatePedidoCompra(id, pedidoCompraDetails);
+        Optional<PedidoCompraDTO> updatedPedidoCompraDTO = pedidoCompraService.updatePedidoCompra(id,
+                pedidoCompraDetails);
+        return updatedPedidoCompraDTO.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Eliminar un pedido de compra
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePedidoCompra(@PathVariable Integer id) {
-        return pedidoCompraService.softDeletePedidoCompra(id);
+        boolean deleted = pedidoCompraService.deletePedidoCompra(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    /**
-     * Recupera todos los detalles de pedido con FK_idPedidoCompra igual a
-     * idPedidoCompra.
-     * 
-     * @param idPedidoCompra El id del pedido compra.
-     * @return Una lista de detalles de pedido DTO que coinciden con el
-     *         idPedidoCompra dado.
-     */
+    // Recuperar todos los detalles de pedido con FK_idPedidoCompra igual a
+    // idPedidoCompra
     @GetMapping("/detalles/{id}")
     public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
             @PathVariable("id") Integer idPedidoCompra) {
-        return pedidoDetalleService.findByDetallesByPedidoCompraId(idPedidoCompra);
+        List<PedidoDetalleDTO> detalles = pedidoDetalleService.findByDetallesByPedidoCompraId(idPedidoCompra);
+        return ResponseEntity.ok(detalles);
     }
 
-    // Obtener PedidoDTO de el proximo pedido de compra a realizar
+    // Obtener PedidoDTO del próximo pedido de compra a realizar
     @GetMapping("/preview")
     public PedidoCompraDTO previewPedidoCompra() {
         return pedidoCompraService.previewPedidoCompra();

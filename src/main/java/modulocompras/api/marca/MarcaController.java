@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/marcas") // Endpoint para Marca
@@ -16,22 +15,20 @@ import java.util.stream.Collectors;
 public class MarcaController {
 
     @Autowired
-    private MarcaRepository marcaRepository;
+    private MarcaService marcaService;
 
     // Obtener todas las marcas
     @GetMapping
     public List<MarcaDTO> getAllMarcas() {
-        return marcaRepository.findByEliminadoFalse().stream()
-                .map(marca -> new MarcaDTO(marca))
-                .collect(Collectors.toList());
+        return marcaService.getAllMarcas();
     }
 
     // Obtener una marca por ID
     @GetMapping("/{id}")
     public ResponseEntity<MarcaDTO> getMarcaById(@PathVariable Integer id) {
-        Optional<Marca> marca = marcaRepository.findByIdAndEliminadoFalse(id);
-        if (marca.isPresent()) {
-            return ResponseEntity.ok(new MarcaDTO(marca.get()));
+        Optional<MarcaDTO> marcaDTO = marcaService.getMarcaById(id);
+        if (marcaDTO.isPresent()) {
+            return ResponseEntity.ok(marcaDTO.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -40,20 +37,16 @@ public class MarcaController {
     // Crear una nueva marca
     @PostMapping
     public ResponseEntity<MarcaDTO> createMarca(@RequestBody MarcaDTO marcaDTO) {
-        Marca newMarca = new Marca(marcaDTO);
-        Marca savedMarca = marcaRepository.save(newMarca);
-        return ResponseEntity.ok(new MarcaDTO(savedMarca));
+        MarcaDTO savedMarcaDTO = marcaService.createMarca(marcaDTO);
+        return ResponseEntity.ok(savedMarcaDTO);
     }
 
     // Actualizar una marca existente
     @PutMapping("/{id}")
     public ResponseEntity<MarcaDTO> updateMarca(@PathVariable Integer id, @RequestBody MarcaDTO marcaDTO) {
-        Optional<Marca> marca = marcaRepository.findByIdAndEliminadoFalse(id);
-        if (marca.isPresent()) {
-            Marca existingMarca = marca.get();
-            existingMarca.setNombre(marcaDTO.getNombre());
-            Marca updatedMarca = marcaRepository.save(existingMarca);
-            return ResponseEntity.ok(new MarcaDTO(updatedMarca));
+        Optional<MarcaDTO> updatedMarcaDTO = marcaService.updateMarca(id, marcaDTO);
+        if (updatedMarcaDTO.isPresent()) {
+            return ResponseEntity.ok(updatedMarcaDTO.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -62,12 +55,11 @@ public class MarcaController {
     // Eliminar una marca (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteMarca(@PathVariable Integer id) {
-        return marcaRepository.findByIdAndEliminadoFalse(id)
-                .map(marca -> {
-                    marca.setEliminado(true);
-                    marcaRepository.save(marca);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+        boolean deleted = marcaService.deleteMarca(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

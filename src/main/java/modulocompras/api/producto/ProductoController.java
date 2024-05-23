@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/productos")
@@ -30,7 +31,11 @@ public class ProductoController {
 
     @PostMapping
     public ResponseEntity<ProductoDTO> createProducto(@RequestBody ProductoDTO productoDTO) {
-        ProductoDTO savedProducto = productoService.createProducto(productoDTO);
+        Optional<ProductoDTO> optionalProducto = productoService.getProductoById(productoDTO.getId());
+        if (!optionalProducto.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        ProductoDTO savedProducto = optionalProducto.get();
         return ResponseEntity.ok(savedProducto);
     }
 
