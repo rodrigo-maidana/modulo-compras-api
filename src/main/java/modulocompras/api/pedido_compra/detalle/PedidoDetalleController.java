@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/pedidos-detalles") // Endpoint para Pedidos Detalles
