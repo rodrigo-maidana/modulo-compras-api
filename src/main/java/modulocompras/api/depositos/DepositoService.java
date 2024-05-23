@@ -35,8 +35,7 @@ public class DepositoService {
     }
 
     public Optional<DepositoDTO> updateDeposito(Integer id, DepositoDTO depositoDTO) {
-        return depositoRepository.findById(id)
-                .filter(deposito -> !deposito.getEliminado())
+        return depositoRepository.findByIdAndEliminadoFalse(id)
                 .map(existingDeposito -> {
                     existingDeposito.setNombre(depositoDTO.getNombre());
                     existingDeposito.setDireccion(depositoDTO.getDireccion());

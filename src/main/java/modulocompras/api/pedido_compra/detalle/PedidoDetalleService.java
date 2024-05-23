@@ -5,12 +5,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import modulocompras.api.pedido_compra.PedidoCompra;
 import modulocompras.api.pedido_compra.PedidoCompraService;
 import modulocompras.api.producto.Producto;
+import modulocompras.api.producto.ProductoDTO;
 import modulocompras.api.producto.ProductoService;
 
 @Service
@@ -37,7 +37,7 @@ public class PedidoDetalleService {
     }
 
     public Optional<PedidoDetalleDTO> createPedidoDetalle(Integer id, PedidoDetalleDTO pedidoDetalleDTO) {
-        Optional<Producto> optionalProducto = productoService.getProductoByDTO(pedidoDetalleDTO.getProducto());
+        Optional<ProductoDTO> optionalProducto = productoService.getProductoById(pedidoDetalleDTO.getId());
         if (!optionalProducto.isPresent()) {
             return Optional.empty();
         }
@@ -47,7 +47,7 @@ public class PedidoDetalleService {
             return Optional.empty();
         }
 
-        Producto producto = optionalProducto.get();
+        Producto producto = new Producto(optionalProducto.get());
         PedidoCompra pedidoCompra = optionalPedidoCompra.get();
         Integer cantidad = pedidoDetalleDTO.getCantidad();
 
