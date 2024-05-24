@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/proveedores") // Endpoint para Proveedor
@@ -16,63 +15,46 @@ import java.util.stream.Collectors;
 public class ProveedorController {
 
     @Autowired
-    private ProveedorRepository proveedorRepository;
+    private ProveedorService proveedorService;
 
     // Obtener todos los proveedores
     @GetMapping
     public List<ProveedorDTO> getAllProveedores() {
-        return proveedorRepository.findByEliminadoFalse().stream()
-                .map(proveedor -> new ProveedorDTO(proveedor))
-                .collect(Collectors.toList());
+        return proveedorService.getAllProveedores();
     }
 
     // Obtener un proveedor por ID
     @GetMapping("/{id}")
     public ResponseEntity<ProveedorDTO> getProveedorById(@PathVariable Integer id) {
-        Optional<Proveedor> proveedor = proveedorRepository.findByIdAndEliminadoFalse(id);
-        if (proveedor.isPresent()) {
-            return ResponseEntity.ok(new ProveedorDTO(proveedor.get()));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<ProveedorDTO> proveedorDTO = proveedorService.getProveedorById(id);
+        return proveedorDTO.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Crear un nuevo proveedor
     @PostMapping
     public ResponseEntity<ProveedorDTO> createProveedor(@RequestBody ProveedorDTO proveedorDTO) {
-        Proveedor newProveedor = new Proveedor(proveedorDTO);
-        Proveedor savedProveedor = proveedorRepository.save(newProveedor);
-        return ResponseEntity.ok(new ProveedorDTO(savedProveedor));
+        ProveedorDTO savedProveedorDTO = proveedorService.createProveedor(proveedorDTO);
+        return ResponseEntity.ok(savedProveedorDTO);
     }
 
     // Actualizar un proveedor existente
     @PutMapping("/{id}")
     public ResponseEntity<ProveedorDTO> updateProveedor(@PathVariable Integer id,
             @RequestBody ProveedorDTO proveedorDTO) {
-        Optional<Proveedor> proveedor = proveedorRepository.findByIdAndEliminadoFalse(id);
-        if (proveedor.isPresent()) {
-            Proveedor existingProveedor = proveedor.get();
-            existingProveedor.setNombre(proveedorDTO.getNombre());
-            existingProveedor.setRuc(proveedorDTO.getRuc());
-            existingProveedor.setContacto(proveedorDTO.getContacto());
-            existingProveedor.setCorreo(proveedorDTO.getCorreo());
-            existingProveedor.setDireccion(proveedorDTO.getDireccion());
-            Proveedor updatedProveedor = proveedorRepository.save(existingProveedor);
-            return ResponseEntity.ok(new ProveedorDTO(updatedProveedor));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<ProveedorDTO> updatedProveedorDTO = proveedorService.updateProveedor(id, proveedorDTO);
+        return updatedProveedorDTO.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Borrar un proveedor (borrado suave)
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteProveedor(@PathVariable Integer id) {
-        return proveedorRepository.findByIdAndEliminadoFalse(id)
-                .map(proveedor -> {
-                    proveedor.setEliminado(true);
-                    proveedorRepository.save(proveedor);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+        boolean deleted = proveedorService.deleteProveedor(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
