@@ -38,7 +38,8 @@ public class PedidoDetalleService {
     }
 
     public Optional<PedidoDetalleDTO> createPedidoDetalle(Integer id, PedidoDetalleDTO pedidoDetalleDTO) {
-        Optional<ProductoDTO> optionalProducto = productoService.getProductoById(pedidoDetalleDTO.getId());
+        Optional<ProductoDTO> optionalProducto = productoService
+                .getProductoById(pedidoDetalleDTO.getProducto().getId());
         if (!optionalProducto.isPresent()) {
             return Optional.empty();
         }
