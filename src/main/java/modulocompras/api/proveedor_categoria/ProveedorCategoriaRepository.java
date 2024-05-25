@@ -1,6 +1,7 @@
 package modulocompras.api.proveedor_categoria;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,7 @@ public interface ProveedorCategoriaRepository extends JpaRepository<ProveedorCat
 
     // Listar todas los proveedores de una categoría
     List<ProveedorCategoria> findByCategoria(Categoria categoria);
+
+    // Buscar una relación proveedor-categoría
+    Optional<ProveedorCategoria> findByProveedorAndCategoria(Proveedor proveedor, Categoria categoria);
 }
