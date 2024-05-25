@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import modulocompras.api.proveedor.ProveedorDTO;
+import modulocompras.api.proveedor_categoria.ProveedorCategoriaService;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,9 @@ public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
+
+    @Autowired
+    private ProveedorCategoriaService proveedorCategoriaService;
 
     // Obtener todas las categorías
     @GetMapping
@@ -62,5 +67,11 @@ public class CategoriaController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    // Listar todos los proveedores de una categoría
+    @GetMapping("/{idCategoria}/proveedores")
+    public List<ProveedorDTO> listarProveedoresDeCategoria(@PathVariable Integer idCategoria) {
+        return proveedorCategoriaService.getProveedores(idCategoria);
     }
 }

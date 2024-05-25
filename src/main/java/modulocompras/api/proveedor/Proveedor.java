@@ -1,11 +1,17 @@
 package modulocompras.api.proveedor;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import modulocompras.api.categoria.Categoria;
 
 @Entity
 @Table(name = "PROVEEDORES")
@@ -54,52 +60,54 @@ public class Proveedor {
         return id;
     }
 
-    public void setId(Integer idProveedor) {
-        this.id = idProveedor;
-    }
-
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getRuc() {
         return ruc;
     }
 
-    public void setRuc(String ruc) {
-        this.ruc = ruc;
-    }
-
     public String getContacto() {
         return contacto;
-    }
-
-    public void setContacto(String contacto) {
-        this.contacto = contacto;
     }
 
     public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
     public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     public Boolean getEliminado() {
         return eliminado;
+    }
+
+    // Setters
+
+    public void setId(Integer idProveedor) {
+        this.id = idProveedor;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
+    public void setContacto(String contacto) {
+        this.contacto = contacto;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public void setEliminado(Boolean eliminado) {
