@@ -71,7 +71,7 @@ public class CategoriaController {
 
     // Listar todos los proveedores de una categoría
     @GetMapping("/{idCategoria}/proveedores")
-    public List<ProveedorDTO> listarProveedoresDeCategoria(@PathVariable Integer idCategoria) {
+    public List<ProveedorDTO> getProveedoresFromCategoria(@PathVariable Integer idCategoria) {
         return proveedorCategoriaService.getProveedores(idCategoria);
     }
 }
