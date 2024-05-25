@@ -66,16 +66,16 @@ public class ProveedorController {
 
     // Agregar una categoría a un proveedor
     @PostMapping("/categorias")
-    public ResponseEntity<ProveedorCategoriaDTO> agregarCategoriaAProveedor(
+    public ResponseEntity<ProveedorCategoriaDTO> addCategoriaToProveedor(
             @RequestBody ProveedorCategoriaDTO proveedorCategoriaDTO) {
         ProveedorCategoriaDTO proveedorCategoria = proveedorCategoriaService
-                .agregarCategoriaAProveedor(proveedorCategoriaDTO);
+                .addCategoriaToProveedor(proveedorCategoriaDTO);
         return ResponseEntity.ok(proveedorCategoria);
     }
 
     // Listar todas las categorías de un proveedor
     @GetMapping("/{idProveedor}/categorias")
-    public List<CategoriaDTO> listarCategoriasDeProveedor(@PathVariable Integer idProveedor) {
+    public List<CategoriaDTO> getCategoriasFromProveedor(@PathVariable Integer idProveedor) {
         return proveedorCategoriaService.getCategorias(idProveedor);
     }
 }
