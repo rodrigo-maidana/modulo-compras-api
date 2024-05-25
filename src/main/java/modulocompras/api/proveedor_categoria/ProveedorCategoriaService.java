@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.swing.text.html.Option;
+
 @Service
 public class ProveedorCategoriaService {
 
@@ -28,16 +30,23 @@ public class ProveedorCategoriaService {
     private CategoriaService categoriaService;
 
     // Agregar una categoría a un proveedor
-    public ProveedorCategoriaDTO agregarCategoriaAProveedor(ProveedorCategoriaDTO proveedorCategoriaDTO) {
+    public ProveedorCategoriaDTO addCategoriaToProveedor(ProveedorCategoriaDTO proveedorCategoriaDTO) {
         Optional<ProveedorDTO> optionalProveedor = proveedorService
                 .getProveedorById(proveedorCategoriaDTO.getProveedorId());
         if (!optionalProveedor.isPresent()) {
-            throw new RuntimeException("Proveedor no encontrado");
+            return null;
         }
         Optional<CategoriaDTO> optionalCategoria = categoriaService
                 .getCategoriaById(proveedorCategoriaDTO.getCategoriaId());
         if (!optionalCategoria.isPresent()) {
-            throw new RuntimeException("Categoria no encontrada");
+            return null;
+        }
+
+        Optional<ProveedorCategoria> optionalProveedorCategoria = proveedorCategoriaRepository
+                .findByProveedorAndCategoria(new Proveedor(optionalProveedor.get()),
+                        new Categoria(optionalCategoria.get()));
+        if (optionalProveedorCategoria.isPresent()) {
+            return new ProveedorCategoriaDTO(optionalProveedorCategoria.get());
         }
 
         Proveedor proveedor = new Proveedor(optionalProveedor.get());
