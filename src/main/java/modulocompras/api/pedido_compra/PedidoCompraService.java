@@ -70,7 +70,7 @@ public class PedidoCompraService {
                 });
     }
 
-    // Eliminar un pedido de compra por ID (Soft Delete)
+    // Eliminar un pedido de compra por ID
     public boolean deletePedidoCompra(Integer id) {
         return pedidoCompraRepository.findByIdAndEliminadoFalse(id)
                 .map(pedidoCompra -> {
@@ -93,7 +93,4 @@ public class PedidoCompraService {
         return new PedidoCompraDTO(newPedidoCompra);
     }
 
-    public Optional<PedidoCompra> findByIdAndEliminadoFalse(Integer id) {
-        return pedidoCompraRepository.findByIdAndEliminadoFalse(id);
-    }
 }

@@ -61,16 +61,4 @@ public class PedidoDetalleController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // Recuperar todos los detalles de pedido con FK_idPedidoCompra igual a
-    // idPedidoCompra
-    @GetMapping("/pedidos/{id}")
-    public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
-            @PathVariable("id") Integer idPedidoCompra) {
-        List<PedidoDetalleDTO> detalles = pedidoDetalleService.findByDetallesByPedidoCompraId(idPedidoCompra);
-        if (detalles.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(detalles);
-    }
 }

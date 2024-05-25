@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import modulocompras.api.pedido_compra.PedidoCompra;
+import modulocompras.api.pedido_compra.PedidoCompraDTO;
 import modulocompras.api.pedido_compra.PedidoCompraService;
 import modulocompras.api.producto.Producto;
 import modulocompras.api.producto.ProductoDTO;
@@ -42,13 +43,13 @@ public class PedidoDetalleService {
             return Optional.empty();
         }
 
-        Optional<PedidoCompra> optionalPedidoCompra = pedidoCompraService.findByIdAndEliminadoFalse(id);
-        if (!optionalPedidoCompra.isPresent()) {
+        Optional<PedidoCompraDTO> optionalPedidoCompraDTO = pedidoCompraService.getPedidoCompraById(id);
+        if (!optionalPedidoCompraDTO.isPresent()) {
             return Optional.empty();
         }
 
         Producto producto = new Producto(optionalProducto.get());
-        PedidoCompra pedidoCompra = optionalPedidoCompra.get();
+        PedidoCompra pedidoCompra = new PedidoCompra(optionalPedidoCompraDTO.get());
         Integer cantidad = pedidoDetalleDTO.getCantidad();
 
         PedidoDetalle newPedidoDetalle = new PedidoDetalle();
