@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.swing.text.html.Option;
-
 @Service
 public class ProveedorCategoriaService {
 
