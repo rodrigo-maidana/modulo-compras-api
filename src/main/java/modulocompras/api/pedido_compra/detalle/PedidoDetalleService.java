@@ -26,10 +26,8 @@ public class PedidoDetalleService {
     @Autowired
     private ProductoService productoService;
 
-    public List<PedidoDetalleDTO> getAllPedidosDetalles() {
-        return pedidoDetalleRepository.findByEliminadoFalse().stream()
-                .map(PedidoDetalleDTO::new)
-                .collect(Collectors.toList());
+    public List<PedidoDetalle> getAllPedidosDetalles() {
+        return pedidoDetalleRepository.findByEliminadoFalse();
     }
 
     public Optional<PedidoDetalleDTO> getPedidoDetalleById(Integer id) {
@@ -38,9 +36,8 @@ public class PedidoDetalleService {
     }
 
     public Optional<PedidoDetalleDTO> createPedidoDetalle(Integer id, PedidoDetalleDTO pedidoDetalleDTO) {
-        Optional<ProductoDTO> optionalProducto = productoService
-                .getProductoById(pedidoDetalleDTO.getProducto().getId());
-        if (!optionalProducto.isPresent()) {
+        Producto producto = productoService.getProductoById(pedidoDetalleDTO.getProducto().getId()).orElse(null);
+        if (producto == null) {
             return Optional.empty();
         }
 
@@ -49,7 +46,6 @@ public class PedidoDetalleService {
             return Optional.empty();
         }
 
-        Producto producto = new Producto(optionalProducto.get());
         PedidoCompra pedidoCompra = new PedidoCompra(optionalPedidoCompraDTO.get());
         Integer cantidad = pedidoDetalleDTO.getCantidad();
 
@@ -83,9 +79,7 @@ public class PedidoDetalleService {
     }
 
     // Recupera todos los detalles de pedido con FK_idPedidoCompra igual a id.
-    public List<PedidoDetalleDTO> findByDetallesByPedidoCompraId(Integer id) {
-        return pedidoDetalleRepository.findByPedidoCompraIdAndEliminadoFalse(id).stream()
-                .map(PedidoDetalleDTO::new)
-                .collect(Collectors.toList());
+    public List<PedidoDetalle> getDetallesByPedidoCompraId(Integer id) {
+        return pedidoDetalleRepository.findByPedidoCompraIdAndEliminadoFalse(id);
     }
 }

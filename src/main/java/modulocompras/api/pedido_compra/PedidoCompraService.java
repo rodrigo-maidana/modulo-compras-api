@@ -23,6 +23,7 @@ public class PedidoCompraService {
         // Generar el número de pedido
         String nroPedido = generateNroPedido();
         newPedidoCompra.setNroPedido(nroPedido);
+        newPedidoCompra.setEstado("Pendiente");
 
         PedidoCompra savedPedidoCompra = pedidoCompraRepository.save(newPedidoCompra);
         return new PedidoCompraDTO(savedPedidoCompra);

@@ -382,8 +382,6 @@ INSERT INTO pedidos_detalles (fk_id_pedido_compra, fk_id_producto, int_cantidad,
 (10, 9, 10, FALSE),
 (10, 10, 8, FALSE);
 
-/*PENDIENTE DE IMPLEMENTAR API*/
-
 /*==============================================================*/
 /* Table: detalles_categorias_proveedor                         */
 /*==============================================================*/
@@ -394,6 +392,34 @@ create table detalles_categorias_proveedor
    fk_id_categoria      int,
    primary key (id_detalle_categoria_proveedor)
 );
+
+/*==============================================================*/
+/* Table: pedidos_cotizacion                                    */
+/*==============================================================*/
+create table pedidos_cotizacion
+(
+   id_pedido_cotizacion int not null,
+   fk_id_proveedor      int,
+   fk_id_pedido_de_compra int,
+   date_fecha_emision   date,
+   str_estado           varchar(20),
+   primary key (id_pedido_cotizacion)
+);
+
+/*==============================================================*/
+/* Table: pedidos_cotizacion_detalles                           */
+/*==============================================================*/
+create table pedidos_cotizacion_detalles
+(
+   id_pedido_cotizacion_detalle int not null,
+   fk_id_pedido_cotizacion int,
+   fk_id_producto       int,
+   int_cantidad         int,
+   dec_costo_unitario   decimal,
+   primary key (id_pedido_cotizacion_detalle)
+);
+
+/*PENDIENTE DE IMPLEMENTAR API*/
 
 /*==============================================================*/
 /* Table: detalles_orden_pago                                   */
@@ -477,8 +503,6 @@ create table facturas_detalles
    primary key (id_compra_detalle)
 );
 
-
-
 /*==============================================================*/
 /* Table: metodos_pago                                          */
 /*==============================================================*/
@@ -541,32 +565,6 @@ create table orden_compra
    date_fecha_emision   date,
    str_estado           varchar(20),
    primary key (id_orden_compra)
-);
-
-/*==============================================================*/
-/* Table: pedidos_cotizacion                                    */
-/*==============================================================*/
-create table pedidos_cotizacion
-(
-   id_pedido_cotizacion int not null,
-   fk_id_proveedor      int,
-   fk_id_pedido_de_compra int,
-   date_fecha_emision   date,
-   str_estado           varchar(20),
-   primary key (id_pedido_cotizacion)
-);
-
-/*==============================================================*/
-/* Table: pedidos_cotizacion_detalles                           */
-/*==============================================================*/
-create table pedidos_cotizacion_detalles
-(
-   id_pedido_cotizacion_detalle int not null,
-   fk_id_pedido_cotizacion int,
-   fk_id_producto       int,
-   int_cantidad         int,
-   dec_costo_unitario   decimal,
-   primary key (id_pedido_cotizacion_detalle)
 );
 
 /*==============================================================*/

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/pedidos-detalles") // Endpoint para Pedidos Detalles
@@ -20,7 +21,10 @@ public class PedidoDetalleController {
     // Obtener todos los pedidos detalles
     @GetMapping
     public List<PedidoDetalleDTO> getAllPedidosDetalles() {
-        return pedidoDetalleService.getAllPedidosDetalles();
+        List<PedidoDetalle> pedidoDetalles = pedidoDetalleService.getAllPedidosDetalles();
+        return pedidoDetalles.stream()
+                .map(PedidoDetalleDTO::new)
+                .collect(Collectors.toList());
     }
 
     // Obtener un pedido detalle por ID

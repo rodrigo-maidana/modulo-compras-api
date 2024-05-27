@@ -24,18 +24,20 @@ public class ProductoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductoDTO> getProductoById(@PathVariable Integer id) {
-        return productoService.getProductoById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Producto producto = productoService.getProductoById(id).orElse(null);
+        if (producto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new ProductoDTO(producto));
     }
 
     @PostMapping
     public ResponseEntity<ProductoDTO> createProducto(@RequestBody ProductoDTO productoDTO) {
-        Optional<ProductoDTO> optionalProducto = productoService.getProductoById(productoDTO.getId());
-        if (!optionalProducto.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+        Producto producto = productoService.getProductoById(productoDTO.getId()).orElse(null);
+        if (producto == null) {
+            return ResponseEntity.notFound().build();
         }
-        ProductoDTO savedProducto = optionalProducto.get();
+        ProductoDTO savedProducto = productoService.createProducto(productoDTO).orElse(null);
         return ResponseEntity.ok(savedProducto);
     }
 

@@ -49,7 +49,7 @@ public class Proveedor {
         this.direccion = proveedorDTO.getDireccion();
     }
 
-    // Getters y setters
+    // Getters
     public Integer getId() {
         return id;
     }
