@@ -61,7 +61,13 @@ public class CotizacionDetalleService {
         return cotizacionDetalleRepository.findByIdAndEliminadoFalse(id)
                 .map(existingCotizacionDetalle -> {
                     existingCotizacionDetalle.setCantidad(cotizacionDetalleDTO.getCantidad());
-                    existingCotizacionDetalle.setProducto(new Producto(cotizacionDetalleDTO.getProducto()));
+
+                    Optional<Producto> optionalProducto = productoService
+                            .getProductoById(cotizacionDetalleDTO.getProducto().getId());
+
+                    if (optionalProducto.isPresent())
+                        existingCotizacionDetalle.setProducto(optionalProducto.get());
+
                     CotizacionDetalle updatedCotizacionDetalle = cotizacionDetalleRepository
                             .save(existingCotizacionDetalle);
                     return new CotizacionDetalleDTO(updatedCotizacionDetalle);
