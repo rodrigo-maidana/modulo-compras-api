@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import modulocompras.api.cotizacion.detalle.CotizacionDetalle;
+import modulocompras.api.cotizacion.detalle.CotizacionDetalleDTO;
 import modulocompras.api.cotizacion.detalle.CotizacionDetalleService;
 import modulocompras.api.pedido_compra.detalle.PedidoDetalleService;
 import modulocompras.api.proveedor_categoria.ProveedorCategoriaService;
@@ -60,6 +62,14 @@ public class CotizacionController {
             return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(savedCotizacionDTO);
+    }
+
+    // Obtener todos los detalles de un pedido de cotizacion
+    @GetMapping("/{id}/detalles")
+    public List<CotizacionDetalleDTO> getCotizacionDetalles(Integer id) {
+        return cotizacionDetalleService.getCotizacionDetallesById(id).stream()
+                .map(CotizacionDetalleDTO::new)
+                .collect(Collectors.toList());
     }
 
 }

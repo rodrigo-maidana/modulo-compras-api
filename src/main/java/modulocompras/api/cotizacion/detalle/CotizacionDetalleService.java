@@ -77,10 +77,7 @@ public class CotizacionDetalleService {
                 }).orElse(false);
     }
 
-    // Recupera todos los detalles de cotización con FK_idCotizacion igual a id.
-    public List<CotizacionDetalleDTO> findDetallesByCotizacionId(Integer id) {
-        return cotizacionDetalleRepository.findByCotizacionIdAndEliminadoFalse(id).stream()
-                .map(CotizacionDetalleDTO::new)
-                .collect(Collectors.toList());
+    public List<CotizacionDetalle> getCotizacionDetallesById(Integer id) {
+        return cotizacionDetalleRepository.findByCotizacionIdAndEliminadoFalse(id);
     }
 }
