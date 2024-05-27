@@ -6,6 +6,7 @@ public class CotizacionDetalleDTO {
     private Integer id;
     private ProductoDTO producto;
     private Integer cantidad;
+    private Double precioUnitario;
 
     // Constructor por defecto
     public CotizacionDetalleDTO() {
@@ -16,6 +17,7 @@ public class CotizacionDetalleDTO {
         this.id = pedidoDetalle.getId();
         this.producto = new ProductoDTO(pedidoDetalle.getProducto());
         this.cantidad = pedidoDetalle.getCantidad();
+        this.precioUnitario = pedidoDetalle.getPrecioUnitario();
     }
 
     // Getters
@@ -31,6 +33,10 @@ public class CotizacionDetalleDTO {
         return cantidad;
     }
 
+    public Double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
     // Setters
     public void setId(Integer idPedidoDetalle) {
         this.id = idPedidoDetalle;
@@ -42,5 +48,9 @@ public class CotizacionDetalleDTO {
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
     }
 }
