@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,12 +65,18 @@ public class CotizacionController {
         return ResponseEntity.ok(savedCotizacionDTO);
     }
 
-    // Obtener todos los detalles de un pedido de cotizacion
+    // Obtener todos los detalles de un pedido de cotización
     @GetMapping("/{id}/detalles")
-    public List<CotizacionDetalleDTO> getCotizacionDetalles(Integer id) {
-        return cotizacionDetalleService.getCotizacionDetallesById(id).stream()
+    public ResponseEntity<List<CotizacionDetalleDTO>> getCotizacionDetalles(@PathVariable Integer id) {
+        List<CotizacionDetalleDTO> detalles = cotizacionDetalleService.getCotizacionDetallesById(id).stream()
                 .map(CotizacionDetalleDTO::new)
                 .collect(Collectors.toList());
+
+        if (detalles.isEmpty()) {
+            return ResponseEntity.noContent().build(); // O ResponseEntity.notFound().build() si prefieres
+        }
+
+        return ResponseEntity.ok(detalles);
     }
 
 }
