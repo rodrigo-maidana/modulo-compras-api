@@ -10,6 +10,7 @@ import modulocompras.api.pedido_compra.detalle.PedidoDetalleService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/pedidos-compra") // Endpoint para Pedidos de Compra
@@ -69,7 +70,9 @@ public class PedidoCompraController {
     @GetMapping("/detalles/{id}")
     public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
             @PathVariable("id") Integer idPedidoCompra) {
-        List<PedidoDetalleDTO> detalles = pedidoDetalleService.findByDetallesByPedidoCompraId(idPedidoCompra);
+        List<PedidoDetalleDTO> detalles = pedidoDetalleService.getDetallesByPedidoCompraId(idPedidoCompra).stream()
+                .map(PedidoDetalleDTO::new)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(detalles);
     }
 

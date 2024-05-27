@@ -32,9 +32,8 @@ public class ProductoService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<ProductoDTO> getProductoById(Integer id) {
-        return productoRepository.findByIdAndEliminadoFalse(id)
-                .map(ProductoDTO::new);
+    public Optional<Producto> getProductoById(Integer id) {
+        return productoRepository.findByIdAndEliminadoFalse(id);
     }
 
     public Optional<ProductoDTO> createProducto(ProductoDTO productoDTO) {
