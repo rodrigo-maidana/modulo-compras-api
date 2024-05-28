@@ -1,6 +1,5 @@
 package modulocompras.api.cotizacion.detalle;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

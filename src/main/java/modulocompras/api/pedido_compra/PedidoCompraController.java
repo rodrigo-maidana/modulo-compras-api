@@ -67,9 +67,9 @@ public class PedidoCompraController {
 
     // Recuperar todos los detalles de pedido con FK_idPedidoCompra igual a
     // idPedidoCompra
-    @GetMapping("/detalles/{id}")
+    @GetMapping("/{idPedidoCompra}/detalles")
     public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
-            @PathVariable("id") Integer idPedidoCompra) {
+            @PathVariable Integer idPedidoCompra) {
         List<PedidoDetalleDTO> detalles = pedidoDetalleService.getDetallesByPedidoCompraId(idPedidoCompra).stream()
                 .map(PedidoDetalleDTO::new)
                 .collect(Collectors.toList());

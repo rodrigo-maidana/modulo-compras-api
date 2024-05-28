@@ -2,7 +2,6 @@ package modulocompras.api.pedido_compra.detalle;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import modulocompras.api.pedido_compra.PedidoCompra;
 import modulocompras.api.pedido_compra.PedidoCompraDTO;
 import modulocompras.api.pedido_compra.PedidoCompraService;
 import modulocompras.api.producto.Producto;
-import modulocompras.api.producto.ProductoDTO;
 import modulocompras.api.producto.ProductoService;
 
 @Service
