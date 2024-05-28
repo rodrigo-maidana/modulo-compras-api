@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import modulocompras.api.categoria.Categoria;
 import modulocompras.api.categoria.CategoriaDTO;
 import modulocompras.api.cotizacion.detalle.CotizacionDetalleService;
 import modulocompras.api.pedido_compra.PedidoCompra;

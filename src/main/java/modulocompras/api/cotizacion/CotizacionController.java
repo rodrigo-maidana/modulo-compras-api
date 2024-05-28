@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import modulocompras.api.cotizacion.detalle.CotizacionDetalle;
 import modulocompras.api.cotizacion.detalle.CotizacionDetalleDTO;
 import modulocompras.api.cotizacion.detalle.CotizacionDetalleService;
-import modulocompras.api.pedido_compra.detalle.PedidoDetalleService;
-import modulocompras.api.proveedor_categoria.ProveedorCategoriaService;
 
 @RestController
 @RequestMapping("api/v1/cotizaciones") // Endpoint para Cotizaciones
@@ -30,12 +27,6 @@ public class CotizacionController {
 
     @Autowired
     private CotizacionDetalleService cotizacionDetalleService;
-
-    @Autowired
-    private PedidoDetalleService pedidoDetalleService;
-
-    @Autowired
-    private ProveedorCategoriaService proveedorCategoriaService;
 
     // Obtener todos los pedidos de compra
     @GetMapping
