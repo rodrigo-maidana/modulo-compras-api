@@ -29,6 +29,11 @@ public class ProveedorCategoriaService {
 
     // Agregar una categoría a un proveedor
     public ProveedorCategoriaDTO addCategoriaToProveedor(ProveedorCategoriaDTO proveedorCategoriaDTO) {
+        if (verifyIfCategoriaExistsForProveedor(proveedorCategoriaDTO.getProveedorId(),
+                proveedorCategoriaDTO.getCategoriaId())) {
+            throw new IllegalStateException("La categoría ya está asignada a este proveedor");
+        }
+
         Optional<ProveedorDTO> optionalProveedor = proveedorService
                 .getProveedorById(proveedorCategoriaDTO.getProveedorId());
         if (!optionalProveedor.isPresent()) {
@@ -38,13 +43,6 @@ public class ProveedorCategoriaService {
                 .getCategoriaById(proveedorCategoriaDTO.getCategoriaId());
         if (!optionalCategoria.isPresent()) {
             return null;
-        }
-
-        Optional<ProveedorCategoria> optionalProveedorCategoria = proveedorCategoriaRepository
-                .findByProveedorAndCategoria(new Proveedor(optionalProveedor.get()),
-                        new Categoria(optionalCategoria.get()));
-        if (optionalProveedorCategoria.isPresent()) {
-            return new ProveedorCategoriaDTO(optionalProveedorCategoria.get());
         }
 
         Proveedor proveedor = new Proveedor(optionalProveedor.get());
@@ -83,6 +81,10 @@ public class ProveedorCategoriaService {
                 .collect(Collectors.toList());
 
         return proveedores;
+    }
+
+    public boolean verifyIfCategoriaExistsForProveedor(Integer proveedorId, Integer categoriaId) {
+        return proveedorCategoriaRepository.existsByProveedorIdAndCategoriaId(proveedorId, categoriaId);
     }
 
 }
