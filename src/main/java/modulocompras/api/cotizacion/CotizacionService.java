@@ -3,6 +3,7 @@ package modulocompras.api.cotizacion;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import modulocompras.api.categoria.Categoria;
+import modulocompras.api.categoria.CategoriaDTO;
 import modulocompras.api.cotizacion.detalle.CotizacionDetalleService;
 import modulocompras.api.pedido_compra.PedidoCompra;
 import modulocompras.api.pedido_compra.PedidoCompraDTO;
@@ -44,8 +46,12 @@ public class CotizacionService {
         @Autowired
         private PedidoDetalleService pedidoDetalleService;
 
-        // Crear un nuevo cotizaciones
         public CotizacionDTO createCotizacion(CotizacionCreateDTO pedidoCotizacionCreateDTO) {
+                if (verifyIfExist(pedidoCotizacionCreateDTO.getIdPedidoCompra(),
+                                pedidoCotizacionCreateDTO.getIdProveedor())) {
+                        throw new IllegalStateException("Ya existe una cotización para este PedidoCompra y Proveedor");
+                }
+
                 PedidoCompraDTO pedidoCompraDTO = pedidoCompraService
                                 .getPedidoCompraById(pedidoCotizacionCreateDTO.getIdPedidoCompra())
                                 .orElseThrow(() -> new IllegalArgumentException("PedidoCompra no encontrado"));
@@ -56,14 +62,12 @@ public class CotizacionService {
 
                 PedidoCompra pedidoCompra = new PedidoCompra(pedidoCompraDTO);
                 Proveedor proveedor = new Proveedor(proveedorDTO);
-                pedidoCompra.setEstado("Pedido Cotización Generado");
+                pedidoCompra.setEstado("Cotización Generada");
 
-                PedidoCompraDTO updatedPedidoCompraDTO = pedidoCompraService.updatePedidoCompra(
-                                pedidoCompra.getId(), new PedidoCompraDTO(pedidoCompra))
+                pedidoCompraService.updatePedidoCompra(pedidoCompra.getId(), new PedidoCompraDTO(pedidoCompra))
                                 .orElseThrow(() -> new IllegalStateException("Error al actualizar PedidoCompra"));
 
-                Cotizacion newCotizacion = new Cotizacion(
-                                new PedidoCompra(updatedPedidoCompraDTO), proveedor);
+                Cotizacion newCotizacion = new Cotizacion(pedidoCompra, proveedor);
                 newCotizacion.setFechaEmision(new Date());
                 newCotizacion.setEstado("Pendiente");
 
@@ -71,21 +75,18 @@ public class CotizacionService {
 
                 List<PedidoDetalle> pedidoDetalles = pedidoDetalleService.getDetallesByPedidoCompraId(
                                 pedidoCotizacionCreateDTO.getIdPedidoCompra());
-                List<Categoria> categorias = proveedorCategoriaService
+
+                Set<Integer> categoriasIds = proveedorCategoriaService
                                 .getCategorias(pedidoCotizacionCreateDTO.getIdProveedor())
                                 .stream()
-                                .map(categoriaDTO -> new Categoria(categoriaDTO))
-                                .collect(Collectors.toList());
+                                .map(CategoriaDTO::getId)
+                                .collect(Collectors.toSet());
 
                 for (PedidoDetalle pedidoDetalle : pedidoDetalles) {
                         Producto producto = pedidoDetalle.getProducto();
-                        Integer cantidad = pedidoDetalle.getCantidad();
-
-                        for (Categoria categoria : categorias) {
-                                if (categoria.getId() == producto.getCategoria().getId()) {
-                                        cotizacionDetalleService.createCotizacionDetalle(savedCotizacion.getId(),
-                                                        producto.getId(), cantidad);
-                                }
+                        if (categoriasIds.contains(producto.getCategoria().getId())) {
+                                cotizacionDetalleService.createCotizacionDetalle(
+                                                savedCotizacion.getId(), producto.getId(), pedidoDetalle.getCantidad());
                         }
                 }
 
@@ -98,6 +99,11 @@ public class CotizacionService {
 
         public List<Cotizacion> getAllCotizaciones() {
                 return pedidoCotizacionRepository.findByEliminadoFalse();
+        }
+
+        public boolean verifyIfExist(Integer pedidoCompraId, Integer proveedorId) {
+                return pedidoCotizacionRepository.existsByPedidoCompraIdAndProveedorIdAndEliminadoFalse(pedidoCompraId,
+                                proveedorId);
         }
 
 }
