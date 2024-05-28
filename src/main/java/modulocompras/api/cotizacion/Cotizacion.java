@@ -23,6 +23,9 @@ public class Cotizacion {
     @Column(name = "ID_COTIZACION")
     private Integer id;
 
+    @Column(name = "STR_NRO_COTIZACION", nullable = false, unique = true)
+    private String nroCotizacion;
+
     @ManyToOne
     @JoinColumn(name = "FK_ID_PEDIDO_COMPRA", referencedColumnName = "ID_PEDIDO_COMPRA", nullable = false)
     private PedidoCompra pedidoCompra;
@@ -46,6 +49,7 @@ public class Cotizacion {
     }
 
     public Cotizacion(PedidoCompra pedidoCompra, Proveedor proveedor) {
+        this.eliminado = false;
         this.pedidoCompra = pedidoCompra;
         this.proveedor = proveedor;
     }
@@ -53,6 +57,7 @@ public class Cotizacion {
     // Constructor desde DTO
     public Cotizacion(CotizacionDTO cotizacionDTO) {
         this.id = cotizacionDTO.getId();
+        this.nroCotizacion = cotizacionDTO.getNroCotizacion();
         this.pedidoCompra = new PedidoCompra(cotizacionDTO.getPedidoCompra());
         this.proveedor = new Proveedor(cotizacionDTO.getProveedor());
         this.fechaEmision = cotizacionDTO.getFechaEmision();
@@ -62,6 +67,10 @@ public class Cotizacion {
     // Getters
     public Integer getId() {
         return id;
+    }
+
+    public String getNroCotizacion() {
+        return nroCotizacion;
     }
 
     public PedidoCompra getPedidoCompra() {
@@ -87,6 +96,10 @@ public class Cotizacion {
     // Setters
     public void setId(Integer idPedidoCotizacion) {
         this.id = idPedidoCotizacion;
+    }
+
+    public void setNroCotizacion(String nroCotizacion) {
+        this.nroCotizacion = nroCotizacion;
     }
 
     public void setPedidoCompra(PedidoCompra pedidoCompra) {
