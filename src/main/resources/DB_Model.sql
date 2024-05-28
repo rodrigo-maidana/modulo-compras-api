@@ -8,416 +8,250 @@ DROP DATABASE modulo_compras;
 
 use modulo_compras;
 
+SHOW CREATE TABLE categorias;
+SHOW CREATE TABLE marcas;
+SHOW CREATE TABLE productos;
+
+SHOW CREATE TABLE depositos;
+
+SHOW CREATE TABLE proveedores;
+SHOW CREATE TABLE proveedores_categorias;
+
+SHOW CREATE TABLE pedidos_compra;
+SHOW CREATE TABLE pedidos_detalles;
+
+SHOW CREATE TABLE cotizaciones;
+SHOW CREATE TABLE cotizacion_detalles;
+SHOW CREATE TABLE users;
+SHOW CREATE TABLE users_seq;
+
+
 /*==============================================================*/
 /* Table: categorias                                            */
 /*==============================================================*/
-CREATE TABLE categorias
-(
-   id_categoria   	INT AUTO_INCREMENT,
-   str_nombre     	VARCHAR(60) NOT NULL,
-   bool_eliminado	BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (id_categoria)
-);
+CREATE TABLE `categorias` (
+  `id_categoria` int NOT NULL AUTO_INCREMENT,
+  `bool_eliminado` bit(1) NOT NULL,
+  `str_nombre` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_categoria`)
+)
 
-show tables;
-
-/* Inserts para categorías */
-INSERT INTO categorias (str_nombre, bool_eliminado) VALUES
-('Herramientas Manuales', FALSE),
-('Herramientas Eléctricas', FALSE),
-('Materiales de Construcción', FALSE),
-('Pinturas y Accesorios', FALSE),
-('Plomería', FALSE),
-('Electricidad', FALSE),
-('Jardinería', FALSE),
-('Ferretería General', FALSE),
-('Tornillería', FALSE),
-('Fijaciones y Anclajes', FALSE),
-('Cerrajería', FALSE),
-('Automatización', FALSE),
-('Carpintería', FALSE),
-('Seguridad Industrial', FALSE),
-('Equipos de Protección Personal', FALSE),
-('Iluminación', FALSE),
-('Químicos', FALSE),
-('Soldadura', FALSE),
-('Climatización', FALSE),
-('Fontanería', FALSE),
-('Adhesivos y Selladores', FALSE),
-('Accesorios de Baño', FALSE),
-('Accesorios de Cocina', FALSE),
-('Muebles y Estanterías', FALSE),
-('Puertas y Ventanas', FALSE),
-('Ventilación', FALSE),
-('Riego y Drenaje', FALSE),
-('Maquinaria Pesada', FALSE),
-('Automotriz y Transporte', FALSE),
-('Artículos de Limpieza', FALSE);
-
+/*Insert categorias*/
+INSERT INTO `categorias` (`id_categoria`, `bool_eliminado`, `str_nombre`) VALUES
+(1, b'0', 'Herramientas Manuales'),
+(2, b'0', 'Herramientas Eléctricas'),
+(3, b'0', 'Materiales de Construcción'),
+(4, b'0', 'Pinturas y Accesorios'),
+(5, b'0', 'Jardinería');
 
 
 /*==============================================================*/
 /* Table: marcas                                                */
 /*==============================================================*/
-CREATE TABLE marcas
-(
-   id_marca       	INT AUTO_INCREMENT,
-   str_nombre     	VARCHAR(200) NOT NULL,
-   bool_eliminado   BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (id_marca)
+CREATE TABLE `marcas` (
+  `id_marca` int NOT NULL AUTO_INCREMENT,
+  `bool_eliminado` bit(1) DEFAULT NULL,
+  `str_nombre` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_marca`)
 );
 
-/* Inserts para marcas */
-INSERT INTO marcas (str_nombre, bool_eliminado) VALUES
-('Bosch', FALSE),
-('Makita', FALSE),
-('DeWalt', FALSE),
-('Black & Decker', FALSE),
-('Stanley', FALSE),
-('Hitachi', FALSE),
-('Metabo', FALSE),
-('Milwaukee', FALSE),
-('Hilti', FALSE),
-('Ryobi', FALSE),
-('Skil', FALSE),
-('Einhell', FALSE),
-('Craftsman', FALSE),
-('Ridgid', FALSE),
-('Dremel', FALSE),
-('Porter-Cable', FALSE),
-('Festool', FALSE),
-('Klein Tools', FALSE),
-('Snap-on', FALSE),
-('Irwin', FALSE),
-('Husky', FALSE),
-('Senco', FALSE),
-('Paslode', FALSE),
-('Simpson Strong-Tie', FALSE),
-('Estwing', FALSE),
-('Wera', FALSE),
-('Knipex', FALSE),
-('Leatherman', FALSE),
-('Bahco', FALSE),
-('Wiha', FALSE);
+/*Insert marcas*/
+INSERT INTO `marcas` (`id_marca`, `bool_eliminado`, `str_nombre`) VALUES
+(1, b'0', 'Stanley'),
+(2, b'0', 'Bosch'),
+(3, b'0', 'Makita'),
+(4, b'0', 'DeWalt'),
+(5, b'0', 'Truper');
 
 /*==============================================================*/
 /* Table: productos                                             */
 /*==============================================================*/
-CREATE TABLE productos
-(
-   id_producto          INT AUTO_INCREMENT,
-   fk_id_marca          INT,
-   fk_id_categoria      INT,
-   str_descripcion      VARCHAR(60),
-   bool_eliminado   	BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (id_producto),
-   FOREIGN KEY (fk_id_marca) REFERENCES marcas(id_marca),
-   FOREIGN KEY (fk_id_categoria) REFERENCES categorias(id_categoria)
+CREATE TABLE `productos` (
+  `id_producto` int NOT NULL AUTO_INCREMENT,
+  `str_descripcion` varchar(255) NOT NULL,
+  `bool_eliminado` bit(1) NOT NULL,
+  `fk_id_categoria` int NOT NULL,
+  `fk_id_marca` int NOT NULL,
+  PRIMARY KEY (`id_producto`),
+  KEY `FKh8p9ls86vpm6bugkl95nqqhsw` (`fk_id_categoria`),
+  KEY `FKscb203xo285vyjkjncnaq6ojt` (`fk_id_marca`),
+  CONSTRAINT `FKh8p9ls86vpm6bugkl95nqqhsw` FOREIGN KEY (`fk_id_categoria`) REFERENCES `categorias` (`id_categoria`),
+  CONSTRAINT `FKscb203xo285vyjkjncnaq6ojt` FOREIGN KEY (`fk_id_marca`) REFERENCES `marcas` (`id_marca`)
 );
 
-INSERT INTO productos (fk_id_marca, fk_id_categoria, str_descripcion, bool_eliminado) VALUES
-(1, 1, 'Taladro Bosch Profesional', FALSE),
-(2, 2, 'Atornillador Inalámbrico Makita', FALSE),
-(3, 3, 'Cemento DeWalt 25kg', FALSE),
-(4, 4, 'Pintura Acrílica Black & Decker 1L', FALSE),
-(5, 5, 'Llave de Paso Stanley', FALSE),
-(6, 6, 'Cable Eléctrico Hitachi 100m', FALSE),
-(7, 7, 'Tijeras de Jardín Metabo', FALSE),
-(8, 8, 'Cinta Métrica Milwaukee 5m', FALSE),
-(9, 9, 'Tornillo de Madera Hilti 50mm', FALSE),
-(10, 10, 'Anclaje Químico Ryobi', FALSE),
-(11, 11, 'Candado de Seguridad Skil', FALSE),
-(12, 12, 'Kit de Automatización Einhell', FALSE),
-(13, 13, 'Sierra de Carpintero Craftsman', FALSE),
-(14, 14, 'Casco de Seguridad Ridgid', FALSE),
-(15, 15, 'Guantes de Protección Dremel', FALSE),
-(16, 16, 'Lámpara LED Porter-Cable', FALSE),
-(17, 17, 'Desengrasante Festool 500ml', FALSE),
-(18, 18, 'Máscara de Soldadura Klein Tools', FALSE),
-(19, 19, 'Aire Acondicionado Snap-on', FALSE),
-(20, 20, 'Tubería de Cobre Irwin 10m', FALSE),
-(21, 21, 'Silicona Selladora Husky', FALSE),
-(22, 22, 'Espejo de Baño Senco', FALSE),
-(23, 23, 'Grifo de Cocina Paslode', FALSE),
-(24, 24, 'Estantería de Metal Simpson Strong-Tie', FALSE),
-(25, 25, 'Puerta de Madera Estwing', FALSE),
-(26, 26, 'Ventilador de Techo Wera', FALSE),
-(27, 27, 'Sistema de Riego Knipex', FALSE),
-(28, 28, 'Excavadora Leatherman', FALSE),
-(29, 29, 'Aceite para Motor Bahco 1L', FALSE),
-(30, 30, 'Escoba de Limpieza Wiha', FALSE),
-(1, 2, 'Lijadora Bosch', FALSE),
-(2, 1, 'Martillo Makita', FALSE),
-(3, 4, 'Rodillo de Pintura DeWalt', FALSE),
-(4, 3, 'Ladrillo Black & Decker', FALSE),
-(5, 6, 'Enchufe Stanley', FALSE),
-(6, 5, 'Válvula de Agua Hitachi', FALSE),
-(7, 7, 'Corta Césped Metabo', FALSE),
-(8, 8, 'Cerradura Milwaukee', FALSE),
-(9, 9, 'Tornillo para Concreto Hilti', FALSE),
-(10, 10, 'Espárrago Ryobi', FALSE),
-(11, 11, 'Llave Allen Skil', FALSE),
-(12, 12, 'Kit de Automatización Einhell Pro', FALSE),
-(13, 13, 'Sierra Circular Craftsman', FALSE),
-(14, 14, 'Protector Auditivo Ridgid', FALSE),
-(15, 15, 'Máscara de Protección Dremel', FALSE),
-(16, 16, 'Tira LED Porter-Cable', FALSE),
-(17, 17, 'Desoxidante Festool 500ml', FALSE),
-(18, 18, 'Guantes de Soldador Klein Tools', FALSE),
-(19, 19, 'Ventana de PVC Snap-on', FALSE),
-(20, 20, 'Manguera de PVC Irwin 20m', FALSE),
-(21, 21, 'Cemento Contacto Husky', FALSE),
-(22, 22, 'Porta Toallas Senco', FALSE),
-(23, 23, 'Fregadero de Acero Inoxidable Paslode', FALSE),
-(24, 24, 'Estante de Pared Simpson Strong-Tie', FALSE),
-(25, 25, 'Ventana de Madera Estwing', FALSE),
-(26, 26, 'Extractor de Aire Wera', FALSE),
-(27, 27, 'Bomba de Agua Knipex', FALSE),
-(28, 28, 'Bulldozer Leatherman', FALSE),
-(29, 29, 'Lubricante Multiusos Bahco 1L', FALSE),
-(30, 30, 'Paño de Limpieza Wiha', FALSE),
-(1, 3, 'Cinta Aislante Bosch', FALSE),
-(2, 4, 'Brocha Makita', FALSE),
-(3, 5, 'Llave Inglesa DeWalt', FALSE),
-(4, 6, 'Interruptor Black & Decker', FALSE),
-(5, 7, 'Podadora Stanley', FALSE),
-(6, 8, 'Taladro de Impacto Hitachi', FALSE),
-(7, 9, 'Tornillo de Seguridad Metabo', FALSE),
-(8, 10, 'Arandela Milwaukee', FALSE),
-(9, 11, 'Candado Hilti', FALSE),
-(10, 12, 'Control de Automatización Ryobi', FALSE),
-(11, 13, 'Cepillo de Carpintero Skil', FALSE),
-(12, 14, 'Protector Facial Einhell', FALSE),
-(13, 15, 'Guantes de Látex Craftsman', FALSE),
-(14, 16, 'Foco LED Ridgid', FALSE),
-(15, 17, 'Limpiador de Contactos Dremel', FALSE),
-(16, 18, 'Máscara para Soldar Porter-Cable', FALSE),
-(17, 19, 'Ventana de Aluminio Festool', FALSE),
-(18, 20, 'Tubo de PVC Klein Tools 10m', FALSE),
-(19, 21, 'Adhesivo Epóxico Snap-on', FALSE),
-(20, 22, 'Espejo con Luz Irwin', FALSE),
-(21, 23, 'Grifo Monomando Husky', FALSE),
-(22, 24, 'Estante de Metal Senco', FALSE),
-(23, 25, 'Puerta de Hierro Paslode', FALSE),
-(24, 26, 'Ventilador de Pared Simpson Strong-Tie', FALSE),
-(25, 27, 'Aspersor de Jardín Estwing', FALSE),
-(26, 28, 'Excavadora Pequeña Wera', FALSE),
-(27, 29, 'Aceite para Cadena Knipex 1L', FALSE),
-(28, 30, 'Cepillo de Barrer Leatherman', FALSE),
-(29, 1, 'Cemento Blanco Bahco 25kg', FALSE),
-(30, 2, 'Jabón para Manos Wiha', FALSE);
+/*Insert productos*/
+INSERT INTO `productos` (`id_producto`, `str_descripcion`, `bool_eliminado`, `fk_id_categoria`, `fk_id_marca`) VALUES
+(1, 'Martillo de Garra Stanley', b'0', 1, 1),
+(2, 'Taladro Inalámbrico Bosch', b'0', 2, 2),
+(3, 'Sierra Circular Makita', b'0', 2, 3),
+(4, 'Pintura Acrílica DeWalt', b'0', 4, 4),
+(5, 'Tijeras de Jardín Truper', b'0', 5, 5),
+(6, 'Destornillador Plano Stanley', b'0', 1, 1),
+(7, 'Lijadora Orbital Bosch', b'0', 2, 2),
+(8, 'Esmeriladora Angular Makita', b'0', 2, 3),
+(9, 'Brocha para Pintura DeWalt', b'0', 4, 4),
+(10, 'Rastrillo Truper', b'0', 5, 5),
+(11, 'Alicates de Corte Stanley', b'0', 1, 1),
+(12, 'Atornillador Eléctrico Bosch', b'0', 2, 2),
+(13, 'Rotomartillo Makita', b'0', 2, 3),
+(14, 'Rodillo para Pintura DeWalt', b'0', 4, 4),
+(15, 'Podadora de Césped Truper', b'0', 5, 5);
+
 
 /*==============================================================*/
 /* Table: depositos                                             */
 /*==============================================================*/
-CREATE TABLE depositos
-(
-   id_deposito    	INT AUTO_INCREMENT,
-   str_nombre     	VARCHAR(60) NOT NULL,
-   str_direccion  	VARCHAR(200) NOT NULL,
-   str_contacto   	VARCHAR(60) NOT NULL,
-   bool_eliminado   BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (id_deposito)
+CREATE TABLE `depositos` (
+  `id_deposito` int NOT NULL AUTO_INCREMENT,
+  `str_contacto` varchar(255) NOT NULL,
+  `str_direccion` varchar(255) NOT NULL,
+  `bool_eliminado` bit(1) NOT NULL,
+  `str_nombre` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_deposito`)
 );
 
-INSERT INTO depositos (str_nombre, str_direccion, str_contacto, bool_eliminado) VALUES
-('Depósito Central', 'Calle Principal 123, Ciudad', '0981123456', FALSE),
-('Depósito Norte', 'Av. Norte 456, Ciudad', '0982234567', FALSE),
-('Depósito Sur', 'Calle Sur 789, Ciudad', '0983345678', FALSE),
-('Depósito Este', 'Av. Este 101, Ciudad', '0984456789', FALSE),
-('Depósito Oeste', 'Calle Oeste 202, Ciudad', '0985567890', FALSE),
-('Depósito A', 'Calle A 303, Ciudad', '0986678901', FALSE),
-('Depósito B', 'Av. B 404, Ciudad', '0987789012', FALSE),
-('Depósito C', 'Calle C 505, Ciudad', '0988890123', FALSE),
-('Depósito D', 'Av. D 606, Ciudad', '0989901234', FALSE),
-('Depósito E', 'Calle E 707, Ciudad', '0981012345', FALSE),
-('Depósito F', 'Av. F 808, Ciudad', '0982123456', FALSE),
-('Depósito G', 'Calle G 909, Ciudad', '0983234567', FALSE),
-('Depósito H', 'Av. H 1010, Ciudad', '0984345678', FALSE),
-('Depósito I', 'Calle I 1111, Ciudad', '0985456789', FALSE),
-('Depósito J', 'Av. J 1212, Ciudad', '0986567890', FALSE),
-('Depósito K', 'Calle K 1313, Ciudad', '0987678901', FALSE),
-('Depósito L', 'Av. L 1414, Ciudad', '0988789012', FALSE),
-('Depósito M', 'Calle M 1515, Ciudad', '0989890123', FALSE),
-('Depósito N', 'Av. N 1616, Ciudad', '0980901234', FALSE),
-('Depósito O', 'Calle O 1717, Ciudad', '0981012345', FALSE),
-('Depósito P', 'Av. P 1818, Ciudad', '0982123456', FALSE),
-('Depósito Q', 'Calle Q 1919, Ciudad', '0983234567', FALSE),
-('Depósito R', 'Av. R 2020, Ciudad', '0984345678', FALSE),
-('Depósito S', 'Calle S 2121, Ciudad', '0985456789', FALSE),
-('Depósito T', 'Av. T 2222, Ciudad', '0986567890', FALSE),
-('Depósito U', 'Calle U 2323, Ciudad', '0987678901', FALSE),
-('Depósito V', 'Av. V 2424, Ciudad', '0988789012', FALSE),
-('Depósito W', 'Calle W 2525, Ciudad', '0989890123', FALSE),
-('Depósito X', 'Av. X 2626, Ciudad', '0980901234', FALSE),
-('Depósito Y', 'Calle Y 2727, Ciudad', '0981012345', FALSE);
+/*Insert depositos*/
+INSERT INTO `depositos` (`id_deposito`, `str_contacto`, `str_direccion`, `bool_eliminado`, `str_nombre`) VALUES
+(1, '0981123456', 'Avenida Principal 123', b'0', 'Depósito Central'),
+(2, '0982234567', 'Calle Secundaria 456', b'0', 'Depósito Norte'),
+(3, '0983345678', 'Boulevard Industrial 789', b'0', 'Depósito Sur');
 
 /*==============================================================*/
 /* Table: proveedores                                           */
 /*==============================================================*/
-CREATE TABLE proveedores
-(
-   id_proveedor   	INT AUTO_INCREMENT,
-   str_nombre     	VARCHAR(60) NOT NULL,
-   str_ruc        	VARCHAR(60) NOT NULL,
-   str_contacto   	VARCHAR(60) NOT NULL,
-   str_correo     	VARCHAR(60) NOT NULL,
-   str_direccion  	VARCHAR(200) NOT NULL,
-   bool_eliminado 	BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (id_proveedor)
-);
+CREATE TABLE `proveedores` (
+  `id_proveedor` int NOT NULL AUTO_INCREMENT,
+  `str_contacto` varchar(255) DEFAULT NULL,
+  `str_correo` varchar(255) DEFAULT NULL,
+  `str_direccion` varchar(255) DEFAULT NULL,
+  `bool_eliminado` bit(1) NOT NULL,
+  `str_nombre` varchar(255) NOT NULL,
+  `str_ruc` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_proveedor`)
+)
 
-INSERT INTO proveedores (str_nombre, str_ruc, str_contacto, str_correo, str_direccion, bool_eliminado) VALUES
-('Ferretería López', '80000001-1', '0981123456', 'contacto@ferreterialopez.com', 'Calle Principal 123, Ciudad', FALSE),
-('Materiales González', '80000002-2', '0982234567', 'ventas@materialesgonzalez.com', 'Av. Norte 456, Ciudad', FALSE),
-('Construcciones Martínez', '80000003-3', '0983345678', 'info@construccionesmartinez.com', 'Calle Sur 789, Ciudad', FALSE),
-('Suministros Pérez', '80000004-4', '0984456789', 'contacto@suministrosperez.com', 'Av. Este 101, Ciudad', FALSE),
-('Herramientas Sánchez', '80000005-5', '0985567890', 'ventas@herramientassanchez.com', 'Calle Oeste 202, Ciudad', FALSE),
-('Electricidad Ruiz', '80000006-6', '0986678901', 'info@electricidadruiz.com', 'Calle A 303, Ciudad', FALSE),
-('Plomería Fernández', '80000007-7', '0987789012', 'contacto@plomeriafernandez.com', 'Av. B 404, Ciudad', FALSE),
-('Pinturas Gómez', '80000008-8', '0988890123', 'ventas@pinturasgomez.com', 'Calle C 505, Ciudad', FALSE),
-('Cerrajería Torres', '80000009-9', '0989901234', 'info@cerrajeriatorres.com', 'Av. D 606, Ciudad', FALSE),
-('Automatización Ramírez', '80000010-0', '0981012345', 'contacto@automatizacionramirez.com', 'Calle E 707, Ciudad', FALSE),
-('Carpintería Díaz', '80000011-1', '0982123456', 'ventas@carpinteriadiaz.com', 'Av. F 808, Ciudad', FALSE),
-('Seguridad Industrial Vega', '80000012-2', '0983234567', 'info@seguridadindustrialvega.com', 'Calle G 909, Ciudad', FALSE),
-('Iluminación Mendoza', '80000013-3', '0984345678', 'contacto@iluminacionmendoza.com', 'Av. H 1010, Ciudad', FALSE),
-('Químicos Ortega', '80000014-4', '0985456789', 'ventas@quimicosortega.com', 'Calle I 1111, Ciudad', FALSE),
-('Soldadura Romero', '80000015-5', '0986567890', 'info@soldaduraromero.com', 'Av. J 1212, Ciudad', FALSE),
-('Fontanería Herrera', '80000016-6', '0987678901', 'contacto@fontaneriaherrera.com', 'Calle K 1313, Ciudad', FALSE),
-('Adhesivos Vázquez', '80000017-7', '0988789012', 'ventas@adhesivosvazquez.com', 'Av. L 1414, Ciudad', FALSE),
-('Accesorios de Baño Castro', '80000018-8', '0989890123', 'info@accesoriosdebanocastro.com', 'Calle M 1515, Ciudad', FALSE),
-('Accesorios de Cocina Morales', '80000019-9', '0980901234', 'contacto@accesoriosdecocinamorales.com', 'Av. N 1616, Ciudad', FALSE),
-('Muebles y Estanterías Peña', '80000020-0', '0981012345', 'ventas@mueblesyestanteriaspena.com', 'Calle O 1717, Ciudad', FALSE),
-('Puertas y Ventanas Castillo', '80000021-1', '0982123456', 'info@puertasventanascastillo.com', 'Av. P 1818, Ciudad', FALSE),
-('Ventilación Ríos', '80000022-2', '0983234567', 'contacto@ventilacionrios.com', 'Calle Q 1919, Ciudad', FALSE),
-('Riego y Drenaje Guzmán', '80000023-3', '0984345678', 'ventas@riegoedrenajeguzman.com', 'Av. R 2020, Ciudad', FALSE),
-('Maquinaria Pesada Flores', '80000024-4', '0985456789', 'info@maquinariapesadaflores.com', 'Calle S 2121, Ciudad', FALSE),
-('Automotriz y Transporte Medina', '80000025-5', '0986567890', 'contacto@automotriztransporte.com', 'Av. T 2222, Ciudad', FALSE),
-('Artículos de Limpieza Silva', '80000026-6', '0987678901', 'ventas@articulosdelimpiezasilva.com', 'Calle U 2323, Ciudad', FALSE),
-('Ferretería Navarro', '80000027-7', '0988789012', 'info@ferreterianavarro.com', 'Av. V 2424, Ciudad', FALSE),
-('Materiales Ortega', '80000028-8', '0989890123', 'contacto@materialesortega.com', 'Calle W 2525, Ciudad', FALSE),
-('Suministros Rodríguez', '80000029-9', '0980901234', 'ventas@suministrosrodriguez.com', 'Av. X 2626, Ciudad', FALSE),
-('Herramientas Jiménez', '80000030-0', '0981012345', 'info@herramientasjimenez.com', 'Calle Y 2727, Ciudad', FALSE);
+/*Insert proveedores*/
+INSERT INTO `proveedores` (`id_proveedor`, `str_contacto`, `str_correo`, `str_direccion`, `bool_eliminado`, `str_nombre`, `str_ruc`) VALUES
+(1, '0984456789', 'contacto1@empresa.com', 'Calle Comercial 123', b'0', 'Ferretería ABC S.A.', '80012345-6'),
+(2, '0985567890', 'contacto2@empresa.com', 'Avenida Industrial 456', b'0', 'Herramientas y Más S.R.L.', '80023456-7'),
+(3, '0986678901', 'contacto3@empresa.com', 'Boulevard de los Negocios 789', b'0', 'Construcciones XYZ Ltda.', '80034567-8'),
+(4, '0987789012', 'contacto4@empresa.com', 'Parque Empresarial 101', b'0', 'Materiales y Servicios S.A.', '80045678-9'),
+(5, '0988890123', 'contacto5@empresa.com', 'Centro Comercial 202', b'0', 'Suministros Integrales S.R.L.', '80056789-0');
+
+
+/*==============================================================*/
+/* Table: proveedores_categorias                                */
+/*==============================================================*/
+CREATE TABLE `proveedores_categorias` (
+  `id_proveedor_categoria` int NOT NULL AUTO_INCREMENT,
+  `id_categoria` int NOT NULL,
+  `id_proveedor` int NOT NULL,
+  PRIMARY KEY (`id_proveedor_categoria`),
+  KEY `FKephrpguqqhg4rglabnj2ihvt0` (`id_categoria`),
+  KEY `FKhxldlutxikdj3vnnj0ps57da4` (`id_proveedor`),
+  CONSTRAINT `FKephrpguqqhg4rglabnj2ihvt0` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`),
+  CONSTRAINT `FKhxldlutxikdj3vnnj0ps57da4` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`)
+)
+
+/*Insert proveedores_categorias*/
+INSERT INTO `proveedores_categorias` (`id_proveedor_categoria`, `id_categoria`, `id_proveedor`) VALUES
+(1, 1, 1), -- Ferretería ABC S.A. provee Herramientas Manuales
+(2, 2, 1), -- Ferretería ABC S.A. provee Herramientas Eléctricas
+(3, 3, 2), -- Herramientas y Más S.R.L. provee Materiales de Construcción
+(4, 4, 2), -- Herramientas y Más S.R.L. provee Pinturas y Accesorios
+(5, 5, 3), -- Construcciones XYZ Ltda. provee Jardinería
+(6, 1, 4), -- Materiales y Servicios S.A. provee Herramientas Manuales
+(7, 2, 4), -- Materiales y Servicios S.A. provee Herramientas Eléctricas
+(8, 3, 5), -- Suministros Integrales S.R.L. provee Materiales de Construcción
+(9, 4, 5), -- Suministros Integrales S.R.L. provee Pinturas y Accesorios
+(10, 5, 5); -- Suministros Integrales S.R.L. provee Jardinería
 
 /*==============================================================*/
 /* Table: pedidos_compra                                        */
 /*==============================================================*/
-CREATE TABLE pedidos_compra
-(
-   id_pedido_compra 	INT AUTO_INCREMENT,
-   date_fecha_emision 	DATE,
-   str_estado 			VARCHAR(60),
-   bool_eliminado   	BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (id_pedido_compra)
-);
+CREATE TABLE `pedidos_compra` (
+  `id_pedido_compra` int NOT NULL AUTO_INCREMENT,
+  `bool_eliminado` bit(1) NOT NULL,
+  `str_estado` varchar(255) NOT NULL,
+  `date_fecha_emision` datetime(6) NOT NULL,
+  `str_nro_pedido` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_pedido_compra`),
+  UNIQUE KEY `UK_mkk34arjsixfk5evdgo7fwyp8` (`str_nro_pedido`)
+)
 
--- Insertando pedidos de compra
-INSERT INTO pedidos_compra (date_fecha_emision, str_estado, bool_eliminado) VALUES
-('2024-01-01', 'Pendiente', FALSE),
-('2024-01-02', 'Procesando', FALSE),
-('2024-01-03', 'Completado', FALSE),
-('2024-01-04', 'Cancelado', FALSE),
-('2024-01-05', 'Pendiente', FALSE),
-('2024-01-06', 'Procesando', FALSE),
-('2024-01-07', 'Completado', FALSE),
-('2024-01-08', 'Cancelado', FALSE),
-('2024-01-09', 'Pendiente', FALSE),
-('2024-01-10', 'Procesando', FALSE);
+/*Insert pedidos_compra*/
+INSERT INTO `pedidos_compra` (`id_pedido_compra`, `bool_eliminado`, `str_estado`, `date_fecha_emision`, `str_nro_pedido`) VALUES
+(1, b'0', 'Pendiente', '2024-05-01 10:00:00.000000', 'PC-20240501-001'),
+(2, b'0', 'Completado', '2024-05-02 11:30:00.000000', 'PC-20240502-002'),
+(3, b'0', 'Pendiente', '2024-05-03 14:15:00.000000', 'PC-20240503-003'),
+(4, b'0', 'Completado', '2024-05-04 09:45:00.000000', 'PC-20240504-004'),
+(5, b'0', 'Pendiente', '2024-05-05 16:20:00.000000', 'PC-20240505-005');
 
 /*==============================================================*/
 /* Table: pedidos_detalles                                      */
 /*==============================================================*/
-CREATE TABLE pedidos_detalles
-(
-   id_pedido_detalle 	INT AUTO_INCREMENT,
-   fk_id_pedido_compra 	INT,
-   fk_id_producto 		INT,
-   int_cantidad 		INT,
-   bool_eliminado  		BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (id_pedido_detalle),
-   FOREIGN KEY (fk_id_pedido_compra) REFERENCES pedidos_compra(id_pedido_compra),
-   FOREIGN KEY (fk_id_producto) REFERENCES productos(id_producto)
-);
+CREATE TABLE `pedidos_detalles` (
+  `id_pedido_detalle` int NOT NULL AUTO_INCREMENT,
+  `int_cantidad` int NOT NULL,
+  `bool_eliminado` bit(1) NOT NULL,
+  `fk_id_pedido_compra` int NOT NULL,
+  `fk_id_producto` int NOT NULL,
+  PRIMARY KEY (`id_pedido_detalle`),
+  KEY `FKl97gkdg4pnpt9l6o7wuycihi6` (`fk_id_pedido_compra`),
+  KEY `FKmi8foa46g8hvmwp4mmavhpmxl` (`fk_id_producto`),
+  CONSTRAINT `FKl97gkdg4pnpt9l6o7wuycihi6` FOREIGN KEY (`fk_id_pedido_compra`) REFERENCES `pedidos_compra` (`id_pedido_compra`),
+  CONSTRAINT `FKmi8foa46g8hvmwp4mmavhpmxl` FOREIGN KEY (`fk_id_producto`) REFERENCES `productos` (`id_producto`)
+)
 
--- Insertando detalles de pedidos
-INSERT INTO pedidos_detalles (fk_id_pedido_compra, fk_id_producto, int_cantidad, bool_eliminado) VALUES
-(1, 1, 10, FALSE),
-(1, 2, 5, FALSE),
-(1, 3, 8, FALSE),
-(1, 4, 12, FALSE),
-(2, 5, 7, FALSE),
-(2, 6, 14, FALSE),
-(2, 7, 6, FALSE),
-(2, 8, 9, FALSE),
-(3, 9, 4, FALSE),
-(3, 10, 3, FALSE),
-(3, 11, 11, FALSE),
-(3, 12, 10, FALSE),
-(4, 13, 8, FALSE),
-(4, 14, 5, FALSE),
-(4, 15, 7, FALSE),
-(4, 16, 6, FALSE),
-(5, 17, 9, FALSE),
-(5, 18, 4, FALSE),
-(5, 19, 5, FALSE),
-(5, 20, 8, FALSE),
-(6, 21, 6, FALSE),
-(6, 22, 7, FALSE),
-(6, 23, 8, FALSE),
-(6, 24, 5, FALSE),
-(7, 25, 12, FALSE),
-(7, 26, 14, FALSE),
-(7, 27, 10, FALSE),
-(7, 28, 9, FALSE),
-(8, 29, 11, FALSE),
-(8, 30, 13, FALSE),
-(8, 1, 7, FALSE),
-(8, 2, 6, FALSE),
-(9, 3, 8, FALSE),
-(9, 4, 10, FALSE),
-(9, 5, 9, FALSE),
-(9, 6, 11, FALSE),
-(10, 7, 14, FALSE),
-(10, 8, 12, FALSE),
-(10, 9, 10, FALSE),
-(10, 10, 8, FALSE);
+/*Insert pedidos_detalles*/
+INSERT INTO `pedidos_detalles` (`id_pedido_detalle`, `int_cantidad`, `bool_eliminado`, `fk_id_pedido_compra`, `fk_id_producto`) VALUES
+(1, 10, b'0', 1, 1), -- Pedido 1, Producto 1 (Martillo de Garra Stanley)
+(2, 5, b'0', 1, 2), -- Pedido 1, Producto 2 (Taladro Inalámbrico Bosch)
+(3, 8, b'0', 2, 3), -- Pedido 2, Producto 3 (Sierra Circular Makita)
+(4, 15, b'0', 2, 4), -- Pedido 2, Producto 4 (Pintura Acrílica DeWalt)
+(5, 12, b'0', 3, 5), -- Pedido 3, Producto 5 (Tijeras de Jardín Truper)
+(6, 20, b'0', 3, 6), -- Pedido 3, Producto 6 (Destornillador Plano Stanley)
+(7, 7, b'0', 4, 7), -- Pedido 4, Producto 7 (Lijadora Orbital Bosch)
+(8, 9, b'0', 4, 8), -- Pedido 4, Producto 8 (Esmeriladora Angular Makita)
+(9, 6, b'0', 5, 9), -- Pedido 5, Producto 9 (Brocha para Pintura DeWalt)
+(10, 10, b'0', 5, 10); -- Pedido 5, Producto 10 (Rastrillo Truper)
 
 /*==============================================================*/
-/* Table: detalles_categorias_proveedor                         */
+/* Table: cotizaciones                                          */
 /*==============================================================*/
-create table detalles_categorias_proveedor
-(
-   id_detalle_categoria_proveedor int not null,
-   fk_id_proveedor      int,
-   fk_id_categoria      int,
-   primary key (id_detalle_categoria_proveedor)
-);
+CREATE TABLE `cotizaciones` (
+  `id_cotizacion` int NOT NULL AUTO_INCREMENT,
+  `bool_eliminado` bit(1) NOT NULL,
+  `str_estado` varchar(255) NOT NULL,
+  `date_fecha_emision` datetime(6) NOT NULL,
+  `str_nro_cotizacion` varchar(255) NOT NULL,
+  `fk_id_pedido_compra` int NOT NULL,
+  `fk_id_proveedor` int NOT NULL,
+  PRIMARY KEY (`id_cotizacion`),
+  UNIQUE KEY `UK_6cwqdeyhq2t7cbcucre39o2ad` (`str_nro_cotizacion`),
+  KEY `FKf60rgqqrjfljob850gww6qx90` (`fk_id_pedido_compra`),
+  KEY `FKllurbxbwdrpi09nd2ff8wwyuh` (`fk_id_proveedor`),
+  CONSTRAINT `FKf60rgqqrjfljob850gww6qx90` FOREIGN KEY (`fk_id_pedido_compra`) REFERENCES `pedidos_compra` (`id_pedido_compra`),
+  CONSTRAINT `FKllurbxbwdrpi09nd2ff8wwyuh` FOREIGN KEY (`fk_id_proveedor`) REFERENCES `proveedores` (`id_proveedor`)
+)
 
 /*==============================================================*/
-/* Table: pedidos_cotizacion                                    */
+/* Table: cotizacion_detalles                                   */
 /*==============================================================*/
-create table pedidos_cotizacion
-(
-   id_pedido_cotizacion int not null,
-   fk_id_proveedor      int,
-   fk_id_pedido_de_compra int,
-   date_fecha_emision   date,
-   str_estado           varchar(20),
-   primary key (id_pedido_cotizacion)
-);
+CREATE TABLE `cotizacion_detalles` (
+  `id_pedido_detalle` int NOT NULL AUTO_INCREMENT,
+  `int_cantidad` int NOT NULL,
+  `bool_eliminado` bit(1) NOT NULL,
+  `dec_precio_unitario` double NOT NULL,
+  `fk_id_cotizacion` int NOT NULL,
+  `fk_id_producto` int NOT NULL,
+  PRIMARY KEY (`id_pedido_detalle`),
+  KEY `FKhpl84uep1s3d92nubvl16kjv6` (`fk_id_cotizacion`),
+  KEY `FKjpf5fkehx6n5ju7pn580jrw84` (`fk_id_producto`),
+  CONSTRAINT `FKhpl84uep1s3d92nubvl16kjv6` FOREIGN KEY (`fk_id_cotizacion`) REFERENCES `cotizaciones` (`id_cotizacion`),
+  CONSTRAINT `FKjpf5fkehx6n5ju7pn580jrw84` FOREIGN KEY (`fk_id_producto`) REFERENCES `productos` (`id_producto`)
+)
 
-/*==============================================================*/
-/* Table: pedidos_cotizacion_detalles                           */
-/*==============================================================*/
-create table pedidos_cotizacion_detalles
-(
-   id_pedido_cotizacion_detalle int not null,
-   fk_id_pedido_cotizacion int,
-   fk_id_producto       int,
-   int_cantidad         int,
-   dec_costo_unitario   decimal,
-   primary key (id_pedido_cotizacion_detalle)
-);
 
 /*PENDIENTE DE IMPLEMENTAR API*/
 
