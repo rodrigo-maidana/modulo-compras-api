@@ -50,23 +50,23 @@ public class CotizacionService {
         public CotizacionDTO createCotizacion(CotizacionCreateDTO pedidoCotizacionCreateDTO) {
                 if (verifyIfExist(pedidoCotizacionCreateDTO.getIdPedidoCompra(),
                                 pedidoCotizacionCreateDTO.getIdProveedor())) {
-                        throw new IllegalStateException("Ya existe una cotización para este PedidoCompra y Proveedor");
+                        return null;
                 }
 
                 PedidoCompraDTO pedidoCompraDTO = pedidoCompraService
                                 .getPedidoCompraById(pedidoCotizacionCreateDTO.getIdPedidoCompra())
-                                .orElseThrow(() -> new IllegalArgumentException("PedidoCompra no encontrado"));
+                                .orElse(null);
 
                 ProveedorDTO proveedorDTO = proveedorService
                                 .getProveedorById(pedidoCotizacionCreateDTO.getIdProveedor())
-                                .orElseThrow(() -> new IllegalArgumentException("Proveedor no encontrado"));
+                                .orElse(null);
 
                 PedidoCompra pedidoCompra = new PedidoCompra(pedidoCompraDTO);
                 Proveedor proveedor = new Proveedor(proveedorDTO);
                 pedidoCompra.setEstado("Cotización Generada");
 
                 pedidoCompraService.updatePedidoCompra(pedidoCompra.getId(), new PedidoCompraDTO(pedidoCompra))
-                                .orElseThrow(() -> new IllegalStateException("Error al actualizar PedidoCompra"));
+                                .orElse(null);
 
                 Cotizacion newCotizacion = new Cotizacion(pedidoCompra, proveedor);
                 newCotizacion.setFechaEmision(new Date());
