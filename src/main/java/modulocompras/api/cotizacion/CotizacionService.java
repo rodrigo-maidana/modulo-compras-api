@@ -118,7 +118,7 @@ public class CotizacionService {
         }
 
         public List<Cotizacion> getAllCotizaciones() {
-                return cotizacionRepository.findByEliminadoFalse();
+                return cotizacionRepository.findByEliminadoFalseOrderByFechaEmisionDesc();
         }
 
         // Verificar si ya existe una cotización para el PedidoCompra y Proveedor
