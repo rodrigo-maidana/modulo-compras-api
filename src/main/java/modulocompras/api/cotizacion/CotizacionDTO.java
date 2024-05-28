@@ -8,6 +8,7 @@ import modulocompras.api.proveedor.ProveedorDTO;
 public class CotizacionDTO {
 
     private Integer id;
+    private String nroCotizacion;
     private PedidoCompraDTO pedidoCompra;
     private ProveedorDTO proveedor;
     private Date fechaEmision;
@@ -20,6 +21,7 @@ public class CotizacionDTO {
     // Constructor desde Entity
     public CotizacionDTO(Cotizacion pedidoCotizacion) {
         this.id = pedidoCotizacion.getId();
+        this.nroCotizacion = pedidoCotizacion.getNroCotizacion();
         this.pedidoCompra = new PedidoCompraDTO(pedidoCotizacion.getPedidoCompra());
         this.proveedor = new ProveedorDTO(pedidoCotizacion.getProveedor());
         this.fechaEmision = pedidoCotizacion.getFechaEmision();
@@ -29,6 +31,10 @@ public class CotizacionDTO {
     // Getters
     public Integer getId() {
         return id;
+    }
+
+    public String getNroCotizacion() {
+        return nroCotizacion;
     }
 
     public PedidoCompraDTO getPedidoCompra() {
@@ -50,6 +56,10 @@ public class CotizacionDTO {
     // Setters
     public void setId(Integer idPedidoCotizacion) {
         this.id = idPedidoCotizacion;
+    }
+
+    public void setNroCotizacion(String nroCotizacion) {
+        this.nroCotizacion = nroCotizacion;
     }
 
     public void setPedidoCompra(PedidoCompraDTO pedidoCompra) {
