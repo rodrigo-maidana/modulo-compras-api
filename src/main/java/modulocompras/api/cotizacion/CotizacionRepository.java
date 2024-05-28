@@ -43,4 +43,13 @@ public interface CotizacionRepository extends JpaRepository<Cotizacion, Integer>
      */
     public List<Cotizacion> findByFechaEmision(Date fecha);
 
+    /**
+     * Verifica si existe un pedido de cotización por su ID y si no ha sido
+     * eliminado.
+     *
+     * @param id el ID del pedido de cotización
+     * @return true si existe y no ha sido eliminado, de lo contrario, false
+     */
+    public boolean existsByPedidoCompraIdAndProveedorIdAndEliminadoFalse(Integer pedidoCompraId, Integer proveedorId);
+
 }
