@@ -1,5 +1,6 @@
 package modulocompras.api.cotizacion;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,23 +29,23 @@ import modulocompras.api.proveedor_categoria.ProveedorCategoriaService;
 public class CotizacionService {
 
         @Autowired
-        private CotizacionRepository pedidoCotizacionRepository;
-
-        @Autowired
-        private PedidoCompraService pedidoCompraService;
-
-        @Autowired
-        private ProveedorService proveedorService;
-
-        @Autowired
-        private ProveedorCategoriaService proveedorCategoriaService;
+        private CotizacionRepository cotizacionRepository;
 
         @Autowired
         @Lazy
         private CotizacionDetalleService cotizacionDetalleService;
 
         @Autowired
+        private PedidoCompraService pedidoCompraService;
+
+        @Autowired
         private PedidoDetalleService pedidoDetalleService;
+
+        @Autowired
+        private ProveedorService proveedorService;
+
+        @Autowired
+        private ProveedorCategoriaService proveedorCategoriaService;
 
         public CotizacionDTO createCotizacion(CotizacionCreateDTO pedidoCotizacionCreateDTO) {
                 if (verifyIfExist(pedidoCotizacionCreateDTO.getIdPedidoCompra(),
@@ -70,8 +71,9 @@ public class CotizacionService {
                 Cotizacion newCotizacion = new Cotizacion(pedidoCompra, proveedor);
                 newCotizacion.setFechaEmision(new Date());
                 newCotizacion.setEstado("Pendiente");
+                newCotizacion.setNroCotizacion(generateNroCotizacion());
 
-                Cotizacion savedCotizacion = pedidoCotizacionRepository.save(newCotizacion);
+                Cotizacion savedCotizacion = cotizacionRepository.save(newCotizacion);
 
                 List<PedidoDetalle> pedidoDetalles = pedidoDetalleService.getDetallesByPedidoCompraId(
                                 pedidoCotizacionCreateDTO.getIdPedidoCompra());
@@ -93,16 +95,35 @@ public class CotizacionService {
                 return new CotizacionDTO(savedCotizacion);
         }
 
+        // Generar el número de cotización
+        private String generateNroCotizacion() {
+                SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+                String currentDate = sdf.format(new Date());
+
+                Date today = new Date(new java.util.Date().getTime());
+
+                // Contar las cotizaciones de hoy
+                List<Cotizacion> cotizacionesHoy = cotizacionRepository.findByFechaEmision(today);
+
+                int secuencia = cotizacionesHoy.size() + 1;
+
+                // Formatear la secuencia a cuatro dígitos
+                String secuenciaStr = String.format("%04d", secuencia);
+
+                return "CT-" + currentDate + "-" + secuenciaStr;
+        }
+
         public Optional<Cotizacion> getCotizacionById(Integer id) {
-                return pedidoCotizacionRepository.findByIdAndEliminadoFalse(id);
+                return cotizacionRepository.findByIdAndEliminadoFalse(id);
         }
 
         public List<Cotizacion> getAllCotizaciones() {
-                return pedidoCotizacionRepository.findByEliminadoFalse();
+                return cotizacionRepository.findByEliminadoFalse();
         }
 
+        // Verificar si ya existe una cotización para el PedidoCompra y Proveedor
         public boolean verifyIfExist(Integer pedidoCompraId, Integer proveedorId) {
-                return pedidoCotizacionRepository.existsByPedidoCompraIdAndProveedorIdAndEliminadoFalse(pedidoCompraId,
+                return cotizacionRepository.existsByPedidoCompraIdAndProveedorIdAndEliminadoFalse(pedidoCompraId,
                                 proveedorId);
         }
 
