@@ -56,21 +56,16 @@ public class CotizacionDetalleService {
         cotizacionDetalleRepository.save(newCotizacionDetalle);
     }
 
-    public Optional<CotizacionDetalleDTO> updateCotizacionDetalle(Integer id,
-            CotizacionDetalleDTO cotizacionDetalleDTO) {
+    public Optional<CotizacionDetalle> updateCotizacionDetalle(Integer id, CotizacionDetalleDTO cotizacionDetalleDTO) {
         return cotizacionDetalleRepository.findByIdAndEliminadoFalse(id)
                 .map(existingCotizacionDetalle -> {
                     existingCotizacionDetalle.setCantidad(cotizacionDetalleDTO.getCantidad());
+                    existingCotizacionDetalle.setPrecioUnitario(cotizacionDetalleDTO.getPrecioUnitario());
 
-                    Optional<Producto> optionalProducto = productoService
-                            .getProductoById(cotizacionDetalleDTO.getProducto().getId());
+                    productoService.getProductoById(cotizacionDetalleDTO.getProducto().getId())
+                            .ifPresent(existingCotizacionDetalle::setProducto);
 
-                    if (optionalProducto.isPresent())
-                        existingCotizacionDetalle.setProducto(optionalProducto.get());
-
-                    CotizacionDetalle updatedCotizacionDetalle = cotizacionDetalleRepository
-                            .save(existingCotizacionDetalle);
-                    return new CotizacionDetalleDTO(updatedCotizacionDetalle);
+                    return cotizacionDetalleRepository.save(existingCotizacionDetalle);
                 });
     }
 
