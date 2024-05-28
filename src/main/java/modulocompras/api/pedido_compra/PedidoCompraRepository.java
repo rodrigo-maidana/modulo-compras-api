@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -42,6 +44,7 @@ public interface PedidoCompraRepository extends JpaRepository<PedidoCompra, Inte
      * @param fecha la fecha de emisión
      * @return la lista de pedidos de compra por su fecha de emisión
      */
-    List<PedidoCompra> findByFechaEmision(Date fecha);
+    @Query("SELECT p FROM PedidoCompra p WHERE DATE(p.fechaEmision) = DATE(:fecha)")
+    List<PedidoCompra> findByFechaEmision(@Param("fecha") Date fecha);
 
 }

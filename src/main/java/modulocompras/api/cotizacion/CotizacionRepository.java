@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -41,7 +43,8 @@ public interface CotizacionRepository extends JpaRepository<Cotizacion, Integer>
      * @param fecha la fecha de emisión
      * @return la lista de pedidos de cotización por su fecha de emisión
      */
-    public List<Cotizacion> findByFechaEmision(Date fecha);
+    @Query("SELECT p FROM Cotizacion p WHERE DATE(p.fechaEmision) = DATE(:fecha)")
+    public List<Cotizacion> findByFechaEmision(@Param("fecha") Date fecha);
 
     /**
      * Verifica si existe un pedido de cotización por su ID y si no ha sido
