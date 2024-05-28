@@ -127,7 +127,13 @@ public class CotizacionService {
                                 proveedorId);
         }
 
-        public void updateCotizacion(Integer id, Cotizacion cotizacion) {
+        public void setCotizado(Integer id) {
+                Cotizacion cotizacion = getCotizacionById(id).orElse(null);
+                if (cotizacion == null) {
+                        throw new IllegalArgumentException("Cotización no encontrada");
+                }
+
+                cotizacion.setEstado("Cotizado");
                 cotizacionRepository.save(cotizacion);
         }
 
