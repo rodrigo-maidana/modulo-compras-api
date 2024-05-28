@@ -57,8 +57,6 @@ public class CotizacionDetalleService {
     }
 
     public Optional<CotizacionDetalle> updateCotizacionDetalle(Integer id, CotizacionDetalleDTO cotizacionDetalleDTO) {
-        cotizacionService.setCotizado(id);
-
         return cotizacionDetalleRepository.findByIdAndEliminadoFalse(id)
                 .map(existingCotizacionDetalle -> {
                     existingCotizacionDetalle.setCantidad(cotizacionDetalleDTO.getCantidad());

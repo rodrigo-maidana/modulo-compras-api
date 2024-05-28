@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,6 +64,17 @@ public class CotizacionController {
             return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(savedCotizacionDTO);
+    }
+
+    // Actualizar un pedido de cotización existente
+    @PutMapping("/{id}")
+    public ResponseEntity<CotizacionDTO> updateCotizacion(@PathVariable Integer id,
+            @RequestBody CotizacionDTO cotizacionDTO) {
+        CotizacionDTO updatedCotizacion = cotizacionService.updateCotizacion(id, cotizacionDTO);
+        if (updatedCotizacion == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedCotizacion);
     }
 
     // Obtener todos los detalles de un pedido de cotización
