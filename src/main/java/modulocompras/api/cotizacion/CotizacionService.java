@@ -127,4 +127,8 @@ public class CotizacionService {
                                 proveedorId);
         }
 
+        public void updateCotizacion(Integer id, Cotizacion cotizacion) {
+                cotizacionRepository.save(cotizacion);
+        }
+
 }
