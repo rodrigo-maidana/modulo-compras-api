@@ -72,7 +72,7 @@ public class CotizacionController {
             @RequestBody CotizacionDTO cotizacionDTO) {
         CotizacionDTO updatedCotizacion = cotizacionService.updateCotizacion(id, cotizacionDTO);
         if (updatedCotizacion == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(updatedCotizacion);
     }

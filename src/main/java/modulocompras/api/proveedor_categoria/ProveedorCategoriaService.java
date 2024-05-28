@@ -31,7 +31,7 @@ public class ProveedorCategoriaService {
     public ProveedorCategoriaDTO addCategoriaToProveedor(ProveedorCategoriaDTO proveedorCategoriaDTO) {
         if (verifyIfCategoriaExistsForProveedor(proveedorCategoriaDTO.getProveedorId(),
                 proveedorCategoriaDTO.getCategoriaId())) {
-            throw new IllegalStateException("La categoría ya está asignada a este proveedor");
+            return null;
         }
 
         Optional<ProveedorDTO> optionalProveedor = proveedorService
