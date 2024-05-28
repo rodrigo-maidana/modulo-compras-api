@@ -8,24 +8,6 @@ DROP DATABASE modulo_compras;
 
 use modulo_compras;
 
-SHOW CREATE TABLE categorias;
-SHOW CREATE TABLE marcas;
-SHOW CREATE TABLE productos;
-
-SHOW CREATE TABLE depositos;
-
-SHOW CREATE TABLE proveedores;
-SHOW CREATE TABLE proveedores_categorias;
-
-SHOW CREATE TABLE pedidos_compra;
-SHOW CREATE TABLE pedidos_detalles;
-
-SHOW CREATE TABLE cotizaciones;
-SHOW CREATE TABLE cotizacion_detalles;
-SHOW CREATE TABLE users;
-SHOW CREATE TABLE users_seq;
-
-
 /*==============================================================*/
 /* Table: categorias                                            */
 /*==============================================================*/
