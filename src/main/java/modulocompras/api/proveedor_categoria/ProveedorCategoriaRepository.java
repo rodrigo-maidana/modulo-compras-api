@@ -20,4 +20,7 @@ public interface ProveedorCategoriaRepository extends JpaRepository<ProveedorCat
 
     // Buscar una relación proveedor-categoría
     Optional<ProveedorCategoria> findByProveedorAndCategoria(Proveedor proveedor, Categoria categoria);
+
+    // Verificar si existe una relación proveedor-categoría
+    boolean existsByProveedorIdAndCategoriaId(Integer proveedorId, Integer categoriaId);
 }
