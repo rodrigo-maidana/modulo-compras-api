@@ -32,11 +32,10 @@ public class ProductoController {
 
     @PostMapping
     public ResponseEntity<ProductoDTO> createProducto(@RequestBody ProductoDTO productoDTO) {
-        Producto producto = productoService.getProductoById(productoDTO.getId()).orElse(null);
-        if (producto == null) {
-            return ResponseEntity.notFound().build();
-        }
         ProductoDTO savedProducto = productoService.createProducto(productoDTO).orElse(null);
+        if (savedProducto == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(savedProducto);
     }
 
