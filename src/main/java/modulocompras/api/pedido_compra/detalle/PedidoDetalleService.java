@@ -38,15 +38,18 @@ public class PedidoDetalleService {
     @Autowired
     private CotizacionDetalleService cotizacionesDetallesService;
 
+    // Método para obtener todos los detalles de pedidos
     public List<PedidoDetalle> getAllPedidosDetalles() {
         return pedidoDetalleRepository.findByEliminadoFalse();
     }
 
+    // Método para obtener un detalle de pedido por su ID
     public Optional<PedidoDetalleDTO> getPedidoDetalleById(Integer id) {
         return pedidoDetalleRepository.findByIdAndEliminadoFalse(id)
                 .map(PedidoDetalleDTO::new);
     }
 
+    // Método para crear un detalle de pedido
     public Optional<PedidoDetalleDTO> createPedidoDetalle(Integer id, PedidoDetalleDTO pedidoDetalleDTO) {
         Producto producto = productoService.getProductoById(pedidoDetalleDTO.getProducto().getId()).orElse(null);
         if (producto == null) {
@@ -83,6 +86,7 @@ public class PedidoDetalleService {
         return Optional.of(new PedidoDetalleDTO(savedPedidoDetalle));
     }
 
+    // Método para actualizar un detalle de pedido
     public Optional<PedidoDetalleDTO> updatePedidoDetalle(Integer id, PedidoDetalleDTO pedidoDetalleDTO) {
         return pedidoDetalleRepository.findByIdAndEliminadoFalse(id)
                 .map(existingPedidoDetalle -> {
@@ -93,6 +97,7 @@ public class PedidoDetalleService {
                 });
     }
 
+    // Método para eliminar un detalle de pedido
     public boolean deletePedidoDetalle(Integer id) {
         return pedidoDetalleRepository.findByIdAndEliminadoFalse(id)
                 .map(pedidoDetalle -> {
