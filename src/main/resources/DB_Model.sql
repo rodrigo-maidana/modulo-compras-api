@@ -150,6 +150,33 @@ CREATE TABLE `cotizacion_detalles` (
 )
 
 
+/*==============================================================*/
+/* Table: orden_compra                                          */
+/*==============================================================*/
+create table orden_compra
+(
+   id_orden_compra      int not null,
+   fk_id_proveedor      int,
+   fk_id_deposito       int,
+   date_fecha_emision   date,
+   str_estado           varchar(20),
+   primary key (id_orden_compra)
+);
+
+/*==============================================================*/
+/* Table: detalle_orden_compra                                  */
+/*==============================================================*/
+create table detalle_orden_compra
+(
+   id_detalle_orden_compra int not null,
+   fk_id_orden_compra   int,
+   id_producto          int,
+   int_cantidad         int,
+   dec_precio           decimal,
+   primary key (id_detalle_orden_compra)
+);
+
+
 /*PENDIENTE DE IMPLEMENTAR API*/
 
 /*==============================================================*/
@@ -176,19 +203,6 @@ create table detalles_pedido_devolucion
    fk_id_estado_producto_devuelto int,
    int_cantidad         int,
    primary key (id_detalle_pedido_devolucion)
-);
-
-/*==============================================================*/
-/* Table: detalle_orden_compra                                  */
-/*==============================================================*/
-create table detalle_orden_compra
-(
-   id_detalle_orden_compra int not null,
-   fk_id_orden_compra   int,
-   id_producto          int,
-   int_cantidad         int,
-   dec_precio           decimal,
-   primary key (id_detalle_orden_compra)
 );
 
 /*==============================================================*/
@@ -283,19 +297,6 @@ create table ordenes_pago
    str_estado           varchar(20),
    dec_total            decimal,
    primary key (id_orden_pago)
-);
-
-/*==============================================================*/
-/* Table: orden_compra                                          */
-/*==============================================================*/
-create table orden_compra
-(
-   id_orden_compra      int not null,
-   fk_id_proveedor      int,
-   fk_id_deposito       int,
-   date_fecha_emision   date,
-   str_estado           varchar(20),
-   primary key (id_orden_compra)
 );
 
 /*==============================================================*/
