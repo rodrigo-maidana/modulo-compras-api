@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import modulocompras.api.pedido_compra.detalle.PedidoDetalleDTO;
+import modulocompras.api.pedido_compra.detalle.PedidoDetallePrecioDTO;
 import modulocompras.api.pedido_compra.detalle.PedidoDetalleService;
 
 import java.util.List;
@@ -80,5 +81,12 @@ public class PedidoCompraController {
     @GetMapping("/preview")
     public PedidoCompraDTO previewPedidoCompra() {
         return pedidoCompraService.previewPedidoCompra();
+    }
+
+    // Obtener todos los precios de un detalle
+    @GetMapping("/{idPedidoCompra}/precios")
+    public ResponseEntity<List<PedidoDetallePrecioDTO>> getPrecios(@PathVariable Integer idPedidoCompra) {
+        List<PedidoDetallePrecioDTO> precios = pedidoDetalleService.getPrecios(idPedidoCompra);
+        return ResponseEntity.ok(precios);
     }
 }

@@ -55,4 +55,12 @@ public interface CotizacionRepository extends JpaRepository<Cotizacion, Integer>
      */
     public boolean existsByPedidoCompraIdAndProveedorIdAndEliminadoFalse(Integer pedidoCompraId, Integer proveedorId);
 
+    /**
+     * Obtiene una lista de pedidos de cotización por su ID de pedido de compra.
+     *
+     * @param id el ID del pedido de compra
+     * @return la lista de pedidos de cotización por su ID de pedido de compra
+     */
+    public List<Cotizacion> findByPedidoCompraIdAndEliminadoFalse(Integer id);
+
 }

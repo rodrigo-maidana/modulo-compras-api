@@ -38,6 +38,7 @@ public class CotizacionService {
         private PedidoCompraService pedidoCompraService;
 
         @Autowired
+        @Lazy
         private PedidoDetalleService pedidoDetalleService;
 
         @Autowired
@@ -137,6 +138,10 @@ public class CotizacionService {
                 Cotizacion updatedCotizacion = cotizacionRepository.save(cotizacion);
 
                 return new CotizacionDTO(updatedCotizacion);
+        }
+
+        public List<Cotizacion> getCotizacionesByPedidoCompraId(Integer id) {
+                return cotizacionRepository.findByPedidoCompraIdAndEliminadoFalse(id);
         }
 
 }

@@ -78,7 +78,8 @@ public class CotizacionDetalleService {
                 }).orElse(false);
     }
 
-    public List<CotizacionDetalle> getCotizacionDetallesById(Integer id) {
+    public List<CotizacionDetalle> getDetallesByCotizacionId(Integer id) {
         return cotizacionDetalleRepository.findByCotizacionIdAndEliminadoFalse(id);
     }
+
 }
