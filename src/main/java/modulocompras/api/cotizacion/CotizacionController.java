@@ -71,7 +71,7 @@ public class CotizacionController {
     // Obtener todos los detalles de un pedido de cotización
     @GetMapping("/{idCotizacion}/detalles")
     public ResponseEntity<List<CotizacionDetalleDTO>> getCotizacionDetalles(@PathVariable Integer idCotizacion) {
-        List<CotizacionDetalleDTO> detalles = cotizacionDetalleService.getCotizacionDetallesById(idCotizacion).stream()
+        List<CotizacionDetalleDTO> detalles = cotizacionDetalleService.getDetallesByCotizacionId(idCotizacion).stream()
                 .map(CotizacionDetalleDTO::new)
                 .collect(Collectors.toList());
 
