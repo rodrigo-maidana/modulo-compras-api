@@ -1,16 +1,23 @@
 package modulocompras.api.pedido_compra.detalle;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import modulocompras.api.cotizacion.Cotizacion;
+import modulocompras.api.cotizacion.CotizacionService;
+import modulocompras.api.cotizacion.detalle.CotizacionDetalle;
+import modulocompras.api.cotizacion.detalle.CotizacionDetalleService;
 import modulocompras.api.pedido_compra.PedidoCompra;
 import modulocompras.api.pedido_compra.PedidoCompraDTO;
 import modulocompras.api.pedido_compra.PedidoCompraService;
 import modulocompras.api.producto.Producto;
 import modulocompras.api.producto.ProductoService;
+import modulocompras.api.proveedor.ProveedorDTO;
 
 @Service
 public class PedidoDetalleService {
@@ -23,6 +30,13 @@ public class PedidoDetalleService {
 
     @Autowired
     private ProductoService productoService;
+
+    @Autowired
+    @Lazy
+    private CotizacionService cotizacionService;
+
+    @Autowired
+    private CotizacionDetalleService cotizacionesDetallesService;
 
     public List<PedidoDetalle> getAllPedidosDetalles() {
         return pedidoDetalleRepository.findByEliminadoFalse();
@@ -80,4 +94,48 @@ public class PedidoDetalleService {
     public List<PedidoDetalle> getDetallesByPedidoCompraId(Integer id) {
         return pedidoDetalleRepository.findByPedidoCompraIdAndEliminadoFalse(id);
     }
+
+    // Recupera todos los precios de los detalles de pedido con FK_idPedidoCompra
+    // igual a id.
+    public List<PedidoDetallePrecioDTO> getPrecios(Integer id) {
+        List<PedidoDetalle> detalles = getDetallesByPedidoCompraId(id);
+        if (detalles == null) {
+            return null;
+        }
+
+        List<Cotizacion> cotizaciones = cotizacionService.getCotizacionesByPedidoCompraId(id);
+        if (cotizaciones == null) {
+            return null;
+        }
+
+        List<CotizacionDetalle> cotizacionesDetalles = new ArrayList<>();
+        for (Cotizacion cotizacion : cotizaciones) {
+            cotizacionesDetalles.addAll(cotizacionesDetallesService.getDetallesByCotizacionId(cotizacion.getId()));
+        }
+
+        List<PedidoDetallePrecioDTO> detallesPrecios = new ArrayList<>();
+        for (PedidoDetalle detalle : detalles) {
+            Producto producto = detalle.getProducto();
+            PedidoDetallePrecioDTO detallePrecio = new PedidoDetallePrecioDTO();
+            detallePrecio.setId(detalle.getId());
+            List<PrecioDTO> precios = new ArrayList<>();
+
+            for (CotizacionDetalle cotizacionDetalle : cotizacionesDetalles) {
+                Producto productoCotizacion = cotizacionDetalle.getProducto();
+
+                if (producto.getId().equals(productoCotizacion.getId())) {
+                    PrecioDTO precio = new PrecioDTO();
+                    precio.setPrecioUnitario(cotizacionDetalle.getPrecioUnitario());
+                    precio.setProveedor(new ProveedorDTO(cotizacionDetalle.getCotizacion().getProveedor()));
+                    precios.add(precio);
+                }
+            }
+
+            detallePrecio.setPrecios(precios);
+            detallesPrecios.add(detallePrecio);
+        }
+
+        return detallesPrecios;
+    }
+
 }
