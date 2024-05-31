@@ -30,18 +30,20 @@ public class OrdenDetalleService {
     }
 
     // Método para crear un detalle de orden de compra
-    public Optional<OrdenDetalle> createOrdenDetalle(Integer id, OrdenDetalle ordenDetalle) {
+    public Optional<OrdenDetalle> createOrdenDetalle(Integer id, OrdenDetalleDTO ordenDetalleDTO) {
         return ordenCompraService.getOrdenCompraById(id).map(ordenCompra -> {
+            OrdenDetalle ordenDetalle = new OrdenDetalle();
             ordenDetalle.setOrdenCompra(ordenCompra);
+            ordenDetalle.setCantidad(ordenDetalleDTO.getCantidad());
             return Optional.of(ordenDetalleRepository.save(ordenDetalle));
         }).orElse(Optional.empty());
     }
 
     // Método para actualizar un detalle de orden de compra
-    public Optional<OrdenDetalle> updateOrdenDetalle(Integer id, OrdenDetalle ordenDetalle) {
-        return getOrdenDetalleById(id).map(ordenDetalleExistente -> {
-            ordenDetalle.setCantidad(ordenDetalleExistente.getCantidad());
-            return Optional.of(ordenDetalleRepository.save(ordenDetalle));
+    public Optional<OrdenDetalle> updateOrdenDetalle(Integer id, OrdenDetalleDTO ordenDetalle) {
+        return getOrdenDetalleById(id).map(ordenDetalleObj -> {
+            ordenDetalleObj.setCantidad(ordenDetalle.getCantidad());
+            return Optional.of(ordenDetalleRepository.save(ordenDetalleObj));
         }).orElse(Optional.empty());
     }
 

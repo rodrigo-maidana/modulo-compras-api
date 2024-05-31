@@ -6,10 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import modulocompras.api.pedido_compra.detalle.PedidoDetalleDTO;
-import modulocompras.api.pedido_compra.detalle.PedidoDetallePrecioDTO;
-import modulocompras.api.pedido_compra.detalle.PedidoDetalleService;
-import modulocompras.api.orden_compra.detalles.OrdenDetalle;
 import modulocompras.api.orden_compra.detalles.OrdenDetalleDTO;
 import modulocompras.api.orden_compra.detalles.OrdenDetalleService;
 

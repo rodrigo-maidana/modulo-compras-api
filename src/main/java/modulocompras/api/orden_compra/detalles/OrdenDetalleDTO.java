@@ -1,8 +1,5 @@
 package modulocompras.api.orden_compra.detalles;
 
-import java.util.Date;
-
-import modulocompras.api.producto.Producto;
 import modulocompras.api.producto.ProductoDTO;
 
 public class OrdenDetalleDTO {
