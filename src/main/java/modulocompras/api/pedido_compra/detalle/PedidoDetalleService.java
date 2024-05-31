@@ -53,18 +53,21 @@ public class PedidoDetalleService {
             return Optional.empty();
         }
 
+        Optional<PedidoCompraDTO> optionalPedidoCompraDTO = pedidoCompraService.getPedidoCompraById(id);
+        if (!optionalPedidoCompraDTO.isPresent()) {
+            return Optional.empty();
+        }
+
         List<PedidoDetalle> detalles = getDetallesByPedidoCompraId(id);
 
         for (PedidoDetalle detalle : detalles) {
             if (detalle.getProducto().getId().equals(producto.getId())) {
                 detalle.setCantidad(detalle.getCantidad() + pedidoDetalleDTO.getCantidad());
-                return Optional.empty();
-            }
-        }
 
-        Optional<PedidoCompraDTO> optionalPedidoCompraDTO = pedidoCompraService.getPedidoCompraById(id);
-        if (!optionalPedidoCompraDTO.isPresent()) {
-            return Optional.empty();
+                PedidoDetalle updatedPedidoDetalle = pedidoDetalleRepository.save(detalle);
+
+                return Optional.of(new PedidoDetalleDTO(updatedPedidoDetalle));
+            }
         }
 
         PedidoCompra pedidoCompra = new PedidoCompra(optionalPedidoCompraDTO.get());
