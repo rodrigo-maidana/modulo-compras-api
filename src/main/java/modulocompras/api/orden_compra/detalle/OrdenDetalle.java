@@ -1,4 +1,4 @@
-package modulocompras.api.orden_compra.detalles;
+package modulocompras.api.orden_compra.detalle;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

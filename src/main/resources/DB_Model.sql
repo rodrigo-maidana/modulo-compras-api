@@ -176,6 +176,39 @@ create table detalle_orden_compra
    primary key (id_detalle_orden_compra)
 );
 
+/*==============================================================*/
+/* Table: facturas                                              */
+/*==============================================================*/
+create table facturas
+(
+   fk_id_factura        int not null,
+   fk_id_proveedor      int,
+   fk_id_orden_pago     int,
+   date_fecha_emision   date,
+   date_fecha_vencimiento date,
+   str_timbrado         varchar(60),
+   str_ruc              varchar(60),
+   str_condicion        varchar(20),
+   str_estado           varchar(20),
+   dec_monto_total      decimal,
+   dec_saldo_pendiente  decimal,
+   primary key (fk_id_factura)
+);
+
+/*==============================================================*/
+/* Table: facturas_detalles                                     */
+/*==============================================================*/
+create table facturas_detalles
+(
+   id_compra_detalle    int not null,
+   fk_id_producto       int,
+   fk_id_factura        int,
+   int_cantidad         int,
+   dec_precio_unitario  decimal,
+   dec_porcentaje_iva   decimal,
+   primary key (id_compra_detalle)
+);
+
 
 /*PENDIENTE DE IMPLEMENTAR API*/
 
@@ -213,39 +246,6 @@ create table estados_productos_devueltos
    id_estado_producto_devuelto int not null,
    str_descripcion      varchar(60),
    primary key (id_estado_producto_devuelto)
-);
-
-/*==============================================================*/
-/* Table: facturas                                              */
-/*==============================================================*/
-create table facturas
-(
-   fk_id_factura        int not null,
-   fk_id_proveedor      int,
-   fk_id_orden_pago     int,
-   date_fecha_emision   date,
-   date_fecha_vencimiento date,
-   str_timbrado         varchar(60),
-   str_ruc              varchar(60),
-   str_condicion        varchar(20),
-   str_estado           varchar(20),
-   dec_monto_total      decimal,
-   dec_saldo_pendiente  decimal,
-   primary key (fk_id_factura)
-);
-
-/*==============================================================*/
-/* Table: facturas_detalles                                     */
-/*==============================================================*/
-create table facturas_detalles
-(
-   id_compra_detalle    int not null,
-   fk_id_producto       int,
-   fk_id_factura        int,
-   int_cantidad         int,
-   dec_precio_unitario  decimal,
-   dec_porcentaje_iva   decimal,
-   primary key (id_compra_detalle)
 );
 
 /*==============================================================*/
