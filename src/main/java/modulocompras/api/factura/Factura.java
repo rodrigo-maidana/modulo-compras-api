@@ -75,6 +75,15 @@ public class Factura {
         this.saldoPendiente = facturaDTO.getSaldoPendiente();
     }
 
+    // Constructor desde FacturaCreateDTO
+    public Factura(FacturaCreateDTO facturaCreateDTO) {
+        this.fechaEmision = facturaCreateDTO.getFechaEmision();
+        this.fechaVencimiento = facturaCreateDTO.getFechaVencimiento();
+        this.nroFactura = facturaCreateDTO.getNroFactura();
+        this.timbrado = facturaCreateDTO.getTimbrado();
+        this.condicion = facturaCreateDTO.getCondicion();
+    }
+
     // Getters
     public Integer getId() {
         return id;
