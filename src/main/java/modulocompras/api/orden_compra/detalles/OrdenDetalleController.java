@@ -40,10 +40,10 @@ public class OrdenDetalleController {
         @PostMapping("/{id}")
         public ResponseEntity<OrdenDetalleDTO> createOrdenDetalle(@PathVariable Integer id,
                         @RequestBody OrdenDetalleDTO ordenDetalleDTO) {
-                Optional<OrdenDetalleDTO> savedOrdenDetalleDTO = ordenDetalleService.createOrdenDetalle(id,
-                                ordenDetalleDTO).map(OrdenDetalleDTO::new);
-                return savedOrdenDetalleDTO.map(ResponseEntity::ok)
-                                .orElseGet(() -> ResponseEntity.badRequest().body(null));
+                Optional<OrdenDetalle> savedOrdenDetalle = ordenDetalleService.createOrdenDetalle(id,
+                                ordenDetalleDTO);
+                return savedOrdenDetalle.map(ordenDetalle -> ResponseEntity.ok(new OrdenDetalleDTO(ordenDetalle)))
+                                .orElseGet(() -> ResponseEntity.badRequest().build());
         }
 
         // Actualizar un orden detalle existente
