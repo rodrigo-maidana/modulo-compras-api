@@ -80,8 +80,8 @@ public class OrdenCompraController {
 
     // Obtener OrdenCompraDTO de la proxima orden de compra
     @GetMapping("/preview")
-    public ResponseEntity<OrdenCompraDTO> getPreviewOrdenCompra() {
-        return ResponseEntity.ok(new OrdenCompraDTO(ordenCompraService.previewOrdenCompra()));
+    public ResponseEntity<OrdenCompraPreviewDTO> getPreviewOrdenCompra() {
+        return ResponseEntity.ok(new OrdenCompraPreviewDTO(ordenCompraService.previewOrdenCompra()));
     }
 
     // Obtiene todas las ordentes de compra con FK_idOrdenCompra igual a
