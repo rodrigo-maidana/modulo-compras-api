@@ -54,9 +54,9 @@ public class FacturaController {
     }
 
     // Crear una nueva factura
-    @PostMapping("/{idPedidoCompra}")
-    public ResponseEntity<FacturaDTO> createFactura(@RequestBody FacturaDTO facturaDTO) {
-        Optional<Factura> createdFactura = facturaService.createFactura(facturaDTO);
+    @PostMapping()
+    public ResponseEntity<FacturaDTO> createFactura(@RequestBody FacturaCreateDTO facturaCreateDTO) {
+        Optional<Factura> createdFactura = facturaService.createFactura(facturaCreateDTO);
         return createdFactura.map(FacturaDTO::new)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.badRequest().build());
