@@ -33,7 +33,8 @@ public class PedidoCompraController {
     // Obtener un pedido de compra por ID
     @GetMapping("/{id}")
     public ResponseEntity<PedidoCompraDTO> getPedidoCompraById(@PathVariable Integer id) {
-        Optional<PedidoCompraDTO> pedidoCompraDTO = pedidoCompraService.getPedidoCompraById(id);
+        Optional<PedidoCompraDTO> pedidoCompraDTO = pedidoCompraService.getPedidoCompraById(id)
+                .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra));
         return pedidoCompraDTO.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

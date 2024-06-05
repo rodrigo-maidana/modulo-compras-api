@@ -19,9 +19,8 @@ public class ProveedorService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<ProveedorDTO> getProveedorById(Integer id) {
-        return proveedorRepository.findByIdAndEliminadoFalse(id)
-                .map(ProveedorDTO::new);
+    public Optional<Proveedor> getProveedorById(Integer id) {
+        return proveedorRepository.findByIdAndEliminadoFalse(id);
     }
 
     public ProveedorDTO createProveedor(ProveedorDTO proveedorDTO) {

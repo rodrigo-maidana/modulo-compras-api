@@ -32,7 +32,8 @@ public class ProveedorController {
     // Obtener un proveedor por ID
     @GetMapping("/{id}")
     public ResponseEntity<ProveedorDTO> getProveedorById(@PathVariable Integer id) {
-        Optional<ProveedorDTO> proveedorDTO = proveedorService.getProveedorById(id);
+        Optional<ProveedorDTO> proveedorDTO = proveedorService.getProveedorById(id)
+                .map(ProveedorDTO::new);
         return proveedorDTO.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

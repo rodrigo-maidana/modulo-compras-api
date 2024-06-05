@@ -56,9 +56,8 @@ public class PedidoCompraService {
     }
 
     // Obtener un pedido de compra por ID
-    public Optional<PedidoCompraDTO> getPedidoCompraById(Integer id) {
-        return pedidoCompraRepository.findByIdAndEliminadoFalse(id)
-                .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra));
+    public Optional<PedidoCompra> getPedidoCompraById(Integer id) {
+        return pedidoCompraRepository.findByIdAndEliminadoFalse(id);
     }
 
     // Actualizar un pedido de compra por ID

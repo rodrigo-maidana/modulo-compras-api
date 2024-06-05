@@ -55,10 +55,12 @@ public class CotizacionService {
 
                 PedidoCompraDTO pedidoCompraDTO = pedidoCompraService
                                 .getPedidoCompraById(pedidoCotizacionCreateDTO.getIdPedidoCompra())
+                                .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra))
                                 .orElse(null);
 
                 ProveedorDTO proveedorDTO = proveedorService
                                 .getProveedorById(pedidoCotizacionCreateDTO.getIdProveedor())
+                                .map(ProveedorDTO::new)
                                 .orElse(null);
 
                 PedidoCompra pedidoCompra = new PedidoCompra(pedidoCompraDTO);
