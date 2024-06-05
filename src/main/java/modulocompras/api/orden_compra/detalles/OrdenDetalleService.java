@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import modulocompras.api.orden_compra.OrdenCompra;
 import modulocompras.api.orden_compra.OrdenCompraService;
 
 @Service
@@ -31,12 +32,13 @@ public class OrdenDetalleService {
 
     // Método para crear un detalle de orden de compra
     public Optional<OrdenDetalle> createOrdenDetalle(Integer id, OrdenDetalleDTO ordenDetalleDTO) {
-        return ordenCompraService.getOrdenCompraById(id).map(ordenCompra -> {
-            OrdenDetalle ordenDetalle = new OrdenDetalle();
-            ordenDetalle.setOrdenCompra(ordenCompra);
-            ordenDetalle.setCantidad(ordenDetalleDTO.getCantidad());
-            return Optional.of(ordenDetalleRepository.save(ordenDetalle));
-        }).orElse(Optional.empty());
+        OrdenCompra ordenCompra = ordenCompraService.getOrdenCompraById(id).orElse(null);
+        if (ordenCompra == null) {
+            return Optional.empty();
+        }
+        OrdenDetalle newOrdenDetalle = new OrdenDetalle(ordenDetalleDTO);
+        newOrdenDetalle.setOrdenCompra(ordenCompra);
+        return Optional.of(ordenDetalleRepository.save(newOrdenDetalle));
     }
 
     // Método para actualizar un detalle de orden de compra
