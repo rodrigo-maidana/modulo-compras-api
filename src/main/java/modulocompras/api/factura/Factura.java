@@ -21,7 +21,7 @@ public class Factura {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "FK_ID_PROVEEDOR", referencedColumnName = "FK_ID_PROVEEDOR", nullable = false)
+    @JoinColumn(name = "FK_ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR", nullable = false)
     private Proveedor proveedor;
 
     @ManyToOne
