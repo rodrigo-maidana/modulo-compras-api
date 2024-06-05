@@ -19,14 +19,17 @@ public class FacturaService {
     @Autowired
     private OrdenCompraService ordenCompraService;
 
+    // Obtener todas las facturas
     public List<Factura> getAllFacturas() {
         return facturaRepository.findByEliminadoFalse();
     }
 
+    // Obtener una factura por ID
     public Optional<Factura> getFacturaById(Integer id) {
         return facturaRepository.findByIdAndEliminadoFalse(id);
     }
 
+    // Actualizar una factura existente
     public Optional<Factura> updateFactura(Integer id, FacturaDTO facturaDTO) {
         return getFacturaById(id).map(factura -> {
             factura.setEstado(facturaDTO.getEstado());
@@ -35,6 +38,7 @@ public class FacturaService {
         }).orElse(Optional.empty());
     }
 
+    // Crear una nueva factura
     public Optional<Factura> createFactura(FacturaCreateDTO facturaCreateDTO) {
         OrdenCompra ordenCompra = ordenCompraService.getOrdenCompraById(facturaCreateDTO.getIdOrdenCompra())
                 .orElse(null);
@@ -49,6 +53,15 @@ public class FacturaService {
         factura.setOrdenCompra(ordenCompra);
 
         return Optional.of(facturaRepository.save(factura));
+    }
+
+    // Eliminar una factura (soft delete)
+    public boolean deletedFactura(Integer id) {
+        return getFacturaById(id).map(factura -> {
+            factura.setEliminado(true);
+            facturaRepository.save(factura);
+            return true;
+        }).orElse(false);
     }
 
 }

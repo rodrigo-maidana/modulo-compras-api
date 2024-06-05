@@ -62,4 +62,11 @@ public class FacturaController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    // Eliminar una factura
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteFactura(@PathVariable Integer id) {
+        boolean deleted = facturaService.deletedFactura(id);
+        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+
 }
