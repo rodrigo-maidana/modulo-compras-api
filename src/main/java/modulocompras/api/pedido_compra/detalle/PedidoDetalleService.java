@@ -56,7 +56,8 @@ public class PedidoDetalleService {
             return Optional.empty();
         }
 
-        Optional<PedidoCompraDTO> optionalPedidoCompraDTO = pedidoCompraService.getPedidoCompraById(id);
+        Optional<PedidoCompraDTO> optionalPedidoCompraDTO = pedidoCompraService.getPedidoCompraById(id)
+                .map(pedidoCompra -> new PedidoCompraDTO(pedidoCompra));
         if (!optionalPedidoCompraDTO.isPresent()) {
             return Optional.empty();
         }

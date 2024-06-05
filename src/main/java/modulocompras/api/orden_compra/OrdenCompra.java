@@ -7,7 +7,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import modulocompras.api.proveedor.Proveedor;
 
 @Entity
 @Table(name = "ORDENES_COMPRA")
@@ -17,6 +20,10 @@ public class OrdenCompra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ORDEN_COMPRA")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR", nullable = false)
+    private Proveedor proveedor;
 
     @Column(name = "STR_NRO_ORDEN", nullable = false, unique = true)
     private String nroOrdenCompra;
@@ -38,6 +45,7 @@ public class OrdenCompra {
     // Constructor desde DTO
     public OrdenCompra(OrdenCompraDTO ordenCompraDTO) {
         this.id = ordenCompraDTO.getId();
+        this.proveedor = new Proveedor(ordenCompraDTO.getProveedor());
         this.fechaEmision = ordenCompraDTO.getFechaEmision();
         this.estado = ordenCompraDTO.getEstado();
         this.nroOrdenCompra = ordenCompraDTO.getNroOrdenCompra();
@@ -46,6 +54,10 @@ public class OrdenCompra {
     // Getters
     public Integer getId() {
         return id;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
     public Date getFechaEmision() {
@@ -67,6 +79,10 @@ public class OrdenCompra {
     // Setters
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     public void setFechaEmision(Date fechaEmision) {

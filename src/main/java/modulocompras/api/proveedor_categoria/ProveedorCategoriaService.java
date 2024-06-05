@@ -35,7 +35,8 @@ public class ProveedorCategoriaService {
         }
 
         Optional<ProveedorDTO> optionalProveedor = proveedorService
-                .getProveedorById(proveedorCategoriaDTO.getProveedorId());
+                .getProveedorById(proveedorCategoriaDTO.getProveedorId())
+                .map(ProveedorDTO::new);
         if (!optionalProveedor.isPresent()) {
             return null;
         }
@@ -55,7 +56,8 @@ public class ProveedorCategoriaService {
 
     // Listar todas las categorías de un proveedor
     public List<CategoriaDTO> getCategorias(Integer idProveedor) {
-        Optional<ProveedorDTO> optionalProveedor = proveedorService.getProveedorById(idProveedor);
+        Optional<ProveedorDTO> optionalProveedor = proveedorService.getProveedorById(idProveedor)
+                .map(ProveedorDTO::new);
         if (!optionalProveedor.isPresent()) {
             return Collections.emptyList();
         }

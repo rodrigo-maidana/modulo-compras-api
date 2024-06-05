@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import modulocompras.api.proveedor.Proveedor;
+
 @Service
 public class OrdenCompraService {
 
@@ -23,6 +25,7 @@ public class OrdenCompraService {
         String nroOrdenCompra = generateNroOrdenCompra();
         newOrdenCompra.setNroOrdenCompra(nroOrdenCompra);
         newOrdenCompra.setEstado("Pendiente");
+        newOrdenCompra.setProveedor(new Proveedor(ordenCompraDTO.getProveedor()));
 
         return ordenCompraRepository.save(newOrdenCompra);
     }
