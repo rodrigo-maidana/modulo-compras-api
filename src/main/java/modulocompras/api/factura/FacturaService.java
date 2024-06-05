@@ -6,22 +6,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 import modulocompras.api.orden_compra.OrdenCompra;
 import modulocompras.api.orden_compra.OrdenCompraService;
-import modulocompras.api.pedido_compra.PedidoCompra;
-import modulocompras.api.pedido_compra.PedidoCompraService;
 import modulocompras.api.proveedor.Proveedor;
-import modulocompras.api.proveedor.ProveedorService;
 
 @Service
 public class FacturaService {
 
     @Autowired
     private FacturaRepository facturaRepository;
-
-    @Autowired
-    private ProveedorService proveedorService;
 
     @Autowired
     private OrdenCompraService ordenCompraService;
