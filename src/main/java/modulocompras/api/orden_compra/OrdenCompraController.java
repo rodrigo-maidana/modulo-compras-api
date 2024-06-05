@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import modulocompras.api.orden_compra.detalle.OrdenDetalleDTO;
-import modulocompras.api.orden_compra.detalle.OrdenDetalleService;
+import modulocompras.api.orden_compra.detalles.OrdenDetalleDTO;
+import modulocompras.api.orden_compra.detalles.OrdenDetalleService;
 
 import java.util.List;
 import java.util.Optional;

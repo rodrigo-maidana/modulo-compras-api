@@ -1,4 +1,4 @@
-package modulocompras.api.orden_compra.detalle;
+package modulocompras.api.orden_compra.detalles;
 
 import java.util.List;
 import java.util.Optional;
