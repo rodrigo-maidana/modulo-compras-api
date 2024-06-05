@@ -1,4 +1,4 @@
-package modulocompras.api.orden_compra.detalles;
+package modulocompras.api.orden_compra.detalle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
