@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import modulocompras.api.depositos.Deposito;
 import modulocompras.api.depositos.DepositoService;
 import modulocompras.api.orden_compra.OrdenCompra;
+import modulocompras.api.orden_compra.OrdenCompraRepository;
 import modulocompras.api.orden_compra.OrdenCompraService;
 
 @Service
@@ -17,6 +18,9 @@ public class FacturaService {
 
     @Autowired
     private FacturaRepository facturaRepository;
+
+    @Autowired
+    private OrdenCompraRepository ordenCompraRepository;
 
     @Autowired
     private OrdenCompraService ordenCompraService;
@@ -57,6 +61,9 @@ public class FacturaService {
         if (!isValidNumeroFactura(facturaCreateDTO.getNroFactura())
                 || !isValidCondicion(facturaCreateDTO.getCondicion()))
             return Optional.empty();
+
+        ordenCompra.setEstado("Completado");
+        ordenCompraRepository.save(ordenCompra);
 
         Factura factura = new Factura(facturaCreateDTO);
         factura.setProveedor(ordenCompra.getProveedor());
