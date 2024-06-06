@@ -26,12 +26,10 @@ public class DepositoController {
     // Obtener un deposito por ID
     @GetMapping("/{id}")
     public ResponseEntity<DepositoDTO> getDepositoById(@PathVariable Integer id) {
-        Optional<DepositoDTO> depositoDTO = depositoService.getDepositoById(id);
-        if (depositoDTO.isPresent()) {
-            return ResponseEntity.ok(depositoDTO.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<Deposito> deposito = depositoService.getDepositoById(id);
+        return deposito
+                .map(value -> ResponseEntity.ok(new DepositoDTO(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Crear un nuevo deposito

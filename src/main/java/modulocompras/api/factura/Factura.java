@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import modulocompras.api.depositos.Deposito;
 import modulocompras.api.orden_compra.OrdenCompra;
 import modulocompras.api.proveedor.Proveedor;
 
@@ -27,6 +28,10 @@ public class Factura {
     @ManyToOne
     @JoinColumn(name = "FK_ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA", nullable = false)
     private OrdenCompra ordenCompra;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_ID_DEPOSITO", referencedColumnName = "ID_DEPOSITO", nullable = false)
+    private Deposito deposito;
 
     @Column(name = "DATE_FECHA_EMISION", nullable = false)
     private String fechaEmision;
@@ -65,6 +70,7 @@ public class Factura {
         this.id = facturaDTO.getId();
         this.proveedor = new Proveedor(facturaDTO.getProveedor());
         this.ordenCompra = new OrdenCompra(facturaDTO.getOrdenCompra());
+        this.deposito = new Deposito(facturaDTO.getDeposito());
         this.fechaEmision = facturaDTO.getFechaEmision();
         this.fechaVencimiento = facturaDTO.getFechaVencimiento();
         this.nroFactura = facturaDTO.getNroFactura();
@@ -95,6 +101,10 @@ public class Factura {
 
     public OrdenCompra getOrdenCompra() {
         return ordenCompra;
+    }
+
+    public Deposito getDeposito() {
+        return deposito;
     }
 
     public String getFechaEmision() {
@@ -144,6 +154,10 @@ public class Factura {
 
     public void setOrdenCompra(OrdenCompra ordenCompra) {
         this.ordenCompra = ordenCompra;
+    }
+
+    public void setDeposito(Deposito deposito) {
+        this.deposito = deposito;
     }
 
     public void setFechaEmision(String fechaEmision) {

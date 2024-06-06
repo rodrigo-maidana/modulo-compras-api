@@ -3,6 +3,7 @@ package modulocompras.api.factura;
 public class FacturaCreateDTO {
 
     private Integer idOrdenCompra;
+    private Integer idDeposito;
     private String fechaEmision;
     private String fechaVencimiento;
     private String nroFactura;
@@ -15,6 +16,10 @@ public class FacturaCreateDTO {
     // Getters
     public Integer getIdOrdenCompra() {
         return idOrdenCompra;
+    }
+
+    public Integer getIdDeposito() {
+        return idDeposito;
     }
 
     public String getFechaEmision() {
@@ -40,6 +45,10 @@ public class FacturaCreateDTO {
     // Setters
     public void setIdOrdenCompra(Integer idOrdenCompra) {
         this.idOrdenCompra = idOrdenCompra;
+    }
+
+    public void setIdDeposito(Integer idDeposito) {
+        this.idDeposito = idDeposito;
     }
 
     public void setFechaEmision(String fechaEmision) {

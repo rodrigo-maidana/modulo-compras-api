@@ -72,7 +72,8 @@ public class PedidoCompraController {
     @GetMapping("/{idPedidoCompra}/detalles")
     public ResponseEntity<List<PedidoDetalleDTO>> findByDetallesByPedidoCompraId(
             @PathVariable Integer idPedidoCompra) {
-        List<PedidoDetalleDTO> detalles = pedidoDetalleService.getDetallesByPedidoCompraId(idPedidoCompra).stream()
+        List<PedidoDetalleDTO> detalles = pedidoDetalleService.getDetallesByPedidoCompraId(idPedidoCompra)
+                .stream()
                 .map(PedidoDetalleDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(detalles);
