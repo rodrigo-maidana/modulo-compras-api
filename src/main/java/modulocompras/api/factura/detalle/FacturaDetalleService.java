@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import modulocompras.api.factura.Factura;
+import modulocompras.api.factura.FacturaRepository;
 import modulocompras.api.factura.FacturaService;
 import modulocompras.api.producto.Producto;
 import modulocompras.api.producto.ProductoService;
@@ -17,6 +18,9 @@ public class FacturaDetalleService {
 
     @Autowired
     private FacturaDetalleRepository facturaDetalleRepository;
+
+    @Autowired
+    private FacturaRepository facturaRepository;
 
     @Autowired
     @Lazy
@@ -48,8 +52,22 @@ public class FacturaDetalleService {
             return Optional.empty();
         }
 
+        List<FacturaDetalle> detalles = getDetallesByFacturaId(id);
+
+        for (FacturaDetalle detalle : detalles) {
+            if (detalle.getProducto().getId().equals(facturaDetalleDTO.getProducto().getId())) {
+                return Optional.empty();
+            }
+        }
+
         FacturaDetalle facturaDetalle = new FacturaDetalle(facturaDetalleDTO);
         facturaDetalle.setFactura(factura);
+
+        Double totalDetalle = facturaDetalleDTO.getPrecioUnitario() * facturaDetalleDTO.getCantidad();
+        factura.setMontoTotal(factura.getMontoTotal() + totalDetalle);
+        factura.setSaldoPendiente(factura.getSaldoPendiente() + totalDetalle);
+
+        facturaRepository.save(factura);
 
         return Optional.of(facturaDetalleRepository.save(facturaDetalle));
     }

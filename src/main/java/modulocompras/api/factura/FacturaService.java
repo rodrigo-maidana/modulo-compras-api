@@ -10,7 +10,6 @@ import modulocompras.api.depositos.Deposito;
 import modulocompras.api.depositos.DepositoService;
 import modulocompras.api.orden_compra.OrdenCompra;
 import modulocompras.api.orden_compra.OrdenCompraService;
-import modulocompras.api.proveedor.Proveedor;
 
 @Service
 public class FacturaService {
@@ -60,6 +59,9 @@ public class FacturaService {
         factura.setProveedor(ordenCompra.getProveedor());
         factura.setOrdenCompra(ordenCompra);
         factura.setDeposito(deposito);
+        factura.setEstado("Pendiente");
+        factura.setMontoTotal(0.0);
+        factura.setSaldoPendiente(0.0);
 
         return Optional.of(facturaRepository.save(factura));
     }
