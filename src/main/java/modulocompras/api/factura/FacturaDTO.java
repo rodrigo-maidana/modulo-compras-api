@@ -1,5 +1,7 @@
 package modulocompras.api.factura;
 
+import java.util.Date;
+
 import modulocompras.api.depositos.DepositoDTO;
 import modulocompras.api.orden_compra.OrdenCompraDTO;
 import modulocompras.api.proveedor.ProveedorDTO;
@@ -10,8 +12,8 @@ public class FacturaDTO {
     private ProveedorDTO proveedor;
     private OrdenCompraDTO ordenCompra;
     private DepositoDTO deposito;
-    private String fechaEmision;
-    private String fechaVencimiento;
+    private Date fechaEmision;
+    private Date fechaVencimiento;
     private String nroFactura;
     private String timbrado;
     private String condicion;
@@ -56,11 +58,11 @@ public class FacturaDTO {
         return deposito;
     }
 
-    public String getFechaEmision() {
+    public Date getFechaEmision() {
         return fechaEmision;
     }
 
-    public String getFechaVencimiento() {
+    public Date getFechaVencimiento() {
         return fechaVencimiento;
     }
 
@@ -105,11 +107,11 @@ public class FacturaDTO {
         this.deposito = deposito;
     }
 
-    public void setFechaEmision(String fechaEmision) {
+    public void setFechaEmision(Date fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public void setFechaVencimiento(String fechaVencimiento) {
+    public void setFechaVencimiento(Date fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 

@@ -1,5 +1,7 @@
 package modulocompras.api.factura;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,10 +36,10 @@ public class Factura {
     private Deposito deposito;
 
     @Column(name = "DATE_FECHA_EMISION", nullable = false)
-    private String fechaEmision;
+    private Date fechaEmision;
 
     @Column(name = "DATE_FECHA_VENCIMIENTO", nullable = false)
-    private String fechaVencimiento;
+    private Date fechaVencimiento;
 
     @Column(name = "STR_NRO_FACTURA", nullable = false, unique = true)
     private String nroFactura;
@@ -107,11 +109,11 @@ public class Factura {
         return deposito;
     }
 
-    public String getFechaEmision() {
+    public Date getFechaEmision() {
         return fechaEmision;
     }
 
-    public String getFechaVencimiento() {
+    public Date getFechaVencimiento() {
         return fechaVencimiento;
     }
 
@@ -160,11 +162,11 @@ public class Factura {
         this.deposito = deposito;
     }
 
-    public void setFechaEmision(String fechaEmision) {
+    public void setFechaEmision(Date fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public void setFechaVencimiento(String fechaVencimiento) {
+    public void setFechaVencimiento(Date fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 
