@@ -62,6 +62,9 @@ public class FacturaService {
                 || !isValidCondicion(facturaCreateDTO.getCondicion()))
             return Optional.empty();
 
+        if (!isValidTimbrado(facturaCreateDTO.getTimbrado()))
+            return Optional.empty();
+
         ordenCompra.setEstado("Completado");
         ordenCompraRepository.save(ordenCompra);
 
@@ -80,6 +83,12 @@ public class FacturaService {
         // Expresión regular para validar el formato 00X-00X-000000X
         String facturaPattern = "\\d{2}\\d-\\d{2}\\d-\\d{6}\\d";
         return Pattern.matches(facturaPattern, numeroFactura);
+    }
+
+    public boolean isValidTimbrado(String timbrado) {
+        // Expresión regular para validar que el timbrado es solo un string de números
+        String timbradoPattern = "\\d+";
+        return Pattern.matches(timbradoPattern, timbrado);
     }
 
     public boolean isValidCondicion(String condicion) {
