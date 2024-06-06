@@ -47,4 +47,14 @@ public interface OrdenCompraRepository extends JpaRepository<OrdenCompra, Intege
      */
     @Query("SELECT o FROM OrdenCompra o WHERE DATE(o.fechaEmision) = DATE(:fecha)")
     List<OrdenCompra> findByFechaEmision(@Param("fecha") Date fecha);
+
+    /**
+     * Obtiene una colección de todas las órdenes de compra cuyo estado coincide con
+     * el estado especificado y no han sido eliminadas.
+     * 
+     * @param string el estado de la orden de compra
+     * @return una colección de órdenes de compra cuyo estado coincide con el estado
+     *         especificado y no han sido eliminadas
+     */
+    public List<OrdenCompra> findByEstadoAndEliminadoFalse(String string);
 }

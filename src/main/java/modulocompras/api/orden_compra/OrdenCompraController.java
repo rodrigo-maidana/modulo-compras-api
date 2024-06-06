@@ -95,4 +95,14 @@ public class OrdenCompraController {
 
         return ResponseEntity.ok(detalles);
     }
+
+    // Obtiene todos las ordenes de compra con estado pendiente
+    @GetMapping("/pendientes")
+    public ResponseEntity<List<OrdenCompraDTO>> getOrdenesCompraPendientes() {
+        List<OrdenCompraDTO> ordenesCompra = ordenCompraService.getOrdenesCompraPendientes().stream()
+                .map(OrdenCompraDTO::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(ordenesCompra);
+    }
 }

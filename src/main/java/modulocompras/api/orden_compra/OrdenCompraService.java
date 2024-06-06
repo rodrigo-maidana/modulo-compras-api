@@ -1,6 +1,7 @@
 package modulocompras.api.orden_compra;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -89,6 +90,10 @@ public class OrdenCompraService {
 
         // Devolvemos la orden de compra sin guardar
         return ordenCompra;
+    }
+
+    public List<OrdenCompra> getOrdenesCompraPendientes() {
+        return ordenCompraRepository.findByEstadoAndEliminadoFalse("Pendiente");
     }
 
 }
