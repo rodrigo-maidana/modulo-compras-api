@@ -34,9 +34,6 @@ public class FacturaDetalle {
     @Column(name = "DEC_PRECIO_UNITARIO", nullable = false)
     private Double precioUnitario;
 
-    @Column(name = "DEC_PORCENTAJE_IVA", nullable = false)
-    private Double porcentajeIva;
-
     @Column(name = "BOOL_ELIMINADO", nullable = false)
     private Boolean eliminado = false;
 
@@ -52,7 +49,6 @@ public class FacturaDetalle {
         this.producto = new Producto(facturaDetalleDTO.getProducto());
         this.cantidad = facturaDetalleDTO.getCantidad();
         this.precioUnitario = facturaDetalleDTO.getPrecioUnitario();
-        this.porcentajeIva = facturaDetalleDTO.getPorcentajeIva();
     }
 
     // Getters
@@ -74,10 +70,6 @@ public class FacturaDetalle {
 
     public Double getPrecioUnitario() {
         return precioUnitario;
-    }
-
-    public Double getPorcentajeIva() {
-        return porcentajeIva;
     }
 
     public Boolean getEliminado() {
@@ -103,10 +95,6 @@ public class FacturaDetalle {
 
     public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
-    }
-
-    public void setPorcentajeIva(Double porcentajeIva) {
-        this.porcentajeIva = porcentajeIva;
     }
 
     public void setEliminado(Boolean eliminado) {

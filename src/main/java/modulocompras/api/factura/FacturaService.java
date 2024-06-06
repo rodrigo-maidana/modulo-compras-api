@@ -2,6 +2,7 @@ package modulocompras.api.factura;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,14 +47,16 @@ public class FacturaService {
     public Optional<Factura> createFactura(FacturaCreateDTO facturaCreateDTO) {
         OrdenCompra ordenCompra = ordenCompraService.getOrdenCompraById(facturaCreateDTO.getIdOrdenCompra())
                 .orElse(null);
-        if (ordenCompra == null) {
+        if (ordenCompra == null)
             return Optional.empty();
-        }
 
         Deposito deposito = depositoService.getDepositoById(facturaCreateDTO.getIdDeposito()).orElse(null);
-        if (deposito == null) {
+        if (deposito == null)
             return Optional.empty();
-        }
+
+        if (!isValidNumeroFactura(facturaCreateDTO.getNroFactura())
+                || !isValidCondicion(facturaCreateDTO.getCondicion()))
+            return Optional.empty();
 
         Factura factura = new Factura(facturaCreateDTO);
         factura.setProveedor(ordenCompra.getProveedor());
@@ -64,6 +67,16 @@ public class FacturaService {
         factura.setSaldoPendiente(0.0);
 
         return Optional.of(facturaRepository.save(factura));
+    }
+
+    public boolean isValidNumeroFactura(String numeroFactura) {
+        // Expresión regular para validar el formato 00X-00X-000000X
+        String facturaPattern = "\\d{2}\\d-\\d{2}\\d-\\d{6}\\d";
+        return Pattern.matches(facturaPattern, numeroFactura);
+    }
+
+    public boolean isValidCondicion(String condicion) {
+        return "Contado".equalsIgnoreCase(condicion) || "Credito".equalsIgnoreCase(condicion);
     }
 
     // Eliminar una factura (soft delete)
