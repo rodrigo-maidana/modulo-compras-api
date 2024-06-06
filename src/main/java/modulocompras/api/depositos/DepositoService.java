@@ -19,10 +19,8 @@ public class DepositoService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<DepositoDTO> getDepositoById(Integer id) {
-        return depositoRepository.findById(id)
-                .filter(deposito -> !deposito.getEliminado())
-                .map(deposito -> new DepositoDTO(deposito));
+    public Optional<Deposito> getDepositoById(Integer id) {
+        return depositoRepository.findById(id);
     }
 
     public DepositoDTO createDeposito(DepositoDTO depositoDTO) {

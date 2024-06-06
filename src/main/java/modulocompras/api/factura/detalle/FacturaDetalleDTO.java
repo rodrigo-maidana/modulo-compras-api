@@ -10,16 +10,17 @@ public class FacturaDetalleDTO {
     private Double precioUnitario;
     private Double porcentajeIva;
 
+    // Constructor por defecto
     public FacturaDetalleDTO() {
     }
 
-    public FacturaDetalleDTO(Integer id, ProductoDTO producto, Integer cantidad, Double precioUnitario,
-            Double porcentajeIva) {
-        this.id = id;
-        this.producto = producto;
-        this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
-        this.porcentajeIva = porcentajeIva;
+    // Constructor desde Entidad
+    public FacturaDetalleDTO(FacturaDetalle facturaDetalle) {
+        this.id = facturaDetalle.getId();
+        this.producto = new ProductoDTO(facturaDetalle.getProducto());
+        this.cantidad = facturaDetalle.getCantidad();
+        this.precioUnitario = facturaDetalle.getPrecioUnitario();
+        this.porcentajeIva = facturaDetalle.getPorcentajeIva();
     }
 
     // Getters

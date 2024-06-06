@@ -1,5 +1,6 @@
 package modulocompras.api.factura;
 
+import modulocompras.api.depositos.DepositoDTO;
 import modulocompras.api.orden_compra.OrdenCompraDTO;
 import modulocompras.api.proveedor.ProveedorDTO;
 
@@ -8,6 +9,7 @@ public class FacturaDTO {
     private Integer id;
     private ProveedorDTO proveedor;
     private OrdenCompraDTO ordenCompra;
+    private DepositoDTO deposito;
     private String fechaEmision;
     private String fechaVencimiento;
     private String nroFactura;
@@ -26,6 +28,7 @@ public class FacturaDTO {
         this.id = factura.getId();
         this.proveedor = new ProveedorDTO(factura.getProveedor());
         this.ordenCompra = new OrdenCompraDTO(factura.getOrdenCompra());
+        this.deposito = new DepositoDTO(factura.getDeposito());
         this.fechaEmision = factura.getFechaEmision();
         this.fechaVencimiento = factura.getFechaVencimiento();
         this.nroFactura = factura.getNroFactura();
@@ -47,6 +50,10 @@ public class FacturaDTO {
 
     public OrdenCompraDTO getOrdenCompra() {
         return ordenCompra;
+    }
+
+    public DepositoDTO getDeposito() {
+        return deposito;
     }
 
     public String getFechaEmision() {
@@ -92,6 +99,10 @@ public class FacturaDTO {
 
     public void setOrdenCompra(OrdenCompraDTO ordenCompra) {
         this.ordenCompra = ordenCompra;
+    }
+
+    public void setDeposito(DepositoDTO deposito) {
+        this.deposito = deposito;
     }
 
     public void setFechaEmision(String fechaEmision) {

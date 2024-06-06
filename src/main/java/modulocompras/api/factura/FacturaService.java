@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import modulocompras.api.depositos.Deposito;
+import modulocompras.api.depositos.DepositoService;
 import modulocompras.api.orden_compra.OrdenCompra;
 import modulocompras.api.orden_compra.OrdenCompraService;
 import modulocompras.api.proveedor.Proveedor;
@@ -18,6 +20,9 @@ public class FacturaService {
 
     @Autowired
     private OrdenCompraService ordenCompraService;
+
+    @Autowired
+    private DepositoService depositoService;
 
     // Obtener todas las facturas
     public List<Factura> getAllFacturas() {
@@ -46,11 +51,15 @@ public class FacturaService {
             return Optional.empty();
         }
 
-        Proveedor proveedor = ordenCompra.getProveedor();
+        Deposito deposito = depositoService.getDepositoById(facturaCreateDTO.getIdDeposito()).orElse(null);
+        if (deposito == null) {
+            return Optional.empty();
+        }
 
         Factura factura = new Factura(facturaCreateDTO);
-        factura.setProveedor(proveedor);
+        factura.setProveedor(ordenCompra.getProveedor());
         factura.setOrdenCompra(ordenCompra);
+        factura.setDeposito(deposito);
 
         return Optional.of(facturaRepository.save(factura));
     }

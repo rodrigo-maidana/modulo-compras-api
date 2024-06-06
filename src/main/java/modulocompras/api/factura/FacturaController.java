@@ -1,9 +1,10 @@
 package modulocompras.api.factura;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import modulocompras.api.factura.detalle.FacturaDetalleDTO;
+import modulocompras.api.factura.detalle.FacturaDetalleService;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +12,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("api/v1/facturas") // Endpoint para Facturas
@@ -23,6 +20,9 @@ public class FacturaController {
 
     @Autowired
     private FacturaService facturaService;
+
+    @Autowired
+    private FacturaDetalleService facturaDetalleService;
 
     // Obtener todas las facturas
     @GetMapping
@@ -67,6 +67,16 @@ public class FacturaController {
     public ResponseEntity<Object> deleteFactura(@PathVariable Integer id) {
         boolean deleted = facturaService.deletedFactura(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+
+    // Obtener todos los detalles de una factura
+    @GetMapping("/{idFactura}/detalles")
+    public ResponseEntity<List<FacturaDetalleDTO>> getDetallesByFacturaId(@PathVariable Integer idFactura) {
+        List<FacturaDetalleDTO> detalles = facturaDetalleService.getAllFacturasDetalles().stream()
+                .filter(facturaDetalle -> facturaDetalle.getFactura().getId().equals(idFactura))
+                .map(FacturaDetalleDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(detalles);
     }
 
 }
