@@ -52,10 +52,10 @@ public class OrdenPagoDetalleController {
         @PostMapping("/{idOrdenPago}/bulk")
         public ResponseEntity<List<OrdenPagoDetalleDTO>> createOrdenPagoDetallesBulk(
                         @PathVariable Integer idOrdenPago,
-                        @RequestBody List<OrdenPagoDetalleCreateDTO> ordenPagoDetallesDTO) {
+                        @RequestBody List<OrdenPagoDetalleCreateDTO> ordenPagoDetallesCreateDTO) {
 
                 List<OrdenPagoDetalle> newOrdenPagoDetalles = ordenPagoDetalleService.createOrdenPagoDetallesBulk(
-                                idOrdenPago, ordenPagoDetallesDTO);
+                                idOrdenPago, ordenPagoDetallesCreateDTO);
 
                 return ResponseEntity.ok(newOrdenPagoDetalles.stream()
                                 .map(OrdenPagoDetalleDTO::new)
