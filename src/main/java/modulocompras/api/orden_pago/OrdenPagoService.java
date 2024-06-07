@@ -103,6 +103,14 @@ public class OrdenPagoService {
         // Crear detalles de asiento
         crearDetallesDeAsiento(idOrdenPago, asiento, ordenPago.getMontoTotal());
 
+        Factura factura = ordenPago.getFactura();
+        factura.setSaldoPendiente(factura.getSaldoPendiente() - ordenPago.getMontoTotal());
+        if (factura.getSaldoPendiente() == 0.0) {
+            factura.setEstado("Pagado");
+        }
+
+        facturaService.saveFactura(factura);
+
         ordenPago.setEstado("Autorizado");
         return Optional.of(ordenPagoRepository.save(ordenPago));
     }

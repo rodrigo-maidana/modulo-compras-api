@@ -104,4 +104,8 @@ public class FacturaService {
         }).orElse(false);
     }
 
+    public void saveFactura(Factura factura) {
+        facturaRepository.save(factura);
+    }
+
 }
