@@ -69,8 +69,9 @@ public class OrdenPagoDetalleService {
             return null;
 
         Double montoTotal = ordenPago.getMontoTotal();
+        Double montoFactura = ordenPago.getFactura().getMontoTotal();
         Double montoDetalles = ordenPagoDetallesDTO.stream().mapToDouble(OrdenPagoDetalleCreateDTO::getMonto).sum();
-        if (montoTotal < montoDetalles + montoTotal)
+        if (montoFactura < montoDetalles + montoTotal)
             return null;
 
         ordenPago.setMontoTotal(montoTotal + montoDetalles);
