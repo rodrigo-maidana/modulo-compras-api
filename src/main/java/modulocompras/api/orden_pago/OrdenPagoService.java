@@ -41,7 +41,7 @@ public class OrdenPagoService {
         ordenPago.setFactura(factura);
         ordenPago.setEstado("Pendiente");
         ordenPago.setNroOrdenPago(generateNroOrdenCompra());
-        ordenPago.setMontoTotal(factura.getMontoTotal());
+        ordenPago.setMontoTotal(0.0);
 
         return Optional.of(ordenPagoRepository.save(ordenPago));
     }
