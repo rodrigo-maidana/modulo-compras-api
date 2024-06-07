@@ -34,7 +34,7 @@ public class FacturaController {
 
     // Obtener una factura por ID
     @GetMapping("/{id}")
-    public ResponseEntity<FacturaDTO> getFacturaById(@RequestParam Integer id) {
+    public ResponseEntity<FacturaDTO> getFacturaById(@PathVariable Integer id) {
         Optional<Factura> factura = facturaService.getFacturaById(id);
         return factura.stream()
                 .map(FacturaDTO::new)
