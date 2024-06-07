@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import modulocompras.api.factura.Factura;
 import modulocompras.api.proveedor.Proveedor;
 
 @Entity
@@ -22,6 +23,10 @@ public class OrdenPago {
     private Integer idOrdenPago;
 
     @ManyToOne
+    @JoinColumn(name = "FK_ID_FACTURA", referencedColumnName = "ID_FACTURA", nullable = false)
+    private Factura factura;
+
+    @ManyToOne
     @JoinColumn(name = "FK_ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR", nullable = false)
     private Proveedor proveedor;
 
@@ -29,6 +34,96 @@ public class OrdenPago {
     private Date fechaPago;
 
     @Column(name = "NUMERO_ORDEN_PAGO", nullable = false)
-    private Integer numeroOrdenPago;
+    private String nroOrdenPago;
+
+    @Column(name = "STR_ESTADO", nullable = false)
+    private String estado;
+
+    @Column(name = "DEC_MONTO_TOTAL", nullable = false)
+    private Double montoTotal;
+
+    @Column(name = "BOOL_ELIMINADO", nullable = false)
+    private Boolean eliminado = false;
+
+    // Constructor por defecto
+    public OrdenPago() {
+    }
+
+    // Constructor desde DTO
+    public OrdenPago(OrdenPagoDTO ordenPagoDTO) {
+        this.idOrdenPago = ordenPagoDTO.getId();
+        this.factura = new Factura(ordenPagoDTO.getFactura());
+        this.proveedor = new Proveedor(ordenPagoDTO.getProveedor());
+        this.fechaPago = Date.valueOf(ordenPagoDTO.getFechaPago());
+        this.nroOrdenPago = ordenPagoDTO.getNroOrdenPago();
+        this.estado = ordenPagoDTO.getEstado();
+        this.montoTotal = ordenPagoDTO.getMontoTotal();
+    }
+
+    // Getters
+    public Integer getIdOrdenPago() {
+        return idOrdenPago;
+    }
+
+    public Factura getFactura() {
+        return factura;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public Date getFechaPago() {
+        return fechaPago;
+    }
+
+    public String getNroOrdenPago() {
+        return nroOrdenPago;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public Double getMontoTotal() {
+        return montoTotal;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    // Setters
+    public void setIdOrdenPago(Integer idOrdenPago) {
+        this.idOrdenPago = idOrdenPago;
+    }
+
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public void setFechaPago(Date fechaPago) {
+        this.fechaPago = fechaPago;
+    }
+
+    public void setNroOrdenPago(String nroOrdenPago) {
+        this.nroOrdenPago = nroOrdenPago;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setMontoTotal(Double montoTotal) {
+        this.montoTotal = montoTotal;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
+    }
 
 }
