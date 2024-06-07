@@ -16,7 +16,7 @@ public interface FacturaRepository extends JpaRepository<Factura, Integer> {
 
     public Optional<Factura> findByIdAndEliminadoFalse(Integer id);
 
-    public List<Factura> findByEliminadoFalseOrderByFechaEmisionDesc();
+    public List<Factura> findByEliminadoFalseOrderByFechaEmisionDescIdDesc();
 
     @Query("SELECT f FROM Factura f WHERE DATE(f.fechaEmision) = DATE(:fecha)")
     List<Factura> findByFechaEmision(@Param("fecha") Date fecha);

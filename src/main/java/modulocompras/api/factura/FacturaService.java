@@ -30,7 +30,7 @@ public class FacturaService {
 
     // Obtener todas las facturas
     public List<Factura> getAllFacturas() {
-        return facturaRepository.findByEliminadoFalseOrderByFechaEmisionDesc();
+        return facturaRepository.findByEliminadoFalseOrderByFechaEmisionDescIdDesc();
     }
 
     // Obtener una factura por ID
