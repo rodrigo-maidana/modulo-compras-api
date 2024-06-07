@@ -48,4 +48,18 @@ public class OrdenPagoDetalleController {
                                 : ResponseEntity.badRequest().build();
         }
 
+        // Crear detalles en bulk
+        @PostMapping("/{idOrdenPago}/bulk")
+        public ResponseEntity<List<OrdenPagoDetalleDTO>> createOrdenPagoDetallesBulk(
+                        @PathVariable Integer idOrdenPago,
+                        @RequestBody List<OrdenPagoDetalleDTO> ordenPagoDetallesDTO) {
+
+                List<OrdenPagoDetalle> newOrdenPagoDetalles = ordenPagoDetalleService.createOrdenPagoDetallesBulk(
+                                idOrdenPago, ordenPagoDetallesDTO);
+
+                return ResponseEntity.ok(newOrdenPagoDetalles.stream()
+                                .map(OrdenPagoDetalleDTO::new)
+                                .collect(Collectors.toList()));
+        }
+
 }

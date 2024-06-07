@@ -62,4 +62,33 @@ public class OrdenPagoDetalleService {
         return Optional.of(ordenPagoDetalleRepository.save(newOrdenPagoDetalle));
     }
 
+    public List<OrdenPagoDetalle> createOrdenPagoDetallesBulk(Integer idOrdenPago,
+            List<OrdenPagoDetalleDTO> ordenPagoDetallesDTO) {
+        OrdenPago ordenPago = ordenPagoService.getOrdenPagoById(idOrdenPago).orElse(null);
+        if (ordenPago == null)
+            return null;
+
+        Double montoTotal = ordenPago.getMontoTotal();
+        Double montoDetalles = ordenPagoDetallesDTO.stream().mapToDouble(OrdenPagoDetalleDTO::getMonto).sum();
+        if (montoTotal < montoDetalles + montoTotal)
+            return null;
+
+        ordenPago.setMontoTotal(montoTotal + montoDetalles);
+        ordenPagoRepository.save(ordenPago);
+
+        for (OrdenPagoDetalleDTO ordenPagoDetalleDTO : ordenPagoDetallesDTO) {
+            MetodoPago metodoPago = metodoPagoService.getMetodoPagoById(ordenPagoDetalleDTO.getMetodoPago().getId())
+                    .orElse(null);
+            if (metodoPago == null)
+                return null;
+            OrdenPagoDetalle newOrdenPagoDetalle = new OrdenPagoDetalle(ordenPagoDetalleDTO);
+            newOrdenPagoDetalle.setOrdenPago(ordenPago);
+            newOrdenPagoDetalle.setMetodoPago(metodoPago);
+            ordenPagoDetalleRepository.save(newOrdenPagoDetalle);
+        }
+
+        return ordenPagoDetalleRepository.findByOrdenPagoIdAndEliminadoFalse(idOrdenPago);
+
+    }
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import modulocompras.api.factura.Factura;
 import modulocompras.api.factura.FacturaService;
+import modulocompras.api.orden_pago.detalle.OrdenPagoDetalle;
 
 @Service
 public class OrdenPagoService {
@@ -38,6 +39,7 @@ public class OrdenPagoService {
 
         OrdenPago ordenPago = new OrdenPago(ordenPagoDTO);
         ordenPago.setFactura(factura);
+        ordenPago.setEstado("Pendiente");
         ordenPago.setNroOrdenPago(generateNroOrdenCompra());
         ordenPago.setMontoTotal(factura.getMontoTotal());
 

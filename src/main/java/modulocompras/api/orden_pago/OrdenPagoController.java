@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("api/v1/orden_pago") // Endpooint para Ordenes de Pago
+@RequestMapping("api/v1/orden-pago") // Endpooint para Ordenes de Pago
 @Tag(name = "15. Ordenes de Pago")
 public class OrdenPagoController {
 
