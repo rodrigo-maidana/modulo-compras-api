@@ -66,7 +66,7 @@ public class OrdenPagoController {
     }
 
     // Obtener detalles de
-    @GetMapping("/{idOrdenPago}/detalle")
+    @GetMapping("/{idOrdenPago}/detalles")
     public ResponseEntity<List<OrdenPagoDetalleDTO>> getOrdenPagoDetalle(@PathVariable Integer idOrdenPago) {
         List<OrdenPagoDetalleDTO> ordenPagoDetalle = ordenPagoDetalleService.getDetallesByOrdenPagoId(idOrdenPago)
                 .stream()

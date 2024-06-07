@@ -100,9 +100,16 @@ public class OrdenPagoService {
         asiento.setTotal(ordenPago.getMontoTotal());
         asientoService.saveAsiento(asiento);
 
-        // Obtener detalles de pago
+        // Crear detalles de asiento
+        crearDetallesDeAsiento(idOrdenPago, asiento, ordenPago.getMontoTotal());
+
+        ordenPago.setEstado("Autorizado");
+        return Optional.of(ordenPagoRepository.save(ordenPago));
+    }
+
+    private void crearDetallesDeAsiento(Integer idOrdenPago, Asiento asiento, double montoTotal) {
+        // Crear detalles Debe
         List<OrdenPagoDetalle> detalles = ordenPagoDetalleService.getDetallesByOrdenPagoId(idOrdenPago);
-        // Crear detalles de asiento.
         for (OrdenPagoDetalle detalle : detalles) {
             AsientoDetalle asientoDetalle = new AsientoDetalle();
             asientoDetalle.setAsiento(asiento);
@@ -112,15 +119,13 @@ public class OrdenPagoService {
             asientoDetalleService.saveAsientoDetalle(asientoDetalle);
         }
 
+        // Crear detalle Haber
         AsientoDetalle asientoDetalle = new AsientoDetalle();
         asientoDetalle.setAsiento(asiento);
         asientoDetalle.setCuenta("1.1.1.1.1.1");
         asientoDetalle.setDebe(0.0);
-        asientoDetalle.setHaber(ordenPago.getMontoTotal());
+        asientoDetalle.setHaber(montoTotal);
         asientoDetalleService.saveAsientoDetalle(asientoDetalle);
-
-        ordenPago.setEstado("Autorizado");
-        return Optional.of(ordenPagoRepository.save(ordenPago));
     }
 
 }
