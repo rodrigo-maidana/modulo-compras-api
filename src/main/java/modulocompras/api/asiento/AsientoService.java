@@ -9,9 +9,9 @@ import java.util.Optional;
 @Service
 public class AsientoService {
 
-    private final AsientoRepository asientoRepository;
-
     @Autowired
+    private AsientoRepository asientoRepository;
+
     public AsientoService(AsientoRepository asientoRepository) {
         this.asientoRepository = asientoRepository;
     }
