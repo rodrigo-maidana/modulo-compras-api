@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -36,5 +37,14 @@ public interface OrdenPagoDetalleRepository extends JpaRepository<OrdenPagoDetal
      * @return a list of OrdenPagoDetalle objects
      */
     List<OrdenPagoDetalle> findByOrdenPagoIdAndEliminadoFalse(Integer ordenPagoId);
+
+    /**
+     * Retrieves a list of OrdenPagoDetalle objects that are not marked as deleted
+     * and are ordered by fechaPago in descending order.
+     *
+     * @return a list of OrdenPagoDetalle objects
+     */
+    @Query("SELECT opd FROM OrdenPagoDetalle opd WHERE opd.eliminado = false ORDER BY opd.fechaPago DESC")
+    List<OrdenPagoDetalle> findByEliminadoFalseOrderByFechaPagoDesc();
 
 }
