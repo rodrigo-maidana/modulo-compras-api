@@ -78,4 +78,13 @@ public class OrdenPagoController {
                 : ResponseEntity.badRequest().build();
     }
 
+    // Autorizar una orden de pago
+    @PutMapping("/{idOrdenPago}/autorizar")
+    public ResponseEntity<OrdenPagoDTO> autorizarOrdenPago(@PathVariable Integer idOrdenPago) {
+        OrdenPago ordenPago = ordenPagoService.autorizarOrdenPago(idOrdenPago).orElse(null);
+        return ordenPago != null
+                ? ResponseEntity.ok(new OrdenPagoDTO(ordenPago))
+                : ResponseEntity.badRequest().build();
+    }
+
 }
