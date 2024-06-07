@@ -8,8 +8,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import modulocompras.api.asiento.Asiento;
+import modulocompras.api.asiento.AsientoService;
+import modulocompras.api.asiento.detalle.AsientoDetalle;
+import modulocompras.api.asiento.detalle.AsientoDetalleService;
 import modulocompras.api.factura.Factura;
 import modulocompras.api.factura.FacturaService;
+import modulocompras.api.orden_pago.detalle.OrdenPagoDetalle;
+import modulocompras.api.orden_pago.detalle.OrdenPagoDetalleService;
 
 @Service
 public class OrdenPagoService {
@@ -19,6 +25,15 @@ public class OrdenPagoService {
 
     @Autowired
     private FacturaService facturaService;
+
+    @Autowired
+    private OrdenPagoDetalleService ordenPagoDetalleService;
+
+    @Autowired
+    private AsientoService asientoService;
+
+    @Autowired
+    private AsientoDetalleService asientoDetalleService;
 
     // Listar todas las órdenes de pago
     public List<OrdenPago> getAllOrdenesPago() {
@@ -75,6 +90,32 @@ public class OrdenPagoService {
         OrdenPago ordenPago = getOrdenPagoById(idOrdenPago).orElse(null);
         if (ordenPago == null)
             return Optional.empty();
+
+        // Crear asiento
+        Asiento asiento = new Asiento();
+        asiento.setFecha(new Date());
+        asiento.setDescripcion("Pago de factura " + ordenPago.getFactura().getNroFactura());
+        asiento.setTotal(ordenPago.getMontoTotal());
+        asientoService.saveAsiento(asiento);
+
+        // Obtener detalles de pago
+        List<OrdenPagoDetalle> detalles = ordenPagoDetalleService.getDetallesByOrdenPagoId(idOrdenPago);
+        // Crear detalles de asiento.
+        for (OrdenPagoDetalle detalle : detalles) {
+            AsientoDetalle asientoDetalle = new AsientoDetalle();
+            asientoDetalle.setAsiento(asiento);
+            asientoDetalle.setCuenta(detalle.getMetodoPago().getId().toString());
+            asientoDetalle.setDebe(detalle.getMonto());
+            asientoDetalle.setHaber(0.0);
+            asientoDetalleService.saveAsientoDetalle(asientoDetalle);
+        }
+
+        AsientoDetalle asientoDetalle = new AsientoDetalle();
+        asientoDetalle.setAsiento(asiento);
+        asientoDetalle.setCuenta("1.1.1.1.1.1");
+        asientoDetalle.setDebe(0.0);
+        asientoDetalle.setHaber(ordenPago.getMontoTotal());
+        asientoDetalleService.saveAsientoDetalle(asientoDetalle);
 
         ordenPago.setEstado("Autorizado");
         return Optional.of(ordenPagoRepository.save(ordenPago));
