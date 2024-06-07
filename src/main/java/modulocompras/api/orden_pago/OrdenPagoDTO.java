@@ -1,5 +1,7 @@
 package modulocompras.api.orden_pago;
 
+import java.util.Date;
+
 import modulocompras.api.factura.FacturaDTO;
 import modulocompras.api.proveedor.ProveedorDTO;
 
@@ -8,7 +10,7 @@ public class OrdenPagoDTO {
     private Integer id;
     private FacturaDTO factura;
     private ProveedorDTO proveedor;
-    private String fechaPago;
+    private Date fechaPago;
     private String nroOrdenPago;
     private String estado;
     private Double montoTotal;
@@ -22,7 +24,7 @@ public class OrdenPagoDTO {
         this.id = ordenPago.getId();
         this.factura = new FacturaDTO(ordenPago.getFactura());
         this.proveedor = new ProveedorDTO(ordenPago.getProveedor());
-        this.fechaPago = ordenPago.getFechaPago().toString();
+        this.fechaPago = ordenPago.getFechaPago();
         this.nroOrdenPago = ordenPago.getNroOrdenPago().toString();
         this.estado = ordenPago.getEstado();
         this.montoTotal = ordenPago.getMontoTotal();
@@ -41,7 +43,7 @@ public class OrdenPagoDTO {
         return proveedor;
     }
 
-    public String getFechaPago() {
+    public Date getFechaPago() {
         return fechaPago;
     }
 
@@ -70,7 +72,7 @@ public class OrdenPagoDTO {
         this.proveedor = proveedor;
     }
 
-    public void setFechaPago(String fechaPago) {
+    public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
     }
 

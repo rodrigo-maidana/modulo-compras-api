@@ -49,4 +49,13 @@ public class OrdenPagoController {
         }
     }
 
+    // Obtener preview de una orden de pago
+    @GetMapping("/preview")
+    public ResponseEntity<OrdenPagoDTO> getOrdenPagoPreview() {
+        OrdenPagoDTO ordenPagoPreview = ordenPagoService.getOrdenPagoPreview();
+        return ordenPagoPreview != null
+                ? ResponseEntity.ok(ordenPagoPreview)
+                : ResponseEntity.badRequest().build();
+    }
+
 }

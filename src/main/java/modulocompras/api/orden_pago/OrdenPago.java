@@ -1,6 +1,6 @@
 package modulocompras.api.orden_pago;
 
-import java.sql.Date;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,7 +54,7 @@ public class OrdenPago {
         this.id = ordenPagoDTO.getId();
         this.factura = new Factura(ordenPagoDTO.getFactura());
         this.proveedor = new Proveedor(ordenPagoDTO.getProveedor());
-        this.fechaPago = Date.valueOf(ordenPagoDTO.getFechaPago());
+        this.fechaPago = ordenPagoDTO.getFechaPago();
         this.nroOrdenPago = ordenPagoDTO.getNroOrdenPago();
         this.estado = ordenPagoDTO.getEstado();
         this.montoTotal = ordenPagoDTO.getMontoTotal();

@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import modulocompras.api.pedido_compra.PedidoCompra;
+
 @Repository
 public interface OrdenPagoRepository extends JpaRepository<OrdenPago, Integer> {
 

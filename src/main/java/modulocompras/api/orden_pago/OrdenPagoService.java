@@ -1,5 +1,7 @@
 package modulocompras.api.orden_pago;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +38,35 @@ public class OrdenPagoService {
 
         OrdenPago ordenPago = new OrdenPago(ordenPagoDTO);
         ordenPago.setFactura(factura);
+        ordenPago.setNroOrdenPago(generateNroOrdenCompra());
 
         return Optional.of(ordenPagoRepository.save(ordenPago));
+    }
+
+    public OrdenPagoDTO getOrdenPagoPreview() {
+        OrdenPagoDTO ordenPagoDTO = new OrdenPagoDTO();
+        ordenPagoDTO.setNroOrdenPago(generateNroOrdenCompra());
+        ordenPagoDTO.setFechaPago(new Date());
+        return ordenPagoDTO;
+
+    }
+
+    // Generar el número de pedido
+    private String generateNroOrdenCompra() {
+        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+        String currentDate = sdf.format(new Date());
+
+        Date today = new Date(new java.util.Date().getTime());
+
+        // Contar los pedidos de hoy
+        List<OrdenPago> pedidosHoy = ordenPagoRepository.findByfechaPago(today);
+
+        int secuencia = pedidosHoy.size() + 1;
+
+        // Formatear la secuencia a cuatro dígitos
+        String secuenciaStr = String.format("%04d", secuencia);
+
+        return "OP-" + currentDate + "-" + secuenciaStr;
     }
 
 }
