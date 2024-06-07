@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/ordenes-compra") // Endpoint para Ordenes de Compra
-@Tag(name = "8. Ordenes de Compra")
+@Tag(name = "H. Ordenes de Compra")
 public class OrdenCompraController {
 
     @Autowired

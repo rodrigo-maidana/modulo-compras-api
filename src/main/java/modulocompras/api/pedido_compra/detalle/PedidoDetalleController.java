@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("api/v1/pedidos-detalles") // Endpoint para Pedidos Detalles
-@Tag(name = "7. Pedidos Detalles")
+@Tag(name = "G. Pedidos Detalles")
 public class PedidoDetalleController {
 
     @Autowired

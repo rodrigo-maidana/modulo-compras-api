@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("api/v1/facturas-detalles") // Endpoint para Facturas Detalles
-@Tag(name = "13. Facturas Detalles")
+@Tag(name = "M. Facturas Detalles")
 public class FacturaDetalleController {
 
         @Autowired

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/proveedores") // Endpoint para Proveedor
-@Tag(name = "1. Proveedores")
+@Tag(name = "B. Proveedores")
 public class ProveedorController {
 
     @Autowired

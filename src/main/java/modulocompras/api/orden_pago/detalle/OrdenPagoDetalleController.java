@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("api/v1/ordenes-pago-detalles")
-@Tag(name = "16. Detalles de órdenes de pago")
+@Tag(name = "P. Detalles de órdenes de pago")
 public class OrdenPagoDetalleController {
 
         @Autowired
@@ -52,7 +52,7 @@ public class OrdenPagoDetalleController {
         @PostMapping("/{idOrdenPago}/bulk")
         public ResponseEntity<List<OrdenPagoDetalleDTO>> createOrdenPagoDetallesBulk(
                         @PathVariable Integer idOrdenPago,
-                        @RequestBody List<OrdenPagoDetalleDTO> ordenPagoDetallesDTO) {
+                        @RequestBody List<OrdenPagoDetalleCreateDTO> ordenPagoDetallesDTO) {
 
                 List<OrdenPagoDetalle> newOrdenPagoDetalles = ordenPagoDetalleService.createOrdenPagoDetallesBulk(
                                 idOrdenPago, ordenPagoDetallesDTO);

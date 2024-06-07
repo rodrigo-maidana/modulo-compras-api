@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/categorias") // Endpoint para Categoria
-@Tag(name = "3. Categorías")
+@Tag(name = "C. Categorías")
 public class CategoriaController {
 
     @Autowired

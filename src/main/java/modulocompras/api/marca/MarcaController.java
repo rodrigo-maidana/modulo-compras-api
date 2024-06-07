@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/marcas") // Endpoint para Marca
-@Tag(name = "4. Marcas")
+@Tag(name = "D. Marcas")
 public class MarcaController {
 
     @Autowired

@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("api/v1/facturas") // Endpoint para Facturas
-@Tag(name = "12. Facturas")
+@Tag(name = "L. Facturas")
 public class FacturaController {
 
     @Autowired

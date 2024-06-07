@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/cotizacion-detalles") // Endpoint para Cotizacion Detalles
-@Tag(name = "11. Cotizacion Detalles")
+@Tag(name = "K. Cotizacion Detalles")
 public class CotizacionDetalleController {
 
     @Autowired

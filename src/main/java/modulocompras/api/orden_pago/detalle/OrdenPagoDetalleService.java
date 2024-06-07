@@ -63,27 +63,28 @@ public class OrdenPagoDetalleService {
     }
 
     public List<OrdenPagoDetalle> createOrdenPagoDetallesBulk(Integer idOrdenPago,
-            List<OrdenPagoDetalleDTO> ordenPagoDetallesDTO) {
+            List<OrdenPagoDetalleCreateDTO> ordenPagoDetallesDTO) {
         OrdenPago ordenPago = ordenPagoService.getOrdenPagoById(idOrdenPago).orElse(null);
         if (ordenPago == null)
             return null;
 
         Double montoTotal = ordenPago.getMontoTotal();
-        Double montoDetalles = ordenPagoDetallesDTO.stream().mapToDouble(OrdenPagoDetalleDTO::getMonto).sum();
+        Double montoDetalles = ordenPagoDetallesDTO.stream().mapToDouble(OrdenPagoDetalleCreateDTO::getMonto).sum();
         if (montoTotal < montoDetalles + montoTotal)
             return null;
 
         ordenPago.setMontoTotal(montoTotal + montoDetalles);
         ordenPagoRepository.save(ordenPago);
 
-        for (OrdenPagoDetalleDTO ordenPagoDetalleDTO : ordenPagoDetallesDTO) {
-            MetodoPago metodoPago = metodoPagoService.getMetodoPagoById(ordenPagoDetalleDTO.getMetodoPago().getId())
+        for (OrdenPagoDetalleCreateDTO ordenPagoDetalleDTO : ordenPagoDetallesDTO) {
+            MetodoPago metodoPago = metodoPagoService.getMetodoPagoById(ordenPagoDetalleDTO.getIdMetodoPago())
                     .orElse(null);
             if (metodoPago == null)
                 return null;
-            OrdenPagoDetalle newOrdenPagoDetalle = new OrdenPagoDetalle(ordenPagoDetalleDTO);
+            OrdenPagoDetalle newOrdenPagoDetalle = new OrdenPagoDetalle();
             newOrdenPagoDetalle.setOrdenPago(ordenPago);
             newOrdenPagoDetalle.setMetodoPago(metodoPago);
+            newOrdenPagoDetalle.setMonto(ordenPagoDetalleDTO.getMonto());
             ordenPagoDetalleRepository.save(newOrdenPagoDetalle);
         }
 
