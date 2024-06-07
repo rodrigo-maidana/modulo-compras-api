@@ -93,4 +93,8 @@ public class OrdenPagoDetalleService {
 
     }
 
+    public List<OrdenPagoDetalle> getDetallesByOrdenPagoId(Integer idOrdenPago) {
+        return ordenPagoDetalleRepository.findByOrdenPagoIdAndEliminadoFalse(idOrdenPago);
+    }
+
 }

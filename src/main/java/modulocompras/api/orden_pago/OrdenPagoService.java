@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import modulocompras.api.factura.Factura;
 import modulocompras.api.factura.FacturaService;
-import modulocompras.api.orden_pago.detalle.OrdenPagoDetalle;
+import modulocompras.api.orden_pago.detalle.OrdenPagoDetalleDTO;
 
 @Service
 public class OrdenPagoService {

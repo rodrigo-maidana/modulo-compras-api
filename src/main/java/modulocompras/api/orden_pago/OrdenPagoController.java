@@ -5,10 +5,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import modulocompras.api.orden_pago.detalle.OrdenPagoDetalleDTO;
+import modulocompras.api.orden_pago.detalle.OrdenPagoDetalleService;
 
 @RestController
 @RequestMapping("api/v1/orden-pago") // Endpooint para Ordenes de Pago
@@ -17,6 +20,10 @@ public class OrdenPagoController {
 
     @Autowired
     private OrdenPagoService ordenPagoService;
+
+    @Autowired
+    @Lazy
+    private OrdenPagoDetalleService ordenPagoDetalleService;
 
     // Obtener todas las órdenes de pago
     @GetMapping
@@ -55,6 +62,19 @@ public class OrdenPagoController {
         OrdenPagoDTO ordenPagoPreview = ordenPagoService.getOrdenPagoPreview();
         return ordenPagoPreview != null
                 ? ResponseEntity.ok(ordenPagoPreview)
+                : ResponseEntity.badRequest().build();
+    }
+
+    // Obtener detalles de
+    @GetMapping("/{idOrdenPago}/detalle")
+    public ResponseEntity<List<OrdenPagoDetalleDTO>> getOrdenPagoDetalle(@PathVariable Integer idOrdenPago) {
+        List<OrdenPagoDetalleDTO> ordenPagoDetalle = ordenPagoDetalleService.getDetallesByOrdenPagoId(idOrdenPago)
+                .stream()
+                .map(OrdenPagoDetalleDTO::new)
+                .collect(Collectors.toList());
+
+        return ordenPagoDetalle != null
+                ? ResponseEntity.ok(ordenPagoDetalle)
                 : ResponseEntity.badRequest().build();
     }
 
