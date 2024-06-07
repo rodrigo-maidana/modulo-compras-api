@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/ordenes-detalles") // Endpoint para Ordenes Detalles
-@Tag(name = "Ordenes Detalles")
+@Tag(name = "9. Ordenes Detalles")
 public class OrdenDetalleController {
 
         @Autowired

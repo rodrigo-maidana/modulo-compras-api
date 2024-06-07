@@ -11,41 +11,41 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("api/v1/ordenes-pago-detalles")
-@Tag(name = "Detalles de órdenes de pago")
+@Tag(name = "16. Detalles de órdenes de pago")
 public class OrdenPagoDetalleController {
 
-    @Autowired
-    private OrdenPagoDetalleService ordenPagoDetalleService;
+        @Autowired
+        private OrdenPagoDetalleService ordenPagoDetalleService;
 
-    // Listar todos los detalles
-    @GetMapping
-    public ResponseEntity<List<OrdenPagoDetalleDTO>> getAllOrdenesPagoDetalles() {
-        List<OrdenPagoDetalle> ordenesPagoDetalles = ordenPagoDetalleService.getAllOrdenesPagoDetalles();
+        // Listar todos los detalles
+        @GetMapping
+        public ResponseEntity<List<OrdenPagoDetalleDTO>> getAllOrdenesPagoDetalles() {
+                List<OrdenPagoDetalle> ordenesPagoDetalles = ordenPagoDetalleService.getAllOrdenesPagoDetalles();
 
-        return ResponseEntity.ok(ordenesPagoDetalles.stream()
-                .map(OrdenPagoDetalleDTO::new)
-                .collect(Collectors.toList()));
-    }
+                return ResponseEntity.ok(ordenesPagoDetalles.stream()
+                                .map(OrdenPagoDetalleDTO::new)
+                                .collect(Collectors.toList()));
+        }
 
-    // Obtener un detalle por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<OrdenPagoDetalleDTO> getOrdenPagoDetalleById(@PathVariable Integer id) {
-        return ordenPagoDetalleService.getOrdenPagoDetalleById(id)
-                .map(OrdenPagoDetalleDTO::new)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+        // Obtener un detalle por ID
+        @GetMapping("/{id}")
+        public ResponseEntity<OrdenPagoDetalleDTO> getOrdenPagoDetalleById(@PathVariable Integer id) {
+                return ordenPagoDetalleService.getOrdenPagoDetalleById(id)
+                                .map(OrdenPagoDetalleDTO::new)
+                                .map(ResponseEntity::ok)
+                                .orElse(ResponseEntity.notFound().build());
+        }
 
-    // Crear un detalle
-    @PostMapping("/{idOrdenPago}")
-    public ResponseEntity<OrdenPagoDetalleDTO> createOrdenPagoDetalle(@PathVariable Integer idOrdenPago,
-            @RequestBody OrdenPagoDetalleDTO ordenPagoDetalleDTO) {
+        // Crear un detalle
+        @PostMapping("/{idOrdenPago}")
+        public ResponseEntity<OrdenPagoDetalleDTO> createOrdenPagoDetalle(@PathVariable Integer idOrdenPago,
+                        @RequestBody OrdenPagoDetalleDTO ordenPagoDetalleDTO) {
 
-        OrdenPagoDetalle newOrdenPagoDetalle = ordenPagoDetalleService.createOrdenPagoDetalle(idOrdenPago,
-                ordenPagoDetalleDTO).orElse(null);
-        return newOrdenPagoDetalle != null
-                ? ResponseEntity.ok(new OrdenPagoDetalleDTO(newOrdenPagoDetalle))
-                : ResponseEntity.badRequest().build();
-    }
+                OrdenPagoDetalle newOrdenPagoDetalle = ordenPagoDetalleService.createOrdenPagoDetalle(idOrdenPago,
+                                ordenPagoDetalleDTO).orElse(null);
+                return newOrdenPagoDetalle != null
+                                ? ResponseEntity.ok(new OrdenPagoDetalleDTO(newOrdenPagoDetalle))
+                                : ResponseEntity.badRequest().build();
+        }
 
 }

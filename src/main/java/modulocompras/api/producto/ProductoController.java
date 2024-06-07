@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/productos")
-@Tag(name = "Productos")
+@Tag(name = "2. Productos")
 public class ProductoController {
 
     @Autowired

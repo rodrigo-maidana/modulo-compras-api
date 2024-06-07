@@ -19,7 +19,7 @@ import modulocompras.api.cotizacion.detalle.CotizacionDetalleService;
 
 @RestController
 @RequestMapping("api/v1/cotizaciones") // Endpoint para Cotizaciones
-@Tag(name = "Cotizaciones")
+@Tag(name = "10. Cotizaciones")
 public class CotizacionController {
 
     @Autowired

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/pedidos-compra") // Endpoint para Pedidos de Compra
-@Tag(name = "Pedidos de Compra")
+@Tag(name = "6. Pedidos de Compra")
 public class PedidoCompraController {
 
     @Autowired

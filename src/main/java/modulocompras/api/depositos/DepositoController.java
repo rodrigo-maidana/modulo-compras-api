@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/depositos") // Endpoint para Deposito
-@Tag(name = "Depósitos")
+@Tag(name = "5. Depósitos")
 public class DepositoController {
 
     @Autowired

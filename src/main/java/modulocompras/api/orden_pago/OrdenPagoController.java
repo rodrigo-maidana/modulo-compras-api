@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("api/v1/orden_pago") // Endpooint para Ordenes de Pago
-@Tag(name = "Ordenes de Pago")
+@Tag(name = "15. Ordenes de Pago")
 public class OrdenPagoController {
 
     @Autowired
