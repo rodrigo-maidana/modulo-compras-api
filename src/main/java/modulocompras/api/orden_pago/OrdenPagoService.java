@@ -39,6 +39,7 @@ public class OrdenPagoService {
         OrdenPago ordenPago = new OrdenPago(ordenPagoDTO);
         ordenPago.setFactura(factura);
         ordenPago.setNroOrdenPago(generateNroOrdenCompra());
+        ordenPago.setMontoTotal(factura.getMontoTotal());
 
         return Optional.of(ordenPagoRepository.save(ordenPago));
     }
