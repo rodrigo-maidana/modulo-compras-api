@@ -72,4 +72,13 @@ public class OrdenPagoService {
         return "OP-" + currentDate + "-" + secuenciaStr;
     }
 
+    public Optional<OrdenPago> autorizarOrdenPago(Integer idOrdenPago) {
+        OrdenPago ordenPago = getOrdenPagoById(idOrdenPago).orElse(null);
+        if (ordenPago == null)
+            return Optional.empty();
+
+        ordenPago.setEstado("Autorizado");
+        return Optional.of(ordenPagoRepository.save(ordenPago));
+    }
+
 }
