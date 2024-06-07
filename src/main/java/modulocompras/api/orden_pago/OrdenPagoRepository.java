@@ -35,7 +35,7 @@ public interface OrdenPagoRepository extends JpaRepository<OrdenPago, Integer> {
      * @return Lista de órdenes de pago no eliminadas ordenadas por fecha de pago
      *         descendente.
      */
-    public List<OrdenPago> findByEliminadoFalseOrderByFechaPagoDesc();
+    List<OrdenPago> findByEliminadoFalseOrderByFechaPagoDesc();
 
     /**
      * Obtiene una lista de órdenes de pago cuya fecha de pago coincide con la fecha

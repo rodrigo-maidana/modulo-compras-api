@@ -39,7 +39,7 @@ public class OrdenPagoService {
 
     // Listar todas las órdenes de pago
     public List<OrdenPago> getAllOrdenesPago() {
-        return ordenPagoRepository.findByEliminadoFalse();
+        return ordenPagoRepository.findByEliminadoFalseOrderByFechaPagoDesc();
     }
 
     // Obtener una orden de pago por ID

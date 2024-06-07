@@ -38,13 +38,4 @@ public interface OrdenPagoDetalleRepository extends JpaRepository<OrdenPagoDetal
      */
     List<OrdenPagoDetalle> findByOrdenPagoIdAndEliminadoFalse(Integer ordenPagoId);
 
-    /**
-     * Retrieves a list of OrdenPagoDetalle objects that are not marked as deleted
-     * and are ordered by fechaPago in descending order.
-     *
-     * @return a list of OrdenPagoDetalle objects
-     */
-    @Query("SELECT opd FROM OrdenPagoDetalle opd WHERE opd.eliminado = false ORDER BY opd.fechaPago DESC")
-    List<OrdenPagoDetalle> findByEliminadoFalseOrderByFechaPagoDesc();
-
 }

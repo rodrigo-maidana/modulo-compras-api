@@ -28,7 +28,7 @@ public class OrdenPagoDetalleService {
     private MetodoPagoService metodoPagoService;
 
     public List<OrdenPagoDetalle> getAllOrdenesPagoDetalles() {
-        return ordenPagoDetalleRepository.findByEliminadoFalseOrderByFechaPagoDesc();
+        return ordenPagoDetalleRepository.findByEliminadoFalse();
 
     }
 
