@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import modulocompras.api.factura.Factura;
 import modulocompras.api.factura.FacturaService;
 
+@Service
 public class OrdenPagoService {
 
     @Autowired

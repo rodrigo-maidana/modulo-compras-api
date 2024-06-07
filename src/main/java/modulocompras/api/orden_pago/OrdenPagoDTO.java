@@ -19,7 +19,7 @@ public class OrdenPagoDTO {
 
     // Constructor desde Entidad
     public OrdenPagoDTO(OrdenPago ordenPago) {
-        this.id = ordenPago.getIdOrdenPago();
+        this.id = ordenPago.getId();
         this.factura = new FacturaDTO(ordenPago.getFactura());
         this.proveedor = new ProveedorDTO(ordenPago.getProveedor());
         this.fechaPago = ordenPago.getFechaPago().toString();

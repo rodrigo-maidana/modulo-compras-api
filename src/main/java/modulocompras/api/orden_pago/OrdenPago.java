@@ -20,7 +20,7 @@ public class OrdenPago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ORDEN_PAGO")
-    private Integer idOrdenPago;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "FK_ID_FACTURA", referencedColumnName = "ID_FACTURA", nullable = false)
@@ -51,7 +51,7 @@ public class OrdenPago {
 
     // Constructor desde DTO
     public OrdenPago(OrdenPagoDTO ordenPagoDTO) {
-        this.idOrdenPago = ordenPagoDTO.getId();
+        this.id = ordenPagoDTO.getId();
         this.factura = new Factura(ordenPagoDTO.getFactura());
         this.proveedor = new Proveedor(ordenPagoDTO.getProveedor());
         this.fechaPago = Date.valueOf(ordenPagoDTO.getFechaPago());
@@ -61,8 +61,8 @@ public class OrdenPago {
     }
 
     // Getters
-    public Integer getIdOrdenPago() {
-        return idOrdenPago;
+    public Integer getId() {
+        return id;
     }
 
     public Factura getFactura() {
@@ -94,8 +94,8 @@ public class OrdenPago {
     }
 
     // Setters
-    public void setIdOrdenPago(Integer idOrdenPago) {
-        this.idOrdenPago = idOrdenPago;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setFactura(Factura factura) {
