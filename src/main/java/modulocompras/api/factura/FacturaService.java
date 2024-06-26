@@ -1,5 +1,7 @@
 package modulocompras.api.factura;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -12,6 +14,7 @@ import modulocompras.api.depositos.DepositoService;
 import modulocompras.api.orden_compra.OrdenCompra;
 import modulocompras.api.orden_compra.OrdenCompraRepository;
 import modulocompras.api.orden_compra.OrdenCompraService;
+import modulocompras.api.pedido_compra.PedidoCompraDTO;
 
 @Service
 public class FacturaService {
@@ -106,6 +109,19 @@ public class FacturaService {
 
     public void saveFactura(Factura factura) {
         facturaRepository.save(factura);
+    }
+
+    // Obtener facturas con vencimiento en el mes actual (fecha de vencimiento <=
+    // último día del mes actual)
+    public List<Factura> getFacturasVencimientoMesActual() {
+        Date fechaActual = new Date();
+        return facturaRepository.findByFechaVencimientoLessThanEqualAndEliminadoFalse(fechaActual);
+    }
+
+    public List<Factura> getFacturasVencimientoMesActualPorProveedor(int proveedorId) {
+        Date fechaActual = new Date();
+        return facturaRepository.findByProveedorIdAndFechaVencimientoLessThanEqualAndEliminadoFalse(proveedorId,
+                fechaActual);
     }
 
 }

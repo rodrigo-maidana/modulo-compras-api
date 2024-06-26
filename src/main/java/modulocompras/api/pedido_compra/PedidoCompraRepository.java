@@ -47,4 +47,12 @@ public interface PedidoCompraRepository extends JpaRepository<PedidoCompra, Inte
     @Query("SELECT p FROM PedidoCompra p WHERE DATE(p.fechaEmision) = DATE(:fecha)")
     List<PedidoCompra> findByFechaEmision(@Param("fecha") Date fecha);
 
+    /**
+     * Obtiene una lista de pedidos de compra por su estado.
+     *
+     * @param estado el estado del pedido de compra
+     * @return la lista de pedidos de compra por su estado
+     */
+    public List<PedidoCompra> findByEstadoAndEliminadoFalse(String string);
+
 }

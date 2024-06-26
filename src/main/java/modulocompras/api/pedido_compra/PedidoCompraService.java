@@ -93,4 +93,9 @@ public class PedidoCompraService {
         return new PedidoCompraDTO(newPedidoCompra);
     }
 
+    // Obtener Pedidos De Compra con estado pendiente
+    public List<PedidoCompra> getPedidosCompraPendientes() {
+        return pedidoCompraRepository.findByEstadoAndEliminadoFalse("Pendiente");
+    }
+
 }
