@@ -43,17 +43,8 @@ public class ReporteController {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Obtiene las facturas a pagar de un proveedor específico con vencimiento en el
-     * mes actual.
-     * 
-     * Este método filtra las facturas que pertenecen a un proveedor dado y cuya
-     * fecha de vencimiento
-     * es menor o igual al último día del mes actual.
-     *
-     * @param proveedorId El ID del proveedor cuyas facturas se desean obtener.
-     * @return Una lista de facturas que cumplen con los criterios de filtro.
-     */
+    // Devuelve una lista de facturas con vencimiento en el mes actual de un
+    // proveedor especifico (fecha de vencimiento <= último día del mes actual)
     @GetMapping("/facturas-vencimiento-mes-actual/{proveedorId}")
     public List<FacturaDTO> getFacturasVencimientoMesActualPorProveedor(@PathVariable int proveedorId) {
         return facturaService.getFacturasVencimientoMesActualPorProveedor(proveedorId).stream()
