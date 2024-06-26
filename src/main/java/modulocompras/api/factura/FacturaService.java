@@ -1,6 +1,5 @@
 package modulocompras.api.factura;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +13,6 @@ import modulocompras.api.depositos.DepositoService;
 import modulocompras.api.orden_compra.OrdenCompra;
 import modulocompras.api.orden_compra.OrdenCompraRepository;
 import modulocompras.api.orden_compra.OrdenCompraService;
-import modulocompras.api.pedido_compra.PedidoCompraDTO;
 
 @Service
 public class FacturaService {

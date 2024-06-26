@@ -93,6 +93,9 @@ public class OrdenPagoService {
         if (ordenPago == null)
             return Optional.empty();
 
+        if (ordenPago.getEstado().equals("Autorizado"))
+            return Optional.empty();
+
         // Crear asiento
         Asiento asiento = new Asiento();
         asiento.setFecha(new Date());
