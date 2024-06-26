@@ -21,9 +21,9 @@ public interface FacturaRepository extends JpaRepository<Factura, Integer> {
     @Query("SELECT f FROM Factura f WHERE DATE(f.fechaEmision) = DATE(:fecha)")
     List<Factura> findByFechaEmision(@Param("fecha") Date fecha);
 
-    List<Factura> findByFechaVencimientoLessThanEqualAndEliminadoFalseOrderByFechaVencimientoAsc(Date fechaActual);
+    List<Factura> findByFechaVencimientoLessThanEqualAndEliminadoFalseOrderByFechaVencimientoDesc(Date fechaActual);
 
-    List<Factura> findByProveedorIdAndFechaVencimientoLessThanEqualAndEliminadoFalseOrderByFechaVencimientoAsc(
+    List<Factura> findByProveedorIdAndFechaVencimientoLessThanEqualAndEliminadoFalseOrderByFechaVencimientoDesc(
             int proveedorId,
             Date fechaActual);
 

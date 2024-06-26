@@ -114,13 +114,13 @@ public class FacturaService {
     public List<Factura> getFacturasVencimientoMesActual() {
         Date fechaActual = new Date();
         return facturaRepository
-                .findByFechaVencimientoLessThanEqualAndEliminadoFalseOrderByFechaVencimientoAsc(fechaActual);
+                .findByFechaVencimientoLessThanEqualAndEliminadoFalseOrderByFechaVencimientoDesc(fechaActual);
     }
 
     public List<Factura> getFacturasVencimientoMesActualPorProveedor(int proveedorId) {
         Date fechaActual = new Date();
         return facturaRepository
-                .findByProveedorIdAndFechaVencimientoLessThanEqualAndEliminadoFalseOrderByFechaVencimientoAsc(
+                .findByProveedorIdAndFechaVencimientoLessThanEqualAndEliminadoFalseOrderByFechaVencimientoDesc(
                         proveedorId,
                         fechaActual);
     }
