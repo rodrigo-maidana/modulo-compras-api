@@ -26,4 +26,9 @@ public class CuentaService {
     public void deleteCuenta(Integer id) {
         cuentaRepository.deleteById(id);
     }
+
+    // Método para obtener una cuenta por numero de cuenta
+    public Cuenta getCuentaByNumeroCuenta(String numeroCuenta) {
+        return cuentaRepository.findByNumeroCuenta(numeroCuenta).orElse(null);
+    }
 }

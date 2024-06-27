@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +23,10 @@ public class Cuenta {
 
     @Column(name = "STR_NOMBRE", nullable = false)
     private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_ID_CUENTA_PADRE")
+    private Cuenta cuentaPadre;
 
     @Column(name = "BOOL_ELIMINADO", nullable = false)
     private Boolean eliminado = false;
@@ -53,6 +59,14 @@ public class Cuenta {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Cuenta getCuentaPadre() {
+        return cuentaPadre;
+    }
+
+    public void setCuentaPadre(Cuenta cuentaPadre) {
+        this.cuentaPadre = cuentaPadre;
     }
 
     public Boolean getEliminado() {

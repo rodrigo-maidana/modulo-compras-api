@@ -9,13 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import modulocompras.api.asiento.Asiento;
 import modulocompras.api.asiento.AsientoService;
-import modulocompras.api.asiento.detalle.AsientoDetalle;
-import modulocompras.api.asiento.detalle.AsientoDetalleService;
 import modulocompras.api.factura.Factura;
 import modulocompras.api.factura.FacturaService;
-import modulocompras.api.orden_pago.detalle.OrdenPagoDetalle;
 import modulocompras.api.orden_pago.detalle.OrdenPagoDetalleService;
 
 @Service
@@ -32,10 +28,8 @@ public class OrdenPagoService {
     private OrdenPagoDetalleService ordenPagoDetalleService;
 
     @Autowired
+    @Lazy
     private AsientoService asientoService;
-
-    @Autowired
-    private AsientoDetalleService asientoDetalleService;
 
     // Listar todas las órdenes de pago
     public List<OrdenPago> getAllOrdenesPago() {
@@ -96,15 +90,8 @@ public class OrdenPagoService {
         if (ordenPago.getEstado().equals("Autorizado"))
             return Optional.empty();
 
-        // Crear asiento
-        Asiento asiento = new Asiento();
-        asiento.setFecha(new Date());
-        asiento.setDescripcion("Pago de factura " + ordenPago.getFactura().getNroFactura());
-        asiento.setTotal(ordenPago.getMontoTotal());
-        asientoService.saveAsiento(asiento);
-
         // Crear detalles de asiento
-        crearDetallesDeAsiento(idOrdenPago, asiento, ordenPago.getMontoTotal());
+        asientoService.generarAsiento(ordenPago);
 
         Factura factura = ordenPago.getFactura();
         factura.setSaldoPendiente(factura.getSaldoPendiente() - ordenPago.getMontoTotal());
@@ -116,27 +103,6 @@ public class OrdenPagoService {
 
         ordenPago.setEstado("Autorizado");
         return Optional.of(ordenPagoRepository.save(ordenPago));
-    }
-
-    private void crearDetallesDeAsiento(Integer idOrdenPago, Asiento asiento, double montoTotal) {
-        // Crear detalles Debe
-        List<OrdenPagoDetalle> detalles = ordenPagoDetalleService.getDetallesByOrdenPagoId(idOrdenPago);
-        for (OrdenPagoDetalle detalle : detalles) {
-            AsientoDetalle asientoDetalle = new AsientoDetalle();
-            asientoDetalle.setAsiento(asiento);
-            asientoDetalle.setCuenta(detalle.getMetodoPago().getId().toString());
-            asientoDetalle.setDebe(detalle.getMonto());
-            asientoDetalle.setHaber(0.0);
-            asientoDetalleService.saveAsientoDetalle(asientoDetalle);
-        }
-
-        // Crear detalle Haber
-        AsientoDetalle asientoDetalle = new AsientoDetalle();
-        asientoDetalle.setAsiento(asiento);
-        asientoDetalle.setCuenta("1.1.1.1.1.1");
-        asientoDetalle.setDebe(0.0);
-        asientoDetalle.setHaber(montoTotal);
-        asientoDetalleService.saveAsientoDetalle(asientoDetalle);
     }
 
 }

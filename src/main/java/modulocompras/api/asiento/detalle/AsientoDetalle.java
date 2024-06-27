@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import modulocompras.api.asiento.Asiento;
+import modulocompras.api.cuenta.Cuenta;
 
 @Entity
 @Table(name = "ASIENTO_DETALLES")
@@ -23,8 +24,9 @@ public class AsientoDetalle {
     @JoinColumn(name = "FK_ID_ASIENTO", referencedColumnName = "ID_ASIENTO", nullable = false)
     private Asiento asiento;
 
-    @Column(name = "CUENTA", nullable = false)
-    private String cuenta;
+    @ManyToOne
+    @JoinColumn(name = "FK_ID_CUENTA", referencedColumnName = "ID_CUENTA", nullable = false)
+    private Cuenta cuenta;
 
     @Column(name = "DEBE", nullable = false)
     private Double debe;
@@ -57,11 +59,11 @@ public class AsientoDetalle {
         this.asiento = asiento;
     }
 
-    public String getCuenta() {
+    public Cuenta getCuenta() {
         return cuenta;
     }
 
-    public void setCuenta(String cuenta) {
+    public void setCuenta(Cuenta cuenta) {
         this.cuenta = cuenta;
     }
 
